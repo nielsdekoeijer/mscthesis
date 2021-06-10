@@ -1,0 +1,100 @@
+\documentclass[11pt,twoside,openright,titlepage]{ce}
+
+% =Imports===============================================================================
+\usepackage[]{tcolorbox}
+\usepackage[]{amsmath,amssymb,amsthm}
+\usepackage[]{graphicx}
+\usepackage[]{color}
+\usepackage[]{listings}
+\usepackage[]{hyperref}
+\usepackage[]{nielstex}
+\usepackage[]{nielsformat}
+\usepackage[]{tikz}
+\usepackage[]{pgfplots}
+\usepackage[]{tikz-3dplot}
+
+% =Definitions===========================================================================
+% Thesis specific definitions
+\newcommand{\za}{\mathcal{A}}
+\newcommand{\zb}{\mathcal{B}}
+
+% =Document Attributes===================================================================
+\msctitle{Sound Zones with a Cost Function based on Human Hearing}
+\mscsubtitle{Subtitle Compulsory?}
+\msckeywords{perceptual sound zones, sound field control, perceptual models, pressure matching}
+\mscauthor{Niels Evert Marinus de Koeijer B.Sc.}
+\msccity{Delft}
+\msccountry{The Netherlands}
+\mscnumber{??}
+\mscdate{September 15, 2021}
+\major{Electrical Engineering}
+\mscinstitute{Delft University of Technology}
+\mscfaculty{Electrical Engineering, Mathematics and Computer Science}
+\mscdepartment{Microelectronics \& Computer Engineering}
+\mscgroup{Circuits and Systems}
+\chairperson{dr.ir. R.C. Hendriks}
+\advisorone{dr. M. Bo M\o ller}
+\advisortwo{dr. P. Martinez Nuevo}
+\memberone{dr. Massimo Mastrangeli}
+\membertwo{dr. J. Martinez Castañeda}
+
+% =Abstract==============================================================================
+\def\ABSTRACT{Something about soundzones, something about perceptual models, something about perceptual sound zones.}
+
+% =Document==============================================================================
+\begin{document}
+
+% =Front Pages===========================================================================
+\frontmatter
+\makecover
+\maketitle
+\makesignature
+\include{abstract}
+\include{ack}
+\tableofcontents
+\listoffigures
+\listoftables
+\mainmatter
+
+% =Content===============================================================================
+\chapter{Introduction}
+\begin{tcolorbox}
+\section*{Skeleton of Chapter}
+\input{introduction/skeleton.tex}
+\end{tcolorbox}
+
+\chapter{Literature Review}
+\begin{tcolorbox}
+\section*{Skeleton of Chapter}
+\input{literature_review/skeleton.tex}
+\end{tcolorbox}
+
+\chapter{Perceptual Models}
+\begin{tcolorbox}
+\section*{Skeleton of Chapter}
+\input{perceptual_models/skeleton.tex}
+\end{tcolorbox}
+
+\chapter{Perceptual Sound Zones}
+\begin{tcolorbox}
+\section*{Skeleton of Chapter}
+\input{perceptual_sound_zones/skeleton.tex}
+\end{tcolorbox}
+\newpage
+\input{perceptual_sound_zones/data_model.tex}
+\newpage
+\input{perceptual_sound_zones/frame_based_framework.tex}
+
+\chapter{Conclusion}
+\begin{tcolorbox}
+\section*{Skeleton of Chapter}
+\input{conclusion/skeleton.tex}
+\end{tcolorbox}
+
+\chapter{Bibliography}
+\bibliography{bib}
+\bibliographystyle{ieeetr}
+
+% =Appendix==============================================================================
+\appendix
+\end{document}

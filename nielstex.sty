@@ -1,0 +1,67 @@
+% library for more complex commands...!
+\usepackage[]{xparse}
+
+
+%% =MathCommands=========================================
+\usepackage[]{amsmath}
+
+% argmin Command
+\DeclareMathOperator*{\argminb}{arg\,min}
+\newcommand{\argmin}[2]{\argminb_{#1}\quad #2}
+
+% argmax Command
+\DeclareMathOperator*{\argmaxb}{arg\,max}
+\newcommand{\argmax}[2]{\argmaxb_{#1}\quad #2}
+
+% subjectto
+\DeclareMathOperator*{\subjecttob}{subject\,\,to}
+\newcommand{\subjectto}[1]{\subjecttob\quad #1}
+
+% norm Command [xparse]
+\NewDocumentCommand{\norm}{O{} O{} m}{\left|\left| #3 \right|\right|_{#1}^{#2}}
+
+% hermetian
+\newcommand{\herm}{^{\text{H}}}
+
+% transpose
+\newcommand{\tran}{^{\text{T}}}
+
+% inverse
+\newcommand{\inv}{^{-1}}
+
+% vector
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\vecsymbol}[1]{\boldsymbol{#1}}
+
+% vector
+\newcommand{\mat}[1]{\mathbf{#1}}
+
+% ceil
+\usepackage[]{mathtools}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+% pseudo
+\newcommand{\pseudo}{^{\dagger}}
+
+% Real numbers
+\usepackage[]{amssymb}
+\newcommand{\Real}[1]{\mathbb{R}^{#1}}
+
+% Complex  numbers
+\newcommand{\Complex}[1]{\mathbb{C}^{#1}}
+
+% Integer  numbers
+\newcommand{\Integer}[1]{\mathbb{Z}^{#1}}
+
+% Real part
+\newcommand{\realpart}[1]{\text{Re}\left\{#1\right\}}
+
+% Imaginairy part
+\newcommand{\imagpart}[1]{\text{Im}\left\{#1\right\}}
+
+% diag
+\newcommand{\diag}[1]{\text{diag}\left(#1\right)}
+
+%% =Generic==================================
+\usepackage[]{xcolor}
+\newcommand{\todo}[1]{\textbf{\textcolor{red}{\underline{TODO:} #1}}}

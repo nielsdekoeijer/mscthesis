@@ -1,0 +1,93 @@
+\tdplotsetmaincoords{70}{110}
+\begin{tikzpicture}[tdplot_main_coords, scale=3]
+    \newcommand{\drawplane}[5]{\draw[#1] (#2) -- (#3) -- (#4) -- (#5) -- cycle;}
+
+    %=Draw Origin========================================================================
+    \pgfmathsetmacro{\Ox}{0.0};
+    \pgfmathsetmacro{\Oy}{0.0};
+    \pgfmathsetmacro{\Oz}{0.0};
+    \coordinate (O) at (\Ox,\Oy,\Oz);
+    \draw[thick,->] (O) -- (1.5,0,0) node[anchor=north east]{$x$};
+    \draw[thick,->] (O) -- (0,1.5,0) node[anchor=north west]{$y$};
+    \draw[thick,->] (O) -- (0,0,1.0) node[anchor=south]{$z$};
+
+    %=Define Room Dimensions, Coordinates, and Background Plane===========================
+    % Dimensions 
+    \pgfmathsetmacro{\ROx}{0.0};
+    \pgfmathsetmacro{\RRx}{1.2};
+    \pgfmathsetmacro{\ROy}{0.0};
+    \pgfmathsetmacro{\RRy}{1.2};
+    \pgfmathsetmacro{\ROz}{0.0};
+    \pgfmathsetmacro{\RRz}{0.8};
+    % Coordinates
+    \coordinate (R000) at (\ROx       , \ROy       , \ROz       );
+    \coordinate (R001) at (\ROx       , \ROy       , \ROz + \RRz);
+    \coordinate (R010) at (\ROx       , \ROy + \RRy, \ROz       );
+    \coordinate (R011) at (\ROx       , \ROy + \RRy, \ROz + \RRz);
+    \coordinate (R100) at (\ROx + \RRx, \ROy       , \ROz       );
+    \coordinate (R101) at (\ROx + \RRx, \ROy       , \ROz + \RRz);
+    \coordinate (R110) at (\ROx + \RRx, \ROy + \RRy, \ROz       );
+    \coordinate (R111) at (\ROx + \RRx, \ROy + \RRy, \ROz + \RRz);
+    % Planes
+    \drawplane{fill=black!20, fill opacity=1.0}{R000}{R010}{R011}{R001}
+    \drawplane{fill=black!35, fill opacity=1.0}{R000}{R100}{R110}{R010}
+    \drawplane{fill=black!45, fill opacity=1.0}{R000}{R100}{R101}{R001}
+    
+
+       %=Define Zone A, Coordinates, and Draw Plane================================
+    % Dimensions 
+    \pgfmathsetmacro{\AOx}{0.3};
+    \pgfmathsetmacro{\AAx}{0.4};
+    \pgfmathsetmacro{\AOy}{0.1};
+    \pgfmathsetmacro{\AAy}{0.3};
+    \pgfmathsetmacro{\AOz}{0.2};
+    \pgfmathsetmacro{\AAz}{0.3};
+    % Coordinates
+    \coordinate (A000) at (\AOx       , \AOy       , \AOz       );
+    \coordinate (A001) at (\AOx       , \AOy       , \AOz + \AAz);
+    \coordinate (A010) at (\AOx       , \AOy + \AAy, \AOz       );
+    \coordinate (A011) at (\AOx       , \AOy + \AAy, \AOz + \AAz);
+    \coordinate (A100) at (\AOx + \AAx, \AOy       , \AOz       );
+    \coordinate (A101) at (\AOx + \AAx, \AOy       , \AOz + \AAz);
+    \coordinate (A110) at (\AOx + \AAx, \AOy + \AAy, \AOz       );
+    \coordinate (A111) at (\AOx + \AAx, \AOy + \AAy, \AOz + \AAz);
+    % Planes
+    \drawplane{dashed, fill=red!70, fill opacity=0.30}{A000}{A100}{A110}{A010}
+    \drawplane{dashed, fill=red!70, fill opacity=0.35}{A000}{A100}{A101}{A001}
+    \drawplane{dashed, fill=red!70, fill opacity=0.20}{A000}{A010}{A011}{A001}
+    \drawplane{fill=red!70, fill opacity=0.2}{A100}{A110}{A111}{A101}
+    \drawplane{fill=red!70, fill opacity=0.2}{A010}{A110}{A111}{A011}
+    \drawplane{fill=red!70, fill opacity=0.2}{A001}{A101}{A111}{A011}
+
+    %=Define Zone B, Coordinates, and Draw Plane================================
+    % Dimensions 
+    \pgfmathsetmacro{\BOx}{0.3};
+    \pgfmathsetmacro{\BBx}{0.4};
+    \pgfmathsetmacro{\BOy}{0.8};
+    \pgfmathsetmacro{\BBy}{0.3};
+    \pgfmathsetmacro{\BOz}{0.2};
+    \pgfmathsetmacro{\BBz}{0.3};
+    % Coordinates
+    \coordinate (B000) at (\BOx       , \BOy       , \BOz       );
+    \coordinate (B001) at (\BOx       , \BOy       , \BOz + \BBz);
+    \coordinate (B010) at (\BOx       , \BOy + \BBy, \BOz       );
+    \coordinate (B011) at (\BOx       , \BOy + \BBy, \BOz + \BBz);
+    \coordinate (B100) at (\BOx + \BBx, \BOy       , \BOz       );
+    \coordinate (B101) at (\BOx + \BBx, \BOy       , \BOz + \BBz);
+    \coordinate (B110) at (\BOx + \BBx, \BOy + \BBy, \BOz       );
+    \coordinate (B111) at (\BOx + \BBx, \BOy + \BBy, \BOz + \BBz);
+    % Planes
+    \drawplane{dashed, fill=blue!70, fill opacity=0.30}{B000}{B100}{B110}{B010}
+    \drawplane{dashed, fill=blue!70, fill opacity=0.45}{B000}{B100}{B101}{B001}
+    \drawplane{dashed, fill=blue!70, fill opacity=0.20}{B000}{B010}{B011}{B001}
+    \drawplane{fill=blue!70, fill opacity=0.2}{B100}{B110}{B111}{B101}
+    \drawplane{fill=blue!70, fill opacity=0.2}{B010}{B110}{B111}{B011}
+    \drawplane{fill=blue!70, fill opacity=0.2}{B001}{B101}{B111}{B011}
+
+    %=Draw Foreground Plane==============================================================
+    \drawplane{fill=black!10, fill opacity=0.2}{R100}{R110}{R111}{R101}
+    \drawplane{fill=black!10, fill opacity=0.2}{R010}{R110}{R111}{R011}
+    \drawplane{fill=black!10, fill opacity=0.2}{R001}{R101}{R111}{R011}
+
+\end{tikzpicture}
+   

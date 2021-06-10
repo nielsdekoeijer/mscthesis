@@ -1,0 +1,29 @@
+\chapter{Appendix name}
+
+\section{ANSI C source code}
+% \lstinputlisting{main.c}
+% - OR -
+% \lstinputlisting{main.c}
+% - OR -
+\lstset{language=C}
+\begin{lstlisting}
+#include <stdio.h>
+
+int main(int argc, char ** argv)
+{
+  printf("Hello world!\n");
+  return 0;
+}
+\end{lstlisting}
+
+\section{VHDL source code}
+
+\lstset{language=VHDL}
+\begin{lstlisting}
+ENTITY wishbone IS
+PORT (
+  pad_clk_ext: IN STD_LOGIC;
+  pad_rst_btn: IN STD_LOGIC;
+);
+END ENTITY wishbone;
+\end{lstlisting}

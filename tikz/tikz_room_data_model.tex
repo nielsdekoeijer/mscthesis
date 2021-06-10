@@ -1,0 +1,45 @@
+\begin{tikzpicture}
+    \draw [draw=black] (0,0) rectangle (8,6);
+
+    % Speakers on the top wall
+    \coordinate (S0)  at (2, 5.6);
+    \coordinate (S1)  at (3, 5.6);
+    \coordinate (S2)  at (4, 5.6);
+    \coordinate (S3)  at (5, 5.6);
+    \coordinate (S4)  at (6, 5.6);
+    \pic[scale=0.7] at (S0) {Speaker};
+    \pic[scale=0.7] at (S1) {Speaker};
+    \pic[scale=0.7] at (S2) {Speaker};
+    \pic[scale=0.7] at (S3) {Speaker};
+    \pic[scale=0.7] at (S4) {Speaker};
+    \node[anchor=north, align=center] at (S0) {$\,\,x^{(0)}$};
+    \node[anchor=north, align=center] at (S1) {$\,\,x^{(1)}$};
+    \node[anchor=north, align=center] at (S2) {$\,\,x^{(2)}$};
+    \node[anchor=north, align=center] at (S3) {$\,\,x^{(3)}$};
+    \node[anchor=north, align=center] at (S4) {$\,\,x^{(4)}$};
+
+    % Speakers on the bottom wall
+    \coordinate (S5)  at (2, 0.4);
+    \coordinate (S6)  at (3, 0.4);
+    \coordinate (S7)  at (4, 0.4);
+    \coordinate (S8)  at (5, 0.4);
+    \coordinate (S9)  at (6, 0.4);
+    \pic[rotate=180, scale=0.7] at (S5) {Speaker};
+    \pic[rotate=180, scale=0.7] at (S6) {Speaker};
+    \pic[rotate=180, scale=0.7] at (S7) {Speaker};
+    \pic[rotate=180, scale=0.7] at (S8) {Speaker};
+    \pic[rotate=180, scale=0.7] at (S9) {Speaker};
+    \node[anchor=south, align=center] at (S5) {$\,\,\,x^{(5)}$};
+    \node[anchor=south, align=center] at (S6) {$\,\,\,x^{(6)}$};
+    \node[anchor=south, align=center] at (S7) {$\,\,\,x^{(7)}$};
+    \node[anchor=south, align=center] at (S8) {$\,\,\,x^{(8)}$};
+    \node[anchor=south, align=center] at (S9) {$\,\,\,x^{(9)}$};
+
+
+    \draw[opacity=0.4, fill=green]  (2,3) circle[radius=1.5];
+    \draw[opacity=0.4, pattern=dots]  (2,3) circle[radius=1.5];
+    \draw[opacity=0.4, fill=red]  (6,3) circle[radius=1.5];
+    \draw[opacity=0.4, pattern=dots]  (6,3) circle[radius=1.5];
+    \draw[thick] (2,3) circle (1.5) node[align=center] {\textbf{Zone A:}\\Target: $t^{(m)}_A[n]$\\RTF: $h^{(l,m)}_A[n]$};
+    \draw[thick] (6,3) circle (1.5) node[align=center] {\textbf{Zone B:}\\Target: $t^{(m)}_B[n]$\\RTF: $h^{(l,m)}_B[n]$};
+\end{tikzpicture}

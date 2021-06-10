@@ -1,0 +1,112 @@
+%-------------------------------------------------------------------------
+% Sample M.Sc. Thesis using the ce class for M.Sc. students computer
+% engineering at Delft University of Technology.
+% 
+% Author: Steven Mulder
+% Date:   20/09/2008
+%-------------------------------------------------------------------------
+%
+\documentclass[11pt,twoside,openright,titlepage]{ce}%
+%
+% define used packages, add your own favorites
+%
+\usepackage{amsmath,amssymb,amsthm}%
+\usepackage{graphicx}%
+\usepackage{color}%
+\usepackage{listings}%
+\usepackage{hyperref}%
+%
+% set up listings package, for easy code formatting (see example in appendix)
+%
+\definecolor{darkgreen}{rgb}{0.1333,0.545,0.1333}
+\definecolor{darkred}{rgb}{0.698,0,0}
+\lstset{basicstyle=\small,%
+				tabsize=4,%
+				stringstyle=\ttfamily\color{darkred},%
+        keywordstyle=\ttfamily\color{blue},%
+        identifierstyle=\ttfamily,%
+        showstringspaces=false,%
+        commentstyle=\ttfamily\color{darkgreen},
+        numbers=left,
+        stepnumber=5,
+        breaklines=true}%
+%
+% set up hyperref package, for nice clickable references
+%
+\hypersetup{colorlinks=true,%
+            breaklinks=true,%
+            linkcolor=black,%
+            pdfstartview=FitH,
+            pdfpagelayout=TwoColumnRight}%
+%
+% useful macros
+%
+\newcommand{\reffig}[1]{Figure~\ref{#1}}%
+\newcommand{\reftab}[1]{Table~\ref{#1}}%
+\newcommand{\refchap}[1]{Chapter~\ref{#1}}%
+\newcommand{\refsec}[1]{Section~\ref{#1}}%
+\newcommand{\ie}{i.e.,~}%
+\newcommand{\eg}{e.g.,~}%
+%
+% enter your thesis details
+%
+\msctitle{My Thesis Title}%
+\mscsubtitle{My Subtitle}%
+\msckeywords{keywords, msc, thesis, computers, hacking, code}%
+\mscauthor{My Name B.Sc.}%
+\msccity{My City}%
+\msccountry{My Country}%
+\mscnumber{00}%
+\mscdate{My Graduation Date}%
+\major{Computer Engineering}%
+\mscinstitute{Delft University of Technology}%
+\mscfaculty{Electrical Engineering, Mathematics and Computer Science}%
+\mscdepartment{Microelectronics \& Computer Engineering}%
+\mscgroup{Circuits and Systems}%
+\chairperson{prof.dr.ir. Th.E. Chairperson}%
+\advisorone{prof.dr.ir. M.Y. Advisor}%
+%\advisortwo{ir. S.E.C. Advisor}%
+\memberone{dr. F.R.S.T. Committee-Member}%
+\membertwo{dr.ir. S.N.D. Member}%
+%\memberthree{ir. Th.R.D. Member}%
+%\memberfour{dr. F.Th. Member}%
+%
+% type your abstract here to have it appear on the cover page and in the Abstract chapter
+%
+\def\ABSTRACT{%
+This is a sample thesis to demonstrate the \texttt{ce} thesis template. The rest of this abstract is filled with random gibberish.
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec varius diam eget ipsum. In rhoncus hendrerit ligula. Fusce dolor. Cras ut velit ut enim fermentum ullamcorper. In tempor justo ut augue. Nullam lacus pede, iaculis eget, facilisis consequat, bibendum sit amet, risus. Sed arcu dui, mattis id, convallis eu, venenatis et, eros. Etiam quis dui id quam aliquam consectetuer. Maecenas metus. Aenean auctor, augue non rutrum commodo, metus dolor mollis diam, vel pellentesque ante augue nec dui. Nullam tellus. Vestibulum vel augue eget turpis euismod tincidunt. Proin nibh lacus, pulvinar non, accumsan in, consectetuer sit amet, lectus. Pellentesque a ligula ac nibh condimentum imperdiet.
+
+Aliquam sodales tortor eget dolor. Donec at nunc. Vestibulum pharetra. Sed posuere. Sed pretium eros vitae quam. Proin accumsan, eros ullamcorper cursus feugiat, orci justo dignissim neque, vehicula pellentesque orci magna a sapien. Etiam magna ligula, volutpat eu, tincidunt eu, ultricies sit amet, pede. Donec metus justo, tristique eget, condimentum et, sodales et, tortor.
+}%
+%
+% uncomment the next line to build only a part of your thesis:
+%\includeonly{ack, intro}
+%
+%-------------------------------------------------------------------------
+% End of the preamble, start of the document
+%-------------------------------------------------------------------------
+\begin{document}%
+%
+\frontmatter%
+% FRONTMATTER: cover, titlepage, signatures, abstract, acknowledgments
+\makecover%
+\maketitle%
+\makesignature%
+\include{abstract}%
+\include{ack}%
+\tableofcontents%
+\listoffigures%
+\listoftables%
+%
+\mainmatter%
+% MAIN MATTER: put your own chapters here
+\include{intro}%
+\include{samplechap}%
+%
+\appendix%
+% APPENDIX: everything that does not belong in the main matter
+\include{code}%
+%
+\end{document}

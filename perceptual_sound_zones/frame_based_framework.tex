@@ -1,0 +1,104 @@
+\section{Frame-Based Processing Framework}
+It is assumed that the desired playback signals $s_\za[n]$ and $s_\zb[n]$ are not known in their entirety
+at a given time $n$.
+The motivation for this is that a user can change the desired playback content in real-time.
+As such, the system should be able to accomodate for this.
+\todo{This really needs better motivation...}
+
+It is assumed that $s_\za[m]$ and $s_\zb[m]$ are known from $\infty \leq m \leq \mu H$, 
+where $\mu = \lfloor n / H \rfloor$.
+This can be interpreted as the desired playback signals is revealed in blocks of size $H$, 
+and that at a time $n = \mu H$, the $\mu^\text{th}$ block is known.  
+
+This assumption as a number of implications on the previously derived equations.
+
+\subsubsection{Implications for Computing Target Pressure}
+As the desired playback signals are not known entirely, the target can also not be computed enitrely as before.
+As the playback signals are revealed in blocks of size $H$, it makes sense to update the target signal in blocks of $H$.  
+
+Consider the following rewrite of the target signal for the desired signal of zone $\za$:
+\begin{align}
+    t^{(m)}[n] &= \sum_{l=0}^{N_L - 1} \left(h^{(l,m)} \ast s_\za\right)[n] \\
+               &= \sum_{l=0}^{N_L - 1} t^{(l,m)}[n]
+\end{align}
+Here, $t^{(m,l)}[n]$ is the contribution of the $l^\text{th}$ loudspeaker to the target sound pressure at reproduction point $m$.
+Consider the following rewrite:
+\begin{align}
+     t^{(m,l)}[n]   &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] s_\za[b] \\
+                    &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] s_\za[b] 
+                        \sum_{k=-\infty}^{\infty} w[b - kH] \\
+                    &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b]  
+                        \sum_{k=-\infty}^{\infty} s_\za[b] w[b - kH] \\
+                    &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b]  
+                        \sum_{k=-\infty}^{\infty} s_{\za,k}[b]  
+\end{align}
+Here, $w[n]\in\Real{N_w}$ is a window that satisfies the COLA condition for a hopsize $H$.
+The window is defined to be non-zero for $-N_w + 1 \leq n \leq 0$, as such it is non-causal.
+Furthermore, the windows are overlapping, thus $N_w > H$. 
+
+In the rewrite above, the desired playback signal $s_\za[n]$ is projected onto a basis of overlapping frames of size $N_w$.
+The projection results in a sum of frames $s_{\za, k}[n]$. 
+The support of $s_{\za, k}[n]$ is deifned by the shifted window that is used to synthesise it, i.e. it is non-zero for $-N_w + 1 + kH \leq n \leq kH$.
+As the COLA condition is met for the chosen window, the sum over all frames reconstructs $s_\za[n]$ perfectly.
+
+At a time $n = \mu H$, the frames up to $k = \mu$ can be computed.
+Let $t_\mu^{(m,l)}[n]$ represent the target using frames up to $k = \mu$:  
+\begin{align}
+    t_\mu^{(m,l)}[n] &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
+                        \sum_{k=-\infty}^{\mu} s_{\za,k}[b] \\
+                     &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
+                        s_{\za,\mu}[b] + \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
+                        \sum_{k=-\infty}^{\mu - 1} s_{\za, k}[b] \\
+                     &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
+                        s_{\za, \mu}[b] + t_{\mu - 1}^{(m,l)}[n]
+\end{align}
+As can be seen, $t_\mu^{(m,l)}[n]$ can expressed as the contribution of the current frames and the contribution of all previous frames.
+In addition, note how the computation can be performed recursively.
+To compute $t_\mu^{(m,l)}[n]$, we compute the convolution of the current frame $s_{\za, \mu}[n]$ with the RIRs, 
+and then add the history of previous frames.
+
+Thus, $t_\mu^{(m,l)}[n]$ can be considered an estimation of the target given frames up to $\mu$. 
+As new frames are revealed, the target estimation can be updated.
+Note that this definition converges to the ``true'' target estimation: $t_\infty^{(m,l)}[n] = t^{(m,l)}[n]$. 
+
+Essentially, this approach allows for the real-time computation for the target signal.
+
+\subsubsection{Implications for Computing Loudspeaker Inputs}
+Just as the target is comuted as new frames are revealed, the loudspeaker input should also be computed this way.
+\todo{I need to motivate this?}
+Consider the following rewrite of the realized sound pressure $p^{(l)}[n]$:
+\begin{align}
+    p^{(m)}[n] &= \sum_{l=0}^{N_L - 1} \left(h^{(l,m)} \ast x^{(l)}\right)[n] \\
+               &= \sum_{l=0}^{N_L - 1} p^{(l,m)}[n]
+\end{align}
+$p^{(m,l)}[n]$ is the contribution of the $l^\text{th}$ loudspeaker to the realized sound pressure at reproduction point $m$.
+Consider the following:
+\begin{align}
+    p^{(m,l)}[n]   &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] x^{(l)}[b] \\
+                    &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] x^{(l)}[b] 
+                        \sum_{k=-\infty}^{\infty} w[b - kH] \\
+                    &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b]  
+                        \sum_{k=-\infty}^{\infty} x^{(l)}[b] w[b - kH] \\
+                    &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b]  
+                        \sum_{k=-\infty}^{\infty} x_k^{(l)}[b]  
+\end{align}
+Analagous to the derivation for the target sound pressure $t^{(m,l)}[n]$, the loudspeaker input signal is project onto a basis consisting of windows $w[n]$.
+This results in frames $x_k^{(l)}[n]$. 
+Just as with the target sound pressure, let $p_\mu^{(m,l)}[n]$ represent the realised sound pressure using frames up to $k = \mu$: 
+\begin{align}
+    p_\mu^{(m,l)}[n] &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
+                        \sum_{k=-\infty}^{\mu} x_k^{(l)}[b] \\
+                     &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
+                        x_\mu^{(l)}[b] + \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
+                        \sum_{k=-\infty}^{\mu - 1} x_k^{(l)}[b] \\
+                     &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
+                        x_\mu^{(l)}[b] + p_{\mu - 1}^{(m,l)}[n]
+\end{align}
+As such, the realised pressure can be computed recursively just like the target sound pressure.
+Using this data model also allows for the recursive computation of loudspeaker frames $x_\mu^{(l)}[n]$.
+The loudspeaker input signals must be chosen such that sound pressure realized by them must approximate the target sound pressure.
+
+This reveales one possible solution approach: computing the loudspeaker frames $x_\mu^{(l)}[n]$ such that the target sound pressure $t_\mu^{(l)}[n]$ is attained.
+\todo{Expand on this. Why does this approach make sense? There are probably other ways of doing it aswell...}
+
+
