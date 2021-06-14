@@ -10,8 +10,8 @@
 \usepackage[]{nielstex}
 \usepackage[]{nielsformat}
 \usepackage[]{tikz}
-\usepackage[]{pgfplots}
 \usepackage[]{tikz-3dplot}
+
 
 % =Definitions===========================================================================
 % Thesis specific definitions
@@ -35,7 +35,7 @@
 \chairperson{dr.ir. R.C. Hendriks}
 \advisorone{dr. M. Bo M\o ller}
 \advisortwo{dr. P. Martinez Nuevo}
-\memberone{dr. Massimo Mastrangeli}
+\memberone{dr. M. Mastrangeli}
 \membertwo{dr. J. Martinez Castañeda}
 
 % =Abstract==============================================================================
@@ -52,6 +52,7 @@
 \include{abstract}
 \include{ack}
 \tableofcontents
+\todo{I am considering merging some chapters (e.g. merging the literature review and the implementation chapters).}
 \listoffigures
 \listoftables
 \mainmatter
@@ -63,31 +64,57 @@
 \input{introduction/skeleton.tex}
 \end{tcolorbox}
 
-\chapter{Literature Review}
+\chapter{Review of Perceptual Model Literature}
 \begin{tcolorbox}
 \section*{Skeleton of Chapter}
-\input{literature_review/skeleton.tex}
+\input{literature_review_perceptual_models/skeleton.tex}
 \end{tcolorbox}
+\newpage
+\input{sound_zones/introduction.tex}
 
-\chapter{Perceptual Models}
+\chapter{Implementation of Perceptual Model}
 \begin{tcolorbox}
 \section*{Skeleton of Chapter}
 \input{perceptual_models/skeleton.tex}
 \end{tcolorbox}
+\newpage
+\input{perceptual_models/introduction.tex}
 
-\chapter{Perceptual Sound Zones}
+
+\chapter{Review of Sound Zone Algorithms Literature}
+\begin{tcolorbox}
+\section*{Skeleton of Chapter}
+\input{literature_review_sound_zones/skeleton.tex}
+\end{tcolorbox}
+\newpage
+\input{sound_zones/introduction.tex}
+
+\chapter{Implementation of Reference Sound Zone Algorithm}
+\begin{tcolorbox}
+\section*{Skeleton of Chapter}
+\input{sound_zones/skeleton.tex}
+\end{tcolorbox}
+\newpage
+\input{sound_zones/introduction.tex}
+\newpage
+\input{sound_zones/data_model.tex}
+\newpage
+\input{sound_zones/pressure_matching.tex}
+\newpage
+\input{sound_zones/frame_based_framework.tex}
+
+\chapter{Perceptual Sound Zone Algorithm}
 \begin{tcolorbox}
 \section*{Skeleton of Chapter}
 \input{perceptual_sound_zones/skeleton.tex}
 \end{tcolorbox}
 \newpage
-\input{perceptual_sound_zones/data_model.tex}
-\newpage
-\input{perceptual_sound_zones/frame_based_framework.tex}
+\input{perceptual_sound_zones/introduction.tex}
 
 \chapter{Conclusion}
 \begin{tcolorbox}
 \section*{Skeleton of Chapter}
+\newpage
 \input{conclusion/skeleton.tex}
 \end{tcolorbox}
 

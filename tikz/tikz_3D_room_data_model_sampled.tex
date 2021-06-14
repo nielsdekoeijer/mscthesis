@@ -39,6 +39,7 @@
     \node[draw=none,shape=circle, fill=red, inner sep=1.6pt] (d1) at (0.05, 0.05, 0.05) {} ;
     \node[draw=none,shape=circle, fill=red, inner sep=1.6pt] (d1) at (0.05, 1.15, 0.75) {} ;
 
+
     %=Define Zone A, Coordinates, and Draw Plane================================
     % Dimensions 
     \pgfmathsetmacro{\AOx}{0.3};
@@ -57,12 +58,23 @@
     \coordinate (A110) at (\AOx + \AAx, \AOy + \AAy, \AOz       );
     \coordinate (A111) at (\AOx + \AAx, \AOy + \AAy, \AOz + \AAz);
     % Planes
-    \drawplane{dashed, fill=green!70, fill opacity=0.40}{A000}{A100}{A110}{A010}
-    \drawplane{dashed, fill=green!70, fill opacity=0.45}{A000}{A100}{A101}{A001}
-    \drawplane{dashed, fill=green!70, fill opacity=0.20}{A000}{A010}{A011}{A001}
-    \drawplane{fill=green!70, fill opacity=0.2}{A100}{A110}{A111}{A101}
-    \drawplane{fill=green!70, fill opacity=0.2}{A010}{A110}{A111}{A011}
-    \drawplane{fill=green!70, fill opacity=0.2}{A001}{A101}{A111}{A011}
+    \drawplane{draw opacity=0.00, dashed, fill=green!70, fill opacity=0.40}{A000}{A100}{A110}{A010}
+    \drawplane{draw opacity=0.00, dashed, fill=green!70, fill opacity=0.45}{A000}{A100}{A101}{A001}
+    \drawplane{draw opacity=0.00, dashed, fill=green!70, fill opacity=0.20}{A000}{A010}{A011}{A001}
+    \pgfmathsetmacro{\AAxi}{\AAx + 0.1};
+    \pgfmathsetmacro{\AAyi}{\AAy + 0.1};
+    \pgfmathsetmacro{\AAzi}{\AAz + 0.1};
+    \foreach \dx in {0.0, 0.2, ..., \AAxi}{
+        \foreach \dy in {0.0, 0.1, ..., \AAyi}{
+            \foreach \dz in {0.0, 0.1, ..., \AAzi}{
+                \node[draw=none,shape=circle, fill=black, inner sep=0.8pt] (d1) at (\AOx + \dx, \AOy + \dy, \AOz + \dz) {} ;
+            }
+        }
+    }
+
+    \drawplane{draw opacity=0.00, fill=green!70, fill opacity=0.2}{A100}{A110}{A111}{A101}
+    \drawplane{draw opacity=0.00, fill=green!70, fill opacity=0.2}{A010}{A110}{A111}{A011}
+    \drawplane{draw opacity=0.00, fill=green!70, fill opacity=0.2}{A001}{A101}{A111}{A011}
 
     %=Define Zone B, Coordinates, and Draw Plane================================
     % Dimensions 
@@ -82,12 +94,22 @@
     \coordinate (B110) at (\BOx + \BBx, \BOy + \BBy, \BOz       );
     \coordinate (B111) at (\BOx + \BBx, \BOy + \BBy, \BOz + \BBz);
     % Planes
-    \drawplane{dashed, fill=blue!70, fill opacity=0.40}{B000}{B100}{B110}{B010}
-    \drawplane{dashed, fill=blue!70, fill opacity=0.45}{B000}{B100}{B101}{B001}
-    \drawplane{dashed, fill=blue!70, fill opacity=0.20}{B000}{B010}{B011}{B001}
-    \drawplane{fill=blue!70, fill opacity=0.2}{B100}{B110}{B111}{B101}
-    \drawplane{fill=blue!70, fill opacity=0.2}{B010}{B110}{B111}{B011}
-    \drawplane{fill=blue!70, fill opacity=0.2}{B001}{B101}{B111}{B011}
+    \drawplane{draw opacity=0.00, dashed, fill=blue!70, fill opacity=0.40}{B000}{B100}{B110}{B010}
+    \drawplane{draw opacity=0.00, dashed, fill=blue!70, fill opacity=0.45}{B000}{B100}{B101}{B001}
+    \drawplane{draw opacity=0.00, dashed, fill=blue!70, fill opacity=0.20}{B000}{B010}{B011}{B001}
+    \pgfmathsetmacro{\BBxi}{\BBx + 0.1};
+    \pgfmathsetmacro{\BByi}{\BBy + 0.1};
+    \pgfmathsetmacro{\BBzi}{\BBz + 0.1};
+    \foreach \dx in {0.0, 0.2, ..., \BBxi}{
+        \foreach \dy in {0.0, 0.1, ..., \BByi}{
+            \foreach \dz in {0.0, 0.1, ..., \BBzi}{
+                \node[draw=none,shape=circle, fill=black, inner sep=0.8pt] (d1) at (\BOx + \dx, \BOy + \dy, \BOz + \dz) {} ;
+            }
+        }
+    }
+    \drawplane{draw opacity=0.00, fill=blue!70, fill opacity=0.2}{B100}{B110}{B111}{B101}
+    \drawplane{draw opacity=0.00, fill=blue!70, fill opacity=0.2}{B010}{B110}{B111}{B011}
+    \drawplane{draw opacity=0.00, fill=blue!70, fill opacity=0.2}{B001}{B101}{B111}{B011}
 
     
 
@@ -103,4 +125,3 @@
 
 
 \end{tikzpicture}
-   
