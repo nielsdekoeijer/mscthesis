@@ -1,10 +1,121 @@
-An introduction to the work and the problem it seeks to solve.
+I envision the outline of my thesis as follows:
 \begin{itemize}
-    \item An introduction to sound zones as a concept.
-    \item Where sound zones come short, motivation to use perceptual models.
-    \item Statement of the goal of the project:
+    \item \textbf{Introduction:}
         \begin{itemize}
-            \item Creating a perceptual multi-zone algorithm
+            \item Introduction to sound zones:
+                \begin{itemize}
+                    \item Explain sound zones, and why we want them.
+                    \item Explain where the state of the art comes short.
+               \end{itemize}
+            \item Introduction to perceptual approach.
+                \begin{itemize}
+                    \item Motivate the perceptual approach.
+                        \begin{itemize}
+                            \item Optimizes for perceptual experience, rather than sound pressure
+                        \end{itemize}
+                    \item Briefly discuss prior work in this approach.
+                        \begin{itemize}
+                            \item Work done by Taewoong Lee 
+                                \cite{lee2020signal}\cite{lee2019towards}.
+                            \item Work done by Jacob Donley
+                                \cite{donley2015multizone}\cite{donley2018multizone}
+                        \end{itemize}
+                    \item Introduce goal of thesis:
+                \end{itemize}
+            \item Give structure of the document
         \end{itemize}
-    \item A description of what the rest of the document will contain.
- \end{itemize}
+    \item \textbf{Review of Sound Zones}
+        \begin{itemize}
+            \item Formal introduction to the sound zone problem.
+                \begin{itemize}
+                    \item Introduction of room model:
+                        \begin{itemize}
+                            \item Room
+                            \item Zones
+                            \item Loudspeakers
+                        \end{itemize}
+                    \item Goal of sound zone algorithm:
+                        \begin{itemize}
+                            \item Attaining Target Sound Pressure
+                        \end{itemize}
+                    \item Way of attaining goal:
+                        \begin{itemize}
+                            \item Controlling loudspeaker inputs
+                            \item Relation sound pressure and loudspeaker inputs
+                        \end{itemize}
+                \end{itemize}
+            \item Short review of prior work, typical approaches.
+                \begin{itemize}
+                    \item Pressure Matching
+                    \item Acoustic Contrast Control
+                    \item Mode Matching
+                \end{itemize}
+        \end{itemize}
+    \item \textbf{Literature Review of Perceptual Models for use in Sound Zones}
+        \begin{itemize}
+            \item Criteria for perceptual models for sound zones
+                \begin{itemize}
+                    \item Easy to optimize for
+                    \item Feasible to compute in real time
+                \end{itemize}
+            \item Masking Models
+                \begin{itemize}
+                    \item Par Distraction Models
+                    \item Taal Distraction Models
+                    \item MPEG Model I and II
+                    \item Dau Model
+                \end{itemize}
+            \item Objective Measures
+                \begin{itemize}
+                    \item Distraction Model
+                    \item Speech Metrics
+                        \begin{itemize}
+                            \item STOI
+                            \item SIIB
+                            \item PESQ
+                        \end{itemize}
+                    \item Audio Metrics
+                        \begin{itemize}
+                            \item ViSQOL
+                            \item PEAQ
+                        \end{itemize}
+                \end{itemize}
+            \item Selection of perceptual model
+                \begin{itemize}
+                    \item Par Distraction selected.
+                        \begin{itemize}
+                            \item Convex, easy to optimize for.
+                            \item Feasible to compute in real time.
+                        \end{itemize}
+                    \item Note that other models can be used for evaluation.
+                \end{itemize}
+        \end{itemize}
+    \item \textbf{Analysis of Detectability for Sound Zone Algorithms}
+        \begin{itemize}
+            \item Detailed discussion of Detectability
+                \begin{itemize}
+                    \item Psycho-acoustical background
+                    \item Implementation details
+                        \begin{itemize}
+                            \item Constructing frequency domain weights
+                            \item Calibration of the model
+                        \end{itemize}
+                \end{itemize}
+            \item Discussion of which Sound Zone Approach best suited for Detectability 
+                \begin{itemize}
+                    \item Review of discussed sound zone algorithms with respect to Detectability
+                        \begin{itemize}
+                            \item Mode Matching, Pressure Matching in a different domain.
+                            \item Acoustic Contrast Control, no content control.
+                            \item Pressure Matching, Detectability is an alternative to squared error.
+                        \end{itemize}
+                    \item Conclusion that Pressure Matching is the best
+                \end{itemize}
+        \end{itemize}
+    \item \textbf{Implementation of Detectability Minimization Algorithms}
+        \begin{itemize}
+            \item Derivation of the Reference Pressure Matching Approach
+            \item Derivation of the Detectability Minimization Approach
+            \item Derivation of the Detectability Constraining Approach
+        \end{itemize}
+\end{itemize}

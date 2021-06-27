@@ -1,0 +1,36 @@
+\section{Frequency Domain Block Based Multi-Zone Pressure Matching}
+In the previous section, the Block-Based Multi-Zone Pressure-Matching (BB-MZ-PM) algorithm was derived.
+When deriving this algorithm it was stated that it's advantages are twofold:
+Firstly, one advantage of using this algorithm over its non block-based counterpart is that it can work in real-time.
+
+Secondly, the block-based approach works on a variable time-scale determine by the block size $H$.
+As a result, it can operate on short time-scales.
+This is useful, as the perceptual model that we wish to integrate operates on short time-scales of the order of 20 to 200 milliseconds.
+As such, the block based approach had a dual purpose.
+
+However, there is an additional adjustment that needs to be made before the perceptual model can be integrated. 
+Currently, the BB-MZ-PM algorithm operates in the time domain, whereas the perceptual model operates in the frequency domain.
+
+For this reason, this section will convert the existing time domain BB-MZ-PM algorithm to an equivalent frequency domain formulation.
+By equivalent it is meant that the algorithms give the same resulting loudspeaker input signals $x_\zz^{(l)}$.
+
+In order to relate the frequency domain and the time domain, a natural choice is are discrete fourier transform (DFT) and inverse discrete fourier transform (IDFT).
+
+\todo{Something about zero padding}
+
+
+\subsection{Proposed Frequency Domain Approach}
+\todo{Add zero padding... Kinda tricky but can be done elegantly.}
+\begin{align}
+    \argmin{x_{\za,\mu}^{(l)}[n],\,x_{\zb,\mu}^{(l)}[n]\,\forall\,l}{
+       &\sum_{m\in A} \norm[2][2]{\hat{p}_{\za,\mu}^{(m)}[\omega] - \hat{t}_\mu^{(m)}[\omega]} +
+        \sum_{m\in A} \norm[2][2]{\hat{p}_{\zb,\mu}^{(m)}[\omega]} + \\
+       &\sum_{m\in B} \norm[2][2]{\hat{p}_{\zb,\mu}^{(m)}[\omega] - \hat{t}_\mu^{(m)}[\omega]} + 
+        \sum_{m\in B} \norm[2][2]{\hat{p}_{\za,\mu}^{(m)}[\omega]}
+    }\\
+    \subjectto{
+       &\hat{p}_{\za,\mu}^{(m)}[\omega] = \sum_{l=0}^{N_L-1}\hat{h}^{(l,m)}[\omega]
+    }
+\end{align}
+
+

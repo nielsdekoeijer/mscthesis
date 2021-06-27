@@ -17,6 +17,7 @@
 % Thesis specific definitions
 \newcommand{\za}{\mathcal{A}}
 \newcommand{\zb}{\mathcal{B}}
+\newcommand{\zz}{\mathcal{Z}}
 
 % =Document Attributes===================================================================
 \msctitle{Sound Zones with a Cost Function based on Human Hearing}
@@ -39,7 +40,9 @@
 \membertwo{dr. J. Martinez Castañeda}
 
 % =Abstract==============================================================================
-\def\ABSTRACT{Something about soundzones, something about perceptual models, something about perceptual sound zones.}
+\def\ABSTRACT{Something about soundzones, something about perceptual models, something about perceptual sound zones.
+MIM: 1) At which point do you introduce the Data model? 2) It's OK to push things to the future work.
+PMN: 1) What is the story? In two sentances. Elevator Pitch. Helps you prioritize. 2) What is it that I'm doing differently. 3) Problems with Tae-Woongs work}
 
 % =Document==============================================================================
 \begin{document}
@@ -59,12 +62,12 @@
 
 % =Content===============================================================================
 \chapter{Introduction}
-\begin{tcolorbox}
-\section*{Skeleton of Chapter}
+\label{sec:introduction}
+\section*{Thesis Outline}
 \input{introduction/skeleton.tex}
-\end{tcolorbox}
 
 \chapter{Review of Perceptual Model Literature}
+\label{sec:literature_review_perceptual_models}
 \begin{tcolorbox}
 \section*{Skeleton of Chapter}
 \input{literature_review_perceptual_models/skeleton.tex}
@@ -73,6 +76,7 @@
 \input{sound_zones/introduction.tex}
 
 \chapter{Implementation of Perceptual Model}
+\label{sec:perceptual_models}
 \begin{tcolorbox}
 \section*{Skeleton of Chapter}
 \input{perceptual_models/skeleton.tex}
@@ -80,8 +84,8 @@
 \newpage
 \input{perceptual_models/introduction.tex}
 
-
 \chapter{Review of Sound Zone Algorithms Literature}
+\label{sec:literature_review_sound_zones}
 \begin{tcolorbox}
 \section*{Skeleton of Chapter}
 \input{literature_review_sound_zones/skeleton.tex}
@@ -90,6 +94,7 @@
 \input{sound_zones/introduction.tex}
 
 \chapter{Implementation of Reference Sound Zone Algorithm}
+\label{sec:sound_zones}
 \begin{tcolorbox}
 \section*{Skeleton of Chapter}
 \input{sound_zones/skeleton.tex}
@@ -102,8 +107,11 @@
 \input{sound_zones/pressure_matching.tex}
 \newpage
 \input{sound_zones/frame_based_framework.tex}
+\newpage
+\input{sound_zones/frequency_domain_approach.tex}
 
 \chapter{Perceptual Sound Zone Algorithm}
+\label{sec:perceptual_sound_zones}
 \begin{tcolorbox}
 \section*{Skeleton of Chapter}
 \input{perceptual_sound_zones/skeleton.tex}
@@ -119,7 +127,7 @@
 \end{tcolorbox}
 
 \chapter{Bibliography}
-\bibliography{bib}
+\bibliography{bibliography}
 \bibliographystyle{ieeetr}
 
 % =Appendix==============================================================================

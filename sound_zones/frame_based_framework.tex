@@ -1,119 +1,154 @@
-\section{Frame-Based Processing Framework}
+\section{Block-Based Multi-Zone Pressure-Matching}
 In the preceding section it is assumed that the desired playback signals $s_\za[n]$ and $s_\zb[n]$ were known in their entirety.
 In practice however, this is not a valid assumption as a user can change the desired playback content in real-time.
-In this section, the Multi-Zone Pressure Matching approach introduced in \autoref{sec:data_model:pressure_matching} will be adjusted 
-in order to accommodate the real-time processing constraint.
-\todo{This really needs better motivation...?}
+This is the case for example when a user changes the song they are playing on their system.
 
-As mentioned, it cannot be assumed that the desired playback signals $s_\za[n]$ and $s_\zb[n]$ are known for all $n$ 
-if the system is to accommodate real-time playback.  
-Instead, at time $m$ it is assumed that $s_\za[n]$ and $s_\zb[n]$ are only known from $\infty \leq n \leq m$, 
-i.e. the most recent and all previous input samples.
+In reality, the sound zone system can only have knowledge the most recent samples and all previous samples.
+In order to deal with this limitation, one option is to buffer a large number of incoming samples and apply the existing MZ-PM approach.
+However, this would introduce significant latency to the system.
 
-The loudspeaker input signals $x^{(l)}[n]$ must thus be found in real-time.
-In order to do so, a block-processing based approach is taken where $x^{(l)}[n]$ is computed in blocks of hop size $H$. 
-When $H$ new samples of $s_\za[n]$ and $s_\zb[n]$ are revealed to the system, $H$ new samples of $x^{(l)}[n]$ can be computed.
-As such, this approach will introduce a delay of at least $H$, as $H$ new samples of the desired playback signals are required before computation can begin.
-\todo{This really needs better motivation...?}
+Instead, a block-based approach can be used where the incoming samples of the desired playback signals are used in real-time as they become available.
+The system buffers a block of $H$ incoming samples samples, and then solves the sound zone problem for the newest block.
+This results in a latency of at least $H$, which could be acceptable assuming $H$ is chosen sufficiently small. 
 
-The processing occurs in steps of $H$ samples.
-Let $\mu = \lfloor n / H \rfloor$ index is the current step at a time $n$.
-Thus at a time $n$, up to and including the $\mu^\text{th}$ block of desired playback signals is known.
+In addition to the benefit of block-based processing, the block-based approach is also practical for the integration of the perceptual model.
+The perceptual model is designed to operate on short time segments in the order of 20 to 200 milliseconds.
+Block-based processing would allow the algorithm to operate on segments of this time scale.
 
-Adapting the previously derived data model to the chosen block-based approach will be the topic of this section.
+For these reasons, this section will adapt existing Multi-Zone Pressure Matching approach introduced in \autoref{sec:data_model:pressure_matching} 
+to accommodate for block based processing.
 
-\subsection{Implications for Computing Target Pressure}
-As the playback signals are revealed in blocks of size $H$, it makes sense to update the target sound pressure $t^{(m)}[n]$ in blocks of $H$.  
-Consider the following rewrite of the target signal for the desired sound pressure of zone $\za$:
+\subsection{Mathematical Block Model}
+For the block-processing based sound zone approach, the incoming samples of the desired playback signals for both zones $s_\za[m]$ and $s_\zb[m]$ are buffered into blocks.
+As such, the sound zone system only has knowledge of the most recent block $\mu$ .
+The relation between the global time index $n$ and block index $\mu$ is given as follows:  
+\begin{equation}
+      \mu = \lfloor n / H \rfloor
+\end{equation}
+Thus at a time $n$, up to and including the $\mu^\text{th}$ blocks of desired playback signals $s_\za[m]$ and $s_\zb[m]$ are known.
+
+As the desired playback signals $s_\za[m]$ and $s_\zb[m]$ are revealed in a block-wise fashion, the sound zone system cannot compute the entirety of 
+loudspeaker input signals $x^{(l)}_{\za}[n]$ and $x^{(l)}_{\zb}[n]$.
+Instead, one approach is to compute the loudspeaker input signals in the same block-wise fashion, by finding the $H$ newest samples of the loudspeaker input signals 
+as the $H$ newest samples of desired playback signals $s_\za[m]$ and $s_\zb[m]$ are revealed to the system.
+
+\subsection{Block Based Multi-Zone Pressure-Matching}
+As discussed previously, the Multi-Zone Pressure-Matching (MZ-PM) algorithm attempts to control the loudspeaker input signals 
+$x^{(l)}_\za[n]$ and $x^{(l)}_\zb[n]$ such that a specified target sound pressure $t^{(m)}[n]$ is attained at all control points $m$.
+Here, target sound pressure $t^{(m)}[n]$ is determined by the sound pressure that arises due to the 
+desired playback signals $s_\za[n]$ and $s_\zb[n]$.
+
+The introduction of the block-based approach limits the knowledge of $s_\za[n]$ and $s_\zb[n]$ up to and including the most recent block $\mu$.
+As such, the desired playback signals are only known up for $0 \leq n \leq \mu H$, assuming causal desired playback signals.
+
+This limitation has implications for the computation of the loudspeaker input signals and the target sound pressure.
+Neither quantities can be computed in their entirety due to the limitation in knowledge of the desired playback signals.
+Because the desired playback signals are revealed to the system in blocks of size $H$, the system will instead compute the loudspeaker input signals and target sound pressure
+at the same rate.
+
+As such, after a new block of desired playback signals is revealed, 
+a new block of loudspeaker input signals will be computed to attain such that a new block of target sound pressure is best attained.
+Adapting the existing MZ-PM algorithm to operate on a block-by-block basis is the topic of this section.
+
+\subsubsection*{Defining Block-Based Loudspeaker Input Signals}
+First, consider the implications of the block based processing on the loudspeaker input signals.
+The goal is to compute $x^{(l)}_{\zz}[n]$ in a blocks of size $H$.
+To do so, consider the segmentation of the sound pressure that is realized due to loudspeaker input signal $x^{(l)}_{\zz}[n]$:
 \begin{align}
-    t^{(m)}[n] &= \sum_{l=0}^{N_L - 1} \left(h^{(l,m)} \ast s_\za\right)[n] \\
-               &= \sum_{l=0}^{N_L - 1} t^{(l,m)}[n]
+    p_\zz^{(m)}[n] &= \sum_{l=0}^{N_L - 1} \left(h^{(l,m)} \ast x^{(l)}_\zz\right)[n] \\
+               &= \sum_{l=0}^{N_L - 1} \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] x^{(l)}_\zz[b] \\
+               &= \sum_{l=0}^{N_L - 1} \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] x^{(l)}_\zz[b] \sum_{k=-\infty}^{\infty} w[b - kH]\\
+               &= \sum_{l=0}^{N_L - 1} \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] \sum_{k=-\infty}^{\infty} x^{(l)}_\zz[b] w[b - kH]\\
 \end{align}
-Here, $t^{(m,l)}[n]$ is the contribution of the $l^\text{th}$ loudspeaker to the target sound pressure at reproduction point $m$.
-Now, consider the following rewrite:
+Here, $w[n]\in\Real{N_w}$ is a window that is defined to be non-zero for $-N_w + 1 \leq n \leq 0$, as such it is non-causal.
+It is chosen such that satisfies the constant overlap add (COLA) condition for a hop size $H$ , which is given as follows:
+\begin{equation}
+    \sum_{k=-\infty}^{\infty} w[n - kH] = 1\quad\forall\,n
+\end{equation}
+The interpretation of the rewrite of $p_\zz^{(m)}[n]$ above can be understood as a projection of the loudspeaker input signals $x^{(l)}_\zz[n]$ onto a basis overlapping windows $w[n]$.
+The hop-size is chosen to be equal to the block size $H$, as such the overlap is equal to $N_w - H$. 
+This forms individual frames $x^{(l)}_{\zz}[n]w[n - \mu H]$, which have support $-N_w + 1 + \mu H \leq n \leq \mu H$.
+Due to the properties of the COLA condition, the individual frames can be recombined to form the complete loudspeaker input signal:
+\begin{equation}
+    x^{(l)}_\zz[n] = \sum_{k=-\infty}^{\infty} x^{(l)}_\zz[n] w[n - kH]
+\end{equation}
+This model can be used order to compute the complete loudspeaker input signal $x^{(l)}_\zz[n]$ block-by-block by solving the sound zone problem per frame $x^{(l)}_\zz[n] w[n - kH]$.
+When the $\mu^\text{th}$ block of $s_\zz[n]$ is revealed, this allows for an update to target sound pressure (how this is done is discussed later).
+The idea is then to compute the $x^{(l)}_\zz[n] w[n - \mu H]$ frame of $x^{(l)}_\zz[n]$ such that said target pressure is best attained.
+
+In order to do so, let $x^{(l)}_{\zz,\mu}[n]\in\Real{N_w}$ represent the content of the $\mu^\text{th}$ frame.  
+
+When block $\mu$ of $s_\zz[n]$ is revealed, $x^{(l)}_{\zz,\mu}[n]$ can be computed such that the target pressure defined by the new desired playback content is best attained.
+The $\mu^\text{th}$ frame can then be added in an overlap-add like fashion to compute the loudspeaker input signal in real-time.
+
+Before deriving how the loudspeaker input signal frame content $x^{(l)}_{\zz,\mu}[n]$ can be computed 
+the block-wise computation the target sound pressure must be discussed.
+This is the topic of the next paragraph.
+
+\subsection{Block-Based Target Pressure Computation}
+As mentioned, the playback signals $s_\za[n]$ and $s_\zb[n]$ are revealed in blocks of size $H$ in the block based framework.
+As such, for block $\mu$, the knowledge of the desired playback signals is limited, which results in a limited knowledge in the target sound pressure $t^{(m)}[n]$.
+
+The target sound pressure can be segmented in a way analogous to the segmentation of the loudspeaker input signals:
 \begin{align}
-     t^{(m,l)}[n]   &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] s_\za[b] \\
-                    &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] s_\za[b] 
-                        \sum_{k=-\infty}^{\infty} w[b - kH] \\
-                    &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b]  
-                        \sum_{k=-\infty}^{\infty} s_\za[b] w[b - kH] \\
-                    &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b]  
-                        \sum_{k=-\infty}^{\infty} s_{\za,k}[b]  
+    t^{(m)}[n] &= \sum_{l=0}^{N_L - 1} \left(h^{(l,m)} \ast s_\zz\right)[n] \\
+               &= \sum_{l=0}^{N_L - 1} \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] s_\zz[b] \\
+               &= \sum_{l=0}^{N_L - 1} \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] s_\zz[b] \sum_{k=-\infty}^{\infty} w[b - kH] \\
+               &= \sum_{l=0}^{N_L - 1} \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] \sum_{\mu =-\infty}^{\infty} s_\zz[b] w[b - \mu H] \\
 \end{align}
-Here, $w[n]\in\Real{N_w}$ is a window that satisfies the COLA condition for a hop size $H$.
-The window is defined to be non-zero for $-N_w + 1 \leq n \leq 0$, as such it is non-causal.
-Furthermore, the windows are overlapping, thus $N_w > H$. 
+In the rewrite above, the desired playback signal $s_\zz[n]$ is projected onto a basis spanned by windows $w[n]$ of size $N_w$. 
+The equation above essentially sums the contributions individual contributions of windowed blocks.
+Note also that the windowed blocks need not be overlapping in general, i.e. one possible choice of window is the rectangular window $H$ with $N_w = H$.
 
-In the rewrite above, the desired playback signal $s_\za[n]$ is projected onto a basis of overlapping frames of size $N_w$.
-The projection results in a sum of frames $s_{\za, k}[n]$. 
-The support of $s_{\za, k}[n]$ is defined by the shifted window that is used to synthesize it, i.e. it is non-zero for $-N_w + 1 + kH \leq n \leq kH$.
-As the COLA condition is met for the chosen window, the sum over all frames reconstructs $s_\za[n]$ perfectly.
-
-At a time $n = \mu H$, the frames up to $k = \mu$ can be computed.
-Let $t_\mu^{(m,l)}[n]$ represent the target using frames up to $k = \mu$:  
+This allows for a formulation of $t_\mu^{(m)}[n]$ in which we only consider the contribution up to and including the $\mu^\text{th}$ windowed block.  
+Such a formulation is given as follows:
 \begin{align}
-    t_\mu^{(m,l)}[n] &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
-                        \sum_{k=-\infty}^{\mu} s_{\za,k}[b] \\
-                     &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
-                        s_{\za,\mu}[b] + \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
-                        \sum_{k=-\infty}^{\mu - 1} s_{\za, k}[b] \\
-                     &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
-                        s_{\za, \mu}[b] + t_{\mu - 1}^{(m,l)}[n]
+    t_\mu^{(m)}[n] &= \sum_{l=0}^{N_L - 1} \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] \sum_{k=-\infty}^{\mu} s_{\zz}[b] w[b - \mu H]\\
+                   &= \sum_{l=0}^{N_L - 1} \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] s_{\zz}[b]\left(w[b - \mu H] + \sum_{k=-\infty}^{\mu - 1} w[b - \mu H] \right)\\
+                   &= \sum_{l=0}^{N_L - 1} \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] s_{\zz}[b] w[b - \mu H] + t_{\mu - 1}^{(m,l)}[n]
 \end{align}
-As can be seen, $t_\mu^{(m,l)}[n]$ can expressed as the contribution of the current frames and the contribution of all previous frames.
-In addition, note how the computation can be performed recursively.
-To compute $t_\mu^{(m,l)}[n]$, we compute the convolution of the current frame $s_{\za, \mu}[n]$ with the RIRs, 
-and then add the history of previous frames.
+As can be seen, $t_\mu^{(m)}[n]$ is expressed as the contribution of the current windowed blocks $\mu$ and the contribution of all previous blocks $-\infty \leq k \leq \mu - 1$.
+The computation can be performed recursively:
+to compute $t_\mu^{(m)}[n]$, we compute the convolution of the current windowed block $s_{\zz,\mu}[n]w[n - \mu H]$ with the RIRs, 
+and then add the history of previous blocks.
 
-Thus, $t_\mu^{(m,l)}[n]$ can be considered an estimation of the target given frames up to $\mu$. 
-As new frames are revealed, the target estimation can be updated.
-Note that this definition converges to the ``true'' target estimation: $t_\infty^{(m,l)}[n] = t^{(m,l)}[n]$. 
+Thus, $t_\mu^{(m)}[n]$ can be understood to be the target pressure given blocks up to $\mu$. 
+As new blocks are revealed, the target target sound pressure can be updated.
+Note that this definition converges to the ``true'' target sound pressure:
+\begin{equation}
+    t_\infty^{(m)}[n] = t^{(m)}[n]  
+\end{equation}
+One interpretation of was done so far is that the target sound pressure can be performed by
+breaking the convolution of the desired playback signal $s_{\zz}[n]$ with the room impulse responses $h^{(l,m)}[n]$
+into a sum of convolutions of windowed blocks of the desired playback signal.
+In doing so, the target sound pressure can be computed in real-time as new samples of $s_{\zz}[n]$ come available.
 
-Essentially, this approach allows for the real-time computation for the target signal.
+The target sound pressure $t_\mu^{(m)}[n]$ will be used in the computation of $x^{(l)}_{\zz,\mu}[n]$.
+The idea here is to choose $x^{(l)}_{\zz,\mu}[n]$ such that the resulting sound pressure best matches $t_\mu^{(m)}[n]$.
 
-\subsection{Implications for Computing Loudspeaker Inputs}
-Just as the target is comuted as new frames are revealed, the loudspeaker input should also be computed this way.
-\todo{I need to motivate this?}
-Consider the following rewrite of the realized sound pressure $p^{(l)}[n]$:
+As $t_\mu^{(m)}[n]$ is shown to converge to the true sound pressure, the sum of the all contributions of $x^{(l)}_{\zz,\mu}[n]$ is thus chosen to best attain it. 
+How this is done exactly is discussed in the next section.
+
+\subsubsection*{Derivation of Block-Based Multi-Zone Pressure-Matching}
+After translating the loudspeaker input signals and the target sound pressure into their block-wise counterparts, 
+the Block-Based Multi-Zone Pressure-Matching (BB-MZ-PM) algorithm can be stated.
+
+To begin, let the sound pressure realized after playing the first $\mu$ loudspeaker input signal frames $x^{(l)}_{\zz,\mu}[n]$ be denoted by $p_{\zz,\mu}^{(m)}[n]$,
+which can be expressed as follows:
 \begin{align}
-    p^{(m)}[n] &= \sum_{l=0}^{N_L - 1} \left(h^{(l,m)} \ast x^{(l)}\right)[n] \\
-               &= \sum_{l=0}^{N_L - 1} p^{(l,m)}[n]
+    p_{\zz,\mu}^{(m)}[n] &= \sum_{l=0}^{N_L - 1} \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] \sum_{k=-\infty}^{\mu} x^{(l)}_{\zz,k}[b] w[b - kH] \\
+                   % &= \sum_{l=0}^{N_L - 1} \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] \left(x^{(l)}_{\zz,\mu}[b]w[b - \mu H] 
+                        % + \sum_{k=-\infty}^{\mu - 1}x^{(l)}_{\zz,k}[b]w[b - kH] \right)\\
+                   &= \sum_{l=0}^{N_L - 1} \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b]  x^{(l)}_{\zz,\mu}[b]w[b - \mu H] + p_{\zz,\mu-1}^{(m)}[n]
 \end{align}
-$p^{(m,l)}[n]$ is the contribution of the $l^\text{th}$ loudspeaker to the realized sound pressure at reproduction point $m$.
-Consider the following:
-\begin{align}
-    p^{(m,l)}[n]   &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] x^{(l)}[b] \\
-                    &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] x^{(l)}[b] 
-                        \sum_{k=-\infty}^{\infty} w[b - kH] \\
-                    &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b]  
-                        \sum_{k=-\infty}^{\infty} x^{(l)}[b] w[b - kH] \\
-                    &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b]  
-                        \sum_{k=-\infty}^{\infty} x_k^{(l)}[b]  
-\end{align}
-Analogous to the derivation for the target sound pressure $t^{(m,l)}[n]$, the loudspeaker input signal is project onto a basis consisting of windows $w[n]$.
-This results in frames $x_k^{(l)}[n]$. 
-Just as with the target sound pressure, let $p_\mu^{(m,l)}[n]$ represent the realized sound pressure using frames up to $k = \mu$: 
-\begin{align}
-    p_\mu^{(m,l)}[n] &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
-                        \sum_{k=-\infty}^{\mu} x_k^{(l)}[b] \\
-                     &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
-                        x_\mu^{(l)}[b] + \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
-                        \sum_{k=-\infty}^{\mu - 1} x_k^{(l)}[b] \\
-                     &= \sum_{b = n - N_h + 1}^{n} h^{(l,m)}[n - b] 
-                        x_\mu^{(l)}[b] + p_{\mu - 1}^{(m,l)}[n]
-\end{align}
-As such, the realized pressure can be computed recursively just like the target sound pressure.
-Using this data model also allows for the recursive computation of loudspeaker frames $x_\mu^{(l)}[n]$.
-The loudspeaker input signals must be chosen such that sound pressure realized by them must approximate the target sound pressure.
+Note that $p_{\zz,\mu}^{(m)}[n]$ can be computed recursively just as was the case with the target sound pressure.
+The sound pressure at a given moment is equal to the sound pressure due to the most recent loudspeaker input signal frame $k = \mu$ and the previous loudspeaker input frames $-\infty \leq k \leq \mu - 1$.
 
-This reveals one possible solution approach: computing the loudspeaker frames $x_\mu^{(l)}[n]$ such that the target sound pressure $t_\mu^{(l)}[n]$ is attained.
-\todo{Expand on this. Why does this approach make sense? There are probably other ways of doing it aswell...}
+The solution approach: computing the loudspeaker input signal frames $x_\mu^{(l)}[n]$ such that the resulting sound pressure $p_{\zz,\mu}^{(m)}[n]$ best attains $t_\mu^{(l)}[n]$.
+As such, the optimization is over one frame at a time, all frames $k \leq \mu - 1$ are assumed constant. 
+Note however that $x_\mu^{(l)}[n]$ can only influence samples $\mu H - N_w + 1$ due to its finite support.
 
-\subsection{Implications for the Multi-Zone Pressure Matching Algorithm}
-\todo{Expand...}
-In the previous sections, frame-based approaches for the target sound pressure and the realized sound pressure were derived.
-This allows us to rewrite the problem as follows:
-
+The final optimization problem can be thus stated as follows:
 \begin{align}
     \argmin{x_{\za,\mu}^{(l)}[n],\,x_{\zb,\mu}^{(l)}[n]\,\forall\,l}{
        &\sum_{m\in A} \norm[2][2]{p_{\za,\mu}^{(m)}[n] - t_\mu^{(m)}[n]} +
@@ -123,9 +158,10 @@ This allows us to rewrite the problem as follows:
     }
 \end{align}
 
-The problem above is solved recursively for each frame $\mu$. 
-The loudspeaker input signals $x_\mu^{(l)}$ can then be recombined as follows:
-
+The problem above is solved recursively for loudspeaker input signal frames $x_{\za,\mu}^{(l)}[n]$ and $x_{\zb,\mu}^{(l)}[n]$ as new samples $s_\za[n]$ and $s_\zb[n]$ are revealed.
+The final loudspeaker input signals can then be found in real-time as follows: 
 \begin{equation}
-    x^{(l)} = \sum_{k=-\infty}^{\infty} x_k^{(l)}
+    x^{(l)}_\zz[n] = \sum_{k=-\infty}^{\mu} x^{(l)}_{\zz,\mu}[n] w[n - kH]\quad \forall\,n \leq \mu H - N_w + H
 \end{equation}
+The expression above is only valid up to $n \leq \mu H - N_w + H$ due to missing overlapping frames.
+The resulting $x^{(l)}_\zz[n]$ can then be played in real-time as the loudspeaker input signal frames $x^{(l)}_{\zz,\mu}[n]$ are being computed.

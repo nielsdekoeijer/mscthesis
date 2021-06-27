@@ -1,38 +1,35 @@
 \section{Data Model}
-\label{sec:data_model}
-\todo{CITATION NEEDED, I have not cited anything. Probably should?}
-In this section the base data model will be introduced.
-This data model will be later used in the derivation of the sound zone algorithms.
+\label{sec:sound_zones:data_model}
+In this section a mathematical framework for a room containing sound zones will be introduced.
+This framework will be used in the derivation of the sound zone algorithms.
+The contents of this section are as follows.
 
-First, in \autoref{sec:data_model:room_model} a spatial description of a room, the zones and loudspeakers contained within will be given.
-In addition to this, a signal model will then be given for the target sound pressure and loudspeaker input signals.
-The derived mathematical framework will then allow for posing sound zone problem more formally. 
+First, \autoref{sec:sound_zones:data_model:room_model} introduces a spatial description of a room containing two zones and a loudspeaker array.
+Then, \autoref{sec:sound_zones:data_model:target_pressure} defines the objective of the sound zone algorithm as realizing target sound pressure at discrete points in the room.
+This is followed by \autoref{sec:sound_zones:data_model:realizing_pressure}, which discusses how the loudspeaker array can be used to realize the target sound pressure.
 
-Next, \autoref{sec:data_model:target_pressure_choice} will then define the desired target sound pressure introduced previously, and motivate this choice. 
+The relation between the sound pressure in the room and loudspeaker input signals will then be given in \autoref{sec:sound_zones:data_model:realizing_pressure}, completing the mathematical framework.
+This is then used in \autoref{sec:sound_zones:data_model:target_pressure_choice} to select a suitable target sound pressure which will be used in the remainder of this thesis.
 
-Finally, \autoref{sec:data_model:pressure_matching} will introduce the Multi-Zone Pressure Matching sound zone algorithm. 
-This algorithm solves the sound zone problem, and forms the basis for the perceptual sound zone algorithms introduced later.
-It will also serve as the reference to which the perceptual models will be compared.
-
-\subsection{Room Model and Sound Zone Problem Statement}
-\label{sec:data_model:room_model}
-\todo{I am not great at topology, so I would love some tips on how to write this down in a better way...}
+\subsection{Room Topology}
+\label{sec:sound_zones:data_model:room_model}
 In this section, a description of the room in which sound zones are to be reproduced will be given.
-In general, the room can contain any number of zones, but this thesis will focus on the two zone case 
-(the work can however be extended to a larger number of zones).
-The room description can then be used to pose the sound zone problem in a more formal way.
+In general, the room can contain any number of zones, but this thesis will focus on the two zone case. 
 
-In general, the room $R$ can be modeled as a closed subset of three dimensional space, $\mathcal{R} \subset \Real{3}$.
+
+The room $R$ can be modeled as a closed subset of three dimensional space, $\mathcal{R} \subset \Real{3}$.
 The two non-overlapping zones $\za$ and $\zb$ are contained within the room $R$, 
 i.e. $\za \subset \mathcal{R}$ and $\zb \subset \mathcal{R}$ where $\za \cap \zb = \emptyset$.
 In addition to the zones, the room $\mathcal{R}$ also contains $N_L$ loudspeakers, which can be modeled as discrete points.
+The room, loudspeakers and zones are visualized in \autoref{fig:data_model:room_model:3D_room}.
 
-\begin{figure}[t]
+\begin{figure}
     \centering
     \input{tikz/tikz_3D_room_data_model.tex}
     \caption{The room $\mathcal{R}\subset \Real{3}$ containing the zones $\za\subset\mathcal{R}$ 
     and $\zb\subset\mathcal{R}$ depicted in green and blue respectively. 
     The room contains $N_L = 8$ loudspeakers, which are denoted by the red dots in the corners of the room.}
+    \label{fig:data_model:room_model:3D_room}
 \end{figure}
 
 The goal of the sound zone algorithm is to use the loudspeakers to realise a specified target sound pressure
@@ -43,36 +40,33 @@ The loudspeakers can be controlled by specifying their input signals.
 As such, the goal of the sound zone algorithm can be reframed as finding loudspeaker input signals such that a specified target sound pressure is attained.
 
 The rest of this section will focus on formalizing this notion mathematically.
-First, a way of modeling the target sound pressure will be discussed.
-Afterwards, a way of realizing said target sound pressure by controlling the loudspeaker inputs will be given mathematically.
-Finally, the data model is used to state the goal of the sound zone algorithm more formally.
 
-\subsubsection{Defining Target Sound Pressure}
+\subsection{Defining Target Pressure}
+\label{sec:sound_zones:data_model:target_pressure}
 As mentioned, the goal of the sound zone algorithm is to realize a specified target sound pressure
 in the different zones $\za$ and $\zb$ in the room $R$.
 
 The zones are given as continuous regions in space.
 Some sound zone approach will attempt to recreate a specified pressure in the entire region of space defined by $\za$ and $\zb$.
-Other sound zone approaches will instead discretion the zones into so-called control points.
+Other sound zone approaches will instead discretize the zones into so-called control points.
 The sound pressure is then controlled only in these control points.
 
-In this work, the latter approach will be taken.
-\todo{Why does discretizing make sense? Add more reasons...}
+In this work, a pressure matching approach is used, and thus the latter approach will be taken.
 Thus, we discretize zones $\za$ and $\zb$ into a total of $N_a$ and $N_b$ control points respectively.   
 Let $A$ and $B$ denote the sets of the resulting control points points contained within zones $\za$ and $\zb$ respectively.
-
-
-\begin{figure}[t]
-    \centering
-    \input{tikz/tikz_3D_room_data_model_sampled.tex}
-    \caption{The previously introduced room $\mathcal{R}$ with zones $\za$ and $\zb$ discretized.}
-\end{figure}
 
 Now let $t^{m}[n]$ denote the target sound pressure at control point $m$ in either $A$ or $B$, i.e. $m\in A \cup B$.
 Our goal is thus to realize $t^{m}[n]$ in all control points $m\in A \cup B$ using the loudspeakers present in the room.
 The relationship between the loudspeaker input signals and the sound pressure is the topic of the next section.
 
-\subsubsection{Realizing Sound Pressure through the Loudspeaker}
+\begin{figure}
+    \centering
+    \input{tikz/tikz_3D_room_data_model_sampled.tex}
+    \caption{The previously introduced room $\mathcal{R}$ with zones $\za$ and $\zb$ discretized.}
+\end{figure}
+
+\subsection{Realizing Sound Pressure through the Loudspeaker}
+\label{sec:sound_zones:data_model:realizing_pressure}
 The sound pressure produced by the loudspeakers can be controlled by specifying their input signals.
 Mathematically speaking, let $x^{(l)}[n]\in\Real{N_x}$ denote the loudspeaker input signal for the $l^\text{th}$ loudspeaker.
 As such, the goal of the sound zone algorithm is to find loudspeaker inputs $x^{(l)}[n]$ 
@@ -84,7 +78,7 @@ This relationship can be modeled by room impulse responses (RIRs) $h^{(l,m)}[n]\
 
 The RIRs $h^{(l,m)}[n]$ determines what sound pressure is realized at control point $m$ due to playing loudspeaker signal $x^{(l)}[n]$. 
 Mathematically, let $p^{(l,m)}[n]\in\Real{N_x + N_h - 1}$ represent the realized sound pressure in control point $m$
-due to playing $x^{(l)}[n]$ from loudspeaker $l$:
+due to playing $x^{(l)}[n]$ from loudspeaker~$l$:
 \begin{equation}
     p^{(l,m)}[n] = \left(h^{(l,m)} \ast x^{(l)}\right)[n]
 \end{equation}
@@ -96,22 +90,19 @@ It can now be expressed as the sum over all contributions as follows:
                &= \sum_{l=0}^{N_L} \left(h^{(l,m)} \ast x^{(l)}\right)[n]
 \end{align}
 
-\subsubsection{Sound Zone Problem Statement}
 With this data model is complete and the goal of the sound zone algorithm can be restated.
-Namely, the goal is to find $x^{(l)}[n]$ such that the realised sound pressure $p^{(m)}[n]$ attains the
+Namely, the goal is to find $x^{(l)}[n]$ such that the realized sound pressure $p^{(m)}[n]$ attains the
 target sound pressure $t^{(m)}[n]$ for all control points $m\in A \cup B$.
 
-The rest of \autoref{sec:data_model} will describe how this problem can be solved in greater detail.
-
 \subsection{Choice of Target Pressure}
-\label{sec:data_model:target_pressure_choice}
+\label{sec:sound_zones:data_model:target_pressure_choice}
 The target sound pressure $t^{(m)}[n]$ describes the desired content for a specific control point $m$. 
 So far, the choice of target sound pressure $t^{(m)}[n]$ has been kept general. 
 In this section, a choice for the target pressure will be made and motivated.
 
 Assume that the user of the sound zone system has selected loudspeaker input signals $s_\za[n]\in\Real{N_x}$ and
 $s_\zb[n]\in\Real{N_x}$ that they wish to hear in zone $\za$ and $\zb$ respectively.
-In order to accomodate the wishes of the user, the target sound pressure is chosen as follows: 
+In order to accommodate the wishes of the user, the target sound pressure is chosen as follows: 
 \begin{align}
     t^{(m)}[n] = \sum_{l=0}^{N_L} \left(h^{(l,m)} \ast s_\za\right)[n]\qquad &\forall\,m\in A\\
     t^{(m)}[n] = \sum_{l=0}^{N_L} \left(h^{(l,m)} \ast s_\zb\right)[n]\qquad &\forall\,m\in B
@@ -121,8 +112,4 @@ selected loudspeaker input signals $s_\za[n]$ and $s_\zb[n]$ through the loudspe
 
 In other words, the sound pressure in a zone is chosen such that it matches the sound pressure arises in said zone when playing only the desired input signal. 
 For example, when in zone $A$, the target sound pressure is set equal to the sound pressure corresponding to playing only $s_\za[n]$ from the loudspeakers.
-
 The motivation for choosing this target is that it physically attainable with the given loudspeakers and room.
-\todo{Expand this motivation with a couple more arguments.}
-
-
