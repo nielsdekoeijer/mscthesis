@@ -40,9 +40,8 @@
 \membertwo{dr. J. Martinez Castañeda}
 
 % =Abstract==============================================================================
-\def\ABSTRACT{Something about soundzones, something about perceptual models, something about perceptual sound zones.
-MIM: 1) At which point do you introduce the Data model? 2) It's OK to push things to the future work.
-PMN: 1) What is the story? In two sentances. Elevator Pitch. Helps you prioritize. 2) What is it that I'm doing differently. 3) Problems with Tae-Woongs work}
+\def\ABSTRACT{\todo{Currently, this contains the draft of my thesis. 
+Everything and anything can be changed as far as I'm concerned, I appreciate all feedback!}}
 
 % =Document==============================================================================
 \begin{document}
@@ -55,7 +54,6 @@ PMN: 1) What is the story? In two sentances. Elevator Pitch. Helps you prioritiz
 \include{abstract}
 \include{ack}
 \tableofcontents
-\todo{I am considering merging some chapters (e.g. merging the literature review and the implementation chapters).}
 \listoffigures
 \listoftables
 \mainmatter
@@ -63,8 +61,11 @@ PMN: 1) What is the story? In two sentances. Elevator Pitch. Helps you prioritiz
 % =Content===============================================================================
 \chapter{Introduction}
 \label{sec:introduction}
-\section*{Thesis Outline}
+\begin{tcolorbox}
+\section*{Skeleton of Chapter}
 \input{introduction/skeleton.tex}
+\end{tcolorbox}
+\newpage
 
 \chapter{Review of Perceptual Model Literature}
 \label{sec:literature_review_perceptual_models}
@@ -73,16 +74,16 @@ PMN: 1) What is the story? In two sentances. Elevator Pitch. Helps you prioritiz
 \input{literature_review_perceptual_models/skeleton.tex}
 \end{tcolorbox}
 \newpage
-\input{sound_zones/introduction.tex}
+% \input{sound_zones/introduction.tex}
 
 \chapter{Implementation of Perceptual Model}
 \label{sec:perceptual_models}
 \begin{tcolorbox}
 \section*{Skeleton of Chapter}
-\input{perceptual_models/skeleton.tex}
+\input{implementation_perceptual_models/skeleton.tex}
 \end{tcolorbox}
 \newpage
-\input{perceptual_models/introduction.tex}
+% \input{perceptual_models/introduction.tex}
 
 \chapter{Review of Sound Zone Algorithms Literature}
 \label{sec:literature_review_sound_zones}
@@ -91,33 +92,43 @@ PMN: 1) What is the story? In two sentances. Elevator Pitch. Helps you prioritiz
 \input{literature_review_sound_zones/skeleton.tex}
 \end{tcolorbox}
 \newpage
-\input{sound_zones/introduction.tex}
+% \input{sound_zones/introduction.tex}
 
 \chapter{Implementation of Reference Sound Zone Algorithm}
 \label{sec:sound_zones}
 \begin{tcolorbox}
 \section*{Skeleton of Chapter}
-\input{sound_zones/skeleton.tex}
+\input{implementation_sound_zones/skeleton.tex}
 \end{tcolorbox}
 \newpage
-\input{sound_zones/introduction.tex}
+\input{implementation_sound_zones/introduction.tex}
 \newpage
-\input{sound_zones/data_model.tex}
+\input{implementation_sound_zones/data_model.tex}
 \newpage
-\input{sound_zones/pressure_matching.tex}
+\input{implementation_sound_zones/pressure_matching.tex}
 \newpage
-\input{sound_zones/frame_based_framework.tex}
+\input{implementation_sound_zones/frame_based_framework.tex}
 \newpage
-\input{sound_zones/frequency_domain_approach.tex}
+\input{implementation_sound_zones/frequency_domain_approach.tex}
 
-\chapter{Perceptual Sound Zone Algorithm}
+\chapter{Implementation of Perceptual Sound Zone Algorithm}
 \label{sec:perceptual_sound_zones}
 \begin{tcolorbox}
 \section*{Skeleton of Chapter}
-\input{perceptual_sound_zones/skeleton.tex}
+\input{implementation_perceptual_sound_zones/skeleton.tex}
 \end{tcolorbox}
 \newpage
-\input{perceptual_sound_zones/introduction.tex}
+\input{implementation_perceptual_sound_zones/introduction.tex}
+\newpage
+\input{implementation_perceptual_sound_zones/perceptual_minimization.tex}
+\newpage
+\input{implementation_perceptual_sound_zones/perceptual_constraining.tex}
+
+\chapter{Evaluation of Perceptual Sound Zone Algorithm}
+\begin{tcolorbox}
+\section*{Skeleton of Chapter}
+\input{evaluation_perceptual_sound_zones/skeleton.tex}
+\end{tcolorbox}
 
 \chapter{Conclusion}
 \begin{tcolorbox}
@@ -126,7 +137,6 @@ PMN: 1) What is the story? In two sentances. Elevator Pitch. Helps you prioritiz
 \input{conclusion/skeleton.tex}
 \end{tcolorbox}
 
-\chapter{Bibliography}
 \bibliography{bibliography}
 \bibliographystyle{ieeetr}
 
