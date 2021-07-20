@@ -1,0 +1,24 @@
+\usepackage{tikz}
+\usepackage{etoolbox}
+\usetikzlibrary{shapes, arrows}
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+    text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+    minimum height=2em]
+
+
+\tikzset{
+  Speaker/.pic={
+    \filldraw[fill=gray!40,pic actions] 
+    (-15pt,0) -- 
+      coordinate[midway] (-front) 
+    (15pt,0) -- 
+    ++([shift={(-6pt,8pt)}]0pt,0pt) coordinate (aux1) -- 
+    ++(-18pt,0) coordinate (aux2) 
+    -- cycle 
+    (aux1) -- ++(0,6pt) -- coordinate[midway] (-back) ++(-18pt,0) -- (aux2);
+  }
+}

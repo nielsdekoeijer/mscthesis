@@ -1,0 +1,38 @@
+\section{Perceptual Minimization Approach}
+Detectability is defined as: 
+\begin{equation}
+    D(x[n],e[n]) = \norm[2][2]{\vec{w}(X[k]) \circ \vec{E}[k]}     
+\end{equation}
+The detectability quantifies how detectable masked signal $e[n]$ is in presence of masker signal $x[n]$.  
+It is calibrated such that $D(x[n],e[n]) = 1$ for a masker-masked signal pair
+Here, $\vec{E}[k]$ is a vector containing the DFT of the $e[n]$.
+The weighting vector $\vec{w}(X[k])$ is computed based on the psycho-acoustical masking properties of $x[n]$,
+which are calculated based on its frequency domain counterpart $X[k]$ . 
+
+The idea now is to integrate this into the previously introduced cost function:
+\begin{align}
+    \argmin{\tilde{x}_{\za,\mu}^{(l)}[n],\,\tilde{x}_{\zb,\mu}^{(l)}[n]\,\forall\,l}{
+       &\sum_{m\in A} \norm[2][2]{\tilde{P}_{\za}^{(m)}[k,\mu] - \tilde{T}^{(m)}[k,\mu]} +
+        \sum_{m\in A} \norm[2][2]{\tilde{P}_{\zb}^{(m)}[k,\mu]} + \\
+       &\sum_{m\in B} \norm[2][2]{\tilde{p}_{\zb}^{(m)}[k,\mu] - \tilde{T}^{(m)}[k,\mu]} + 
+        \sum_{m\in B} \norm[2][2]{\tilde{P}_{\za}^{(m)}[k,\mu]}
+    }
+\end{align}
+Essentially, the approach is to replace the norms in the equation above by the perceptually weighted equivalent.
+For each norm, we consider the masking effects determined by the target sound pressure for the respective point $m$. 
+This results in the following cost function:
+\begin{align}
+    \argmin{\tilde{x}_{\za,\mu}^{(l)}[n],\,\tilde{x}_{\zb,\mu}^{(l)}[n]\,\forall\,l}{
+       &\sum_{m\in A} \norm[2][2]{
+        \vec{w}\left(\tilde{T}^{(m)}[k,\mu]\right)\left[\tilde{P}_{\za}^{(m)}[k,\mu] - \tilde{T}^{(m)}[k,\mu]\right]} + \\
+       &\sum_{m\in A} \norm[2][2]{\vec{w}\left(\tilde{T}^{(m)}[k,\mu]\right)
+        \left[\tilde{P}_{\zb}^{(m)}[k,\mu]\right]} + \\
+       &\sum_{m\in B} \norm[2][2]{\vec{w}\left(\tilde{T}^{(m)}[k,\mu]\right)
+        \left[\tilde{P}_{\zb}^{(m)}[k,\mu] - \tilde{T}^{(m)}[k,\mu]\right]} + \\
+       &\sum_{m\in B} \norm[2][2]{\vec{w}\left(\tilde{T}^{(m)}[k,\mu]\right)
+        \left[\tilde{P}_{\za}^{(m)}[k,\mu]\right]}
+    }
+\end{align}
+The cost function behaves the same way, except all terms are now psycho-acoustically weighted.
+The weighting vectors are chosen based on the target sound pressure in the relevant control point $m$.
+This essentially exploits the psycho-acoustical masking properties of the target signal.

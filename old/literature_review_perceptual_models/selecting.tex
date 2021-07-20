@@ -1,0 +1,17 @@
+\section{Selection of Perceptual Model for use in Sound Zone Algorithm}
+\subsection{Criteria for Selecting Perceptual Model}
+This section will define desirable criteria for the perceptual model for integration with a sound zone algorithm.
+These criteria will be used to select a perceptual model from the models discussed in the literature review.
+\begin{enumerate}
+    \item \textbf{Mathematical Tractability.}\\
+        It is a desirable property for the perceptual model to be easy to include in optimization problems.
+        For example, perceptual models that can are differentiable are therefore favoured over optimization problems
+        that are non-differentiable.
+    \item \textbf{Computational Overhead:}\\
+        It is desirable for the inclusion of the perceptual model to add minimal computational load 
+        to the sound zone algorithm.
+        The additional overhead of the perceptual model should not increased the run time of the sound zone algorithm by many orders of magnitude.
+    \item \textbf{Applicable Audio Content:}\\
+        Many perceptual models, such as speech intelligibility metrics, are designed for a specific kind of audio content.
+        It is preferable that the perceptual model is as general as possible.
+\end{enumerate}

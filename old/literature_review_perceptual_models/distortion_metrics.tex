@@ -1,0 +1,71 @@
+\section{Distortion Measures}
+Distortion measures are typically used in transparent audio coding.
+Audio coding algorithms attempts to find an low-bitrate representation of an audio input signal.
+This process is usually lossy, as reducing the bitrate introduces errors.
+
+These errors can be a detriment to the listening experience.
+As such, most audio coding algorithms use a perceptual model.
+The perceptual model is used to introduce encoding errors in such a way that the audio output
+signal is perceptually indistinguishable from the audio input signal~\cite{taal2012low}.
+
+The perceptual model typically takes form of a distortion function which determines how
+audible the difference between a reference input audio signal and a distorted output audio signal is.
+This function is used to encode an input audio signal such that it has minimal distortion for a
+specified bitrate.
+
+The functions are designed based on findings from psycho-acoustical literature.
+Typically, they operate on short-time scales as psycho-acoustical effects are time-local.
+
+One possibility is to use such distortion functions in a sound zone algorithm.
+As such, in this section, a number of such distortion metrics are discussed.
+
+\subsection{ISO MPEG Models}
+The ISO/IEC 11172-3 standard specifies a coded representation for audio files~\cite{ISO11172-3}, 
+and a decoder for said representation.
+An encoder said representation is not part of the standard.
+This is done deliberately, to allow for future improvements to the encoder, without having to change the standard~\cite{pan1995tutorial}.
+
+The standard does however provide a number of examples of possible encoders, with increasing complexity.
+Alongside these example encoders, two psycho-acoustical models are included for use during the encoding process. 
+
+The psycho-acoustical models work by subdividing the input audio signal into different frequency bands, 
+modeling the frequency bands in the human auditory system.
+Separately per band, the model then determines how much quantization noise can be added without it becoming audible.
+As such, the model assumes that the distortion signal is noise-like~\cite{van2005perceptual}.
+
+The output of the psycho-acoustical model is thus the amount of noise that can be added per band.
+In the case of audio coding, this can then be used to control quantization noise.
+This technique has however also been used for various signal processing purposes, such as audio watermarking~\cite{taal2012low}.
+
+\subsection{Par Detectability}
+In 2005, van der Par et al. proposed a novel perceptual model~\cite{van2005perceptual}.
+The perceptual model defines a distortion measure which determines the ``detectability'' of a distortion signal 
+in presence of a masking signal.
+That is to say, how likely is a human to detect the distortion signal.
+
+The proposed method differentiates itself from the previously discussed ISO MPEG models in two ways.
+
+Firstly, the paper uses newer findings from psycho-acoustic literature, namely spectral integration.
+In spectral integration, the masking effects from neighboring bands are taken into account when computing the masking effects.
+The psycho-acoustical models defined in the ISO MPEG standard does not do this, and effectively works independently~\cite{taal2012low}.
+
+Secondly, it assumes that the distortion signal is sinusoidal, rather than noise-like.
+As such, it is more effective in hiding sinusoidal distortion.
+
+On top of this, the proposed distortion measure can be expressed as an L2-norm.
+This mathematical tractability makes for easy integration into existing least-square problems~\cite{taal2012low}.
+
+The van der Par model has been used in many signal processing applications, examples ranging from speech enhancement to removing perceptually irrelevant sinusoidal 
+components~\cite{balazs2009time, taal2013optimal}.
+
+\subsection{Taal Detectability}
+A paper from 2012 by Taal et al. proposed a novel perceptual model \cite{taal2012low}.
+The perceptual model also defines a distortion measure which determines the detectability, with identical interpretation from the Par Detectability model.
+
+In contrast to the Par Detectability, the Taal Detectability measure takes temporal information into account.
+The inclusion of temporal information allows for the suppression of pre-echoes, 
+an artifact introduced by assuming that the masking effects are stationary over the short time frame over which it operates.
+
+In contrast to other temporal perceptual models, the Taal Detectability has a relatively low computational complexity.
+In addition to this, it can also be expressed as an L2-norm, which makes it a good candidate for optimization.
+The computational demand was however shown to be higher than the Par Detectability~\cite{taal2012low}, especially for larger number of input samples.

@@ -1,4 +1,4 @@
-\documentclass[11pt,twoside,openright,titlepage]{ce}
+\documentclass[10pt,twoside,openright,titlepage]{ce}
 
 % =Imports===============================================================================
 \usepackage[]{tcolorbox}
@@ -7,17 +7,24 @@
 \usepackage[]{color}
 \usepackage[]{listings}
 \usepackage[]{hyperref}
-\usepackage[]{nielstex}
 \usepackage[]{nielsformat}
 \usepackage[]{tikz}
 \usepackage[]{tikz-3dplot}
 
-
 % =Definitions===========================================================================
+\usepackage[]{nielstex}
+\usepackage[]{nielstikz}
+
 % Thesis specific definitions
 \newcommand{\za}{\mathcal{A}}
 \newcommand{\zb}{\mathcal{B}}
 \newcommand{\zz}{\mathcal{Z}}
+
+% For presenting the research questions, some stuff I stole of SO
+\usepackage{enumitem}
+\newlist{questions}{enumerate}{2}
+\setlist[questions,1]{label=RQ\arabic*.,ref=RQ\arabic*}
+\setlist[questions,2]{label=\thequestionsi.\arabic*,ref=\thequestionsi(\alph*)}
 
 % =Document Attributes===================================================================
 \msctitle{Sound Zones with a Cost Function based on Human Hearing}
@@ -54,88 +61,181 @@ Everything and anything can be changed as far as I'm concerned, I appreciate all
 \include{abstract}
 \include{ack}
 \tableofcontents
-\listoffigures
-\listoftables
+% \listoffigures
+% \listoftables
 \mainmatter
 
 % =Content===============================================================================
 \chapter{Introduction}
-\label{sec:introduction}
-\begin{tcolorbox}
-\section*{Skeleton of Chapter}
-\input{introduction/skeleton.tex}
-\end{tcolorbox}
+\label{ch:introduction}
+\input{introduction/motivation.tex}
 \newpage
+\input{introduction/objectives.tex}
 
-\chapter{Review of Perceptual Model Literature}
-\label{sec:literature_review_perceptual_models}
-\begin{tcolorbox}
-\section*{Skeleton of Chapter}
-\input{literature_review_perceptual_models/skeleton.tex}
-\end{tcolorbox}
+\chapter{Perceptual Model Review and Implementation}
+\label{ch:perceptual}
+\section{Introduction}
+\label{ch:perceptual:introduction}
+\input{perceptual_literature_review/introduction.tex}
 \newpage
-% \input{sound_zones/introduction.tex}
+\section{Perceptual Background}
+\label{ch:perceptual:background}
+\input{perceptual_literature_review/perceptual_background.tex}
+\newpage
+\section{Review of Perceptual Models}
+\label{ch:perceptual:review}
+\input{perceptual_literature_review/model_review.tex}
+\newpage
+\section{Selection of Perceptual Model}
+\label{ch:perceptual:selection}
+\input{perceptual_literature_review/model_selection.tex}
+\newpage
+\section{Implementation of Selected Perceptual Model}
+\label{ch:perceptual:implementation}
+\input{perceptual_literature_review/model_implementation.tex}
+\newpage
+\section{Conclusion}
+\label{ch:perceptual:conclusion}
+\input{perceptual_literature_review/conclusion.tex}
 
-\chapter{Implementation of Perceptual Model}
-\label{sec:perceptual_models}
-\begin{tcolorbox}
-\section*{Skeleton of Chapter}
-\input{implementation_perceptual_models/skeleton.tex}
-\end{tcolorbox}
+\chapter{Sound Zone Approach Review and Implementation}
+\label{ch:sound_zone}
+\section{Introduction}
+\label{ch:sound_zone:introduction}
+\input{sound_zone_literature_review/introduction.tex}
 \newpage
-% \input{perceptual_models/introduction.tex}
+\section{Review of Sound Zone Approaches}
+\label{ch:sound_zone:approach_review}
+\input{sound_zone_literature_review/approach_review.tex}
+\newpage
+\section{Selection of Sound Zone Approach}
+\label{ch:sound_zone:approach_selection}
+\input{sound_zone_literature_review/approach_selection.tex}
+\newpage
+\section{Data Model}
+\label{ch:sound_zone:data_model}
+\input{sound_zone_literature_review/data_model.tex}
+\newpage
+\section{Implementation of Selected Sound Zone Algorithm}
+\label{ch:sound_zone:approach_implementation}
+\input{sound_zone_literature_review/approach_implementation.tex}
+\newpage
+\section{Block Based Approach}
+\label{ch:sound_zone:block_based}
+\input{sound_zone_literature_review/short_time.tex}
+\newpage
+\section{Conclusion}
+\label{ch:sound_zone:conclusion}
+\input{sound_zone_literature_review/conclusion.tex}
 
-\chapter{Review of Sound Zone Algorithms Literature}
-\label{sec:literature_review_sound_zones}
-\begin{tcolorbox}
-\section*{Skeleton of Chapter}
-\input{literature_review_sound_zones/skeleton.tex}
-\end{tcolorbox}
+\chapter{Implementation and Evaluation of a Perceptual Sound Zone Algorithm}
+\label{ch:perceptual_sound_zone}
+\section{Introduction}
+\label{ch:perceptual_sound_zone:introduction}
+\input{perceptual_sound_zone_algorithm/introduction.tex}
 \newpage
-% \input{sound_zones/introduction.tex}
+\section{Frequency Domain Conversion}
+\label{ch:perceptual_sound_zone:frequency_domain_conversion}
+\input{perceptual_sound_zone_algorithm/frequency_domain_conversion.tex}
+\newpage
+\section{Unconstrained Perceptual Pressure Matching}
+\label{ch:perceptual_sound_zone:perceptual_minimization}
+\input{perceptual_sound_zone_algorithm/perceptual_minimization.tex}
+\newpage
+\section{Constrained Perceptual Pressure Matching}
+\label{ch:perceptual_sound_zone:perceptual_constraining}
+\input{perceptual_sound_zone_algorithm/perceptual_constraining.tex}
+\newpage
+\section{Results}
+\label{ch:perceptual_sound_zone:results}
+\input{perceptual_sound_zone_algorithm/results.tex}
+\newpage
+\section{Conclusion}
+\label{ch:perceptual_sound_zone:conclusion}
+\input{perceptual_sound_zone_algorithm/conclusion.tex}
 
-\chapter{Implementation of Reference Sound Zone Algorithm}
-\label{sec:sound_zones}
-\begin{tcolorbox}
-\section*{Skeleton of Chapter}
-\input{implementation_sound_zones/skeleton.tex}
-\end{tcolorbox}
-\newpage
-\input{implementation_sound_zones/introduction.tex}
-\newpage
-\input{implementation_sound_zones/data_model.tex}
-\newpage
-\input{implementation_sound_zones/pressure_matching.tex}
-\newpage
-\input{implementation_sound_zones/frame_based_framework.tex}
-\newpage
-\input{implementation_sound_zones/frequency_domain_approach.tex}
+% \begin{tcolorbox}
+% \section*{Skeleton of Chapter}
+% \input{literature_review_perceptual_models/skeleton.tex}
+% \end{tcolorbox}
+% \newpage
+% \input{literature_review_perceptual_models/introduction.tex}
+% \newpage
+% \input{literature_review_perceptual_models/distortion_metrics.tex}
+% \newpage
+% \input{literature_review_perceptual_models/quality_metrics.tex}
+% \newpage
+% \input{literature_review_perceptual_models/selecting.tex}
+% \newpage
+% \input{literature_review_perceptual_models/conclusion.tex}
 
-\chapter{Implementation of Perceptual Sound Zone Algorithm}
-\label{sec:perceptual_sound_zones}
-\begin{tcolorbox}
-\section*{Skeleton of Chapter}
-\input{implementation_perceptual_sound_zones/skeleton.tex}
-\end{tcolorbox}
-\newpage
-\input{implementation_perceptual_sound_zones/introduction.tex}
-\newpage
-\input{implementation_perceptual_sound_zones/perceptual_minimization.tex}
-\newpage
-\input{implementation_perceptual_sound_zones/perceptual_constraining.tex}
+% \chapter{Implementation of Perceptual Model}
+% \label{ch:implementation_perceptual_models}
+% \begin{tcolorbox}
+% \section*{Skeleton of Chapter}
+% \input{implementation_perceptual_models/skeleton.tex}
+% \end{tcolorbox}
+% \newpage
+% \input{implementation_perceptual_models/introduction.tex}
+% \newpage
+% \input{implementation_perceptual_models/description.tex}
+% \newpage
+% \input{implementation_perceptual_models/conclusion.tex}
+% \newpage
 
-\chapter{Evaluation of Perceptual Sound Zone Algorithm}
-\begin{tcolorbox}
-\section*{Skeleton of Chapter}
-\input{evaluation_perceptual_sound_zones/skeleton.tex}
-\end{tcolorbox}
+% \chapter{Review of Sound Zone Algorithms Literature}
+% \label{ch:literature_review_sound_zones}
+% \begin{tcolorbox}
+% \section*{Skeleton of Chapter}
+% \input{literature_review_sound_zones/skeleton.tex}
+% \end{tcolorbox}
+% \newpage
+% \input{literature_review_sound_zones/conclusion.tex}
+
+% \chapter{Implementation of Reference Sound Zone Algorithm}
+% \label{ch:implementation_sound_zones}
+% \begin{tcolorbox}
+% \section*{Skeleton of Chapter}
+% \input{implementation_sound_zones/skeleton.tex}
+% \end{tcolorbox}
+% \newpage
+% \input{implementation_sound_zones/introduction.tex}
+% \newpage
+% \input{implementation_sound_zones/data_model.tex}
+% \newpage
+% \input{implementation_sound_zones/pressure_matching.tex}
+% \newpage
+% \input{implementation_sound_zones/frame_based_framework.tex}
+% \newpage
+% \input{implementation_sound_zones/frequency_domain_approach.tex}
+% \newpage
+% \input{implementation_sound_zones/conclusion.tex}
+
+% \chapter{Implementation of Perceptual Sound Zone Algorithm}
+% \label{ch:implementation_perceptual_sound_zones}
+% \begin{tcolorbox}
+% \section*{Skeleton of Chapter}
+% \input{implementation_perceptual_sound_zones/skeleton.tex}
+% \end{tcolorbox}
+% \newpage
+% \input{implementation_perceptual_sound_zones/introduction.tex}
+% \newpage
+% \input{implementation_perceptual_sound_zones/perceptual_minimization.tex}
+% \newpage
+% \input{implementation_perceptual_sound_zones/perceptual_constraining.tex}
+% \newpage
+% % \input{implementation_perceptual_sound_zones/conclusion.tex}
+
+% \chapter{Evaluation of Perceptual Sound Zone Algorithm}
+% \label{ch:evaluation_perceptual_sound_zones}
+% \begin{tcolorbox}
+% \section*{Skeleton of Chapter}
+% \input{evaluation_perceptual_sound_zones/skeleton.tex}
+% \end{tcolorbox}
+% \newpage
+% % \input{evaluation_perceptual_sound_zones/conclusion.tex}
 
 \chapter{Conclusion}
-\begin{tcolorbox}
-\section*{Skeleton of Chapter}
-\newpage
-\input{conclusion/skeleton.tex}
-\end{tcolorbox}
 
 \bibliography{bibliography}
 \bibliographystyle{ieeetr}

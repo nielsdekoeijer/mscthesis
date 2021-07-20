@@ -1,0 +1,53 @@
+In \autoref{ch:perceptual:review} a literature review of various models of the human auditory system were given.
+In this section, one perceptual model will be selected for use in a sound-zone algorithm.
+
+The other perceptual models will still be of use however during the evaluation of the results of the perceptual
+sound zone algorithm.
+
+The approach to select a perceptual model is as follows.
+First, \autoref{ch:perceptual:selection:criteria} will discuss the criteria that will inform the decision.
+Next, \autoref{ch:perceptual:selection:selection} will use these criteria to evaluate the perceptual models
+discussed in the literature review in \autoref{ch:perceptual:review}.
+From this evaluation the most suited perceptual model will be selected for use in a perceptual sound zone 
+algorithm.
+
+\subsection{Criteria for Selecting Perceptual Model}
+\label{ch:perceptual:selection:criteria}
+This section will define desirable criteria for the perceptual model for integration with a sound zone algorithm.
+These criteria will be used to select a perceptual model from the models discussed in the literature review.
+\begin{enumerate}
+    \item \textbf{Mathematical Tractability.}\\
+        It is a desirable property for the perceptual model to be easy to include in optimization problems.
+        For example, perceptual models that can are differentiable are therefore favoured over optimization problems
+        that are non-differentiable.
+    \item \textbf{Computational Overhead:}\\
+        It is desirable for the inclusion of the perceptual model to add minimal computational load 
+        to the sound zone algorithm.
+        The additional overhead of the perceptual model should not increased the run time of the sound zone algorithm by many orders of magnitude.
+\end{enumerate}
+
+\subsection{Selection of Perceptual Model}
+\label{ch:perceptual:selection:selection}
+This section will use the criteria defined by \autoref{ch:perceptual:selection:criteria} in order to select a perceptual
+model.
+In the literature review given in \autoref{ch:perceptual:review}, two classes of perceptual model were considered:
+perceptual models from audio coding and objective audio measures.
+
+All objective audio measures were found to be mathematically untractable, as all models are both non-differentiable and 
+non-convex functions of their input signals.
+As such, they are difficult to integrate into existing sound zone algorithms.
+However, as the objective audio measures predict the outcomes of listening tests, they are uniquely suited for evaluation
+of the results.
+
+All models from audio coding are mathematically tractable and of low computational overhead.
+The ISO MPEG models were found to be less promising than the Par and Taal detectability as it does not immediately 
+define a cost function which can be optimized over.
+The ISO MPEG models only determines how much noise can be added per frequency band, but does not provide an immediate 
+means of using that information in optimization.
+
+As such, the decision is between the Par and Taal detectability.
+As discussed, the Taal detectability takes into account more perceptual.
+This is however this has been shown to be at the cost of computational complexity.
+As such, the Par detectability will be selected for use in the sound zone algorithm.
+
+

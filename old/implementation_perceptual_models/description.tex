@@ -1,0 +1,85 @@
+\section{Introduction to Par Detectability}
+In this section, a high-level description of the Par detectability will be given.
+This is done to give the reader an understanding of the model before going into greater detail.
+The Par detectability defines a function $D(x[n],\varepsilon[n])$.
+Here, $x[n]\in\Real{N_x}$ is the masking signal, and $\varepsilon[n]\in\Real{N_x}$ is the disturbance signal.
+
+For the model to be accurate, the signals $x[n]$ and $\varepsilon[n]$ should be short-time signals.
+The paper uses a signal length $N_x$ corresponding to between 20 to 200 milliseconds.    
+This is important, as the model assumes that the psycho-acoustical properties of $x[n]$ and $\varepsilon[n]$ are stationary.  
+Note that the Taal detectability does not make this assumption~\cite{taal2012low}.
+
+It is assumed that a human is listening to both the masking signal and the disturbance signal at the same time.
+The detectability can then be understood as the probability that a human listener can detect the disturbance signal 
+$\varepsilon[n]$ in presence of the masking signal $x[n]$~\cite{van2005perceptual}.
+The signal $x[n]\in\Real{N}$ is referred to as the masking signal because it masks the disturbance signal 
+$\varepsilon[n]$ to a degree.
+
+The metric is normalized in such a way that the detectability $D(x[n],\varepsilon[n])$ is equal to 1 when the 
+disturbance signal $\varepsilon[n]$ is just noticeable in presence of masking signal $x[n]$.
+This can be understood as the probability of detecting $\varepsilon[n]$ in presence of $x[n]$ 
+being equal to $1$, or a $100\%$.
+
+The detectability $D(x[n],\varepsilon[n])$ can also attain a value larger than $1$, which clashes with the 
+interpretation of detectability as a probability.
+In fact, a detectability of larger than $1$ will often be used in this work.
+The larger values of the detectability correspond with a more noticeable disturbance signal $\varepsilon[n]$ 
+in presence of masking signal $x[n]$. 
+
+\section{Computation Details of the Par Detectability}
+This section will explore the Par detectability.
+Here, it will be shown how human auditory system is modeled and how the detectability is computed.
+
+The first thing to note about the Par detectability is that it operates in the frequency domain version 
+To this end, let $X[k]$ and $\mathcal{E}[k]$ denote the frequency domain representations of the masking signal $x[n]$ and 
+the disturbance signal $\varepsilon[n]$ respectively.
+
+The Par detectability starts by computing an internal representation of the input signals $X[k]$ and $\mathcal{E}[k]$.
+This internal representation models the filtering that occurs in the human auditory system.
+Note that the exact same filtering is applied to both $X[k]$ and $\mathcal{E}[k]$.
+
+The Par detectability models this filtering in two steps.
+The first step models how parts of the ear filter the incoming sound with an outer- and middle-ear filter $H_\text{om}[k]$. 
+Next, a $4^\text{th}$ order Gammatone filter bank is applied, modeling the filtering of the 
+basilar membrane inside the ear~\cite{van2005perceptual}.
+The Gammatone filter bank consists of $N_g$ filters, which are denoted by $\Gamma_i[k]$ 
+
+After filtering, the power per Gammatone filter tap is computed.
+Let $M_i$ and $S_i$ denote the output power of the $i^\textt{th}$ filter tap of the for $X[k]$ and 
+$\mathcal{E}[k]$ respectively.
+The relationship between the input quantities and the output power of the filter taps can be given as follows:
+\begin{align}
+    M_i &= \frac{1}{N_x}\sum_{k=0}^{N_x}\left|H_\text{om}[k]\right|^2\left|\Gamma_i[k]\right|^2\left|X[k]\right|^2 \\
+    S_i &= \frac{1}{N_x}\sum_{k=0}^{N_x}\left|H_\text{om}[k]\right|^2\left|\Gamma_i[k]\right|^2\left|\mathcal{E}[k]\right|^2 
+\end{align}
+The output powers can then be used to define the within-channel detectability $D_i$.
+This can be thought of the detectability per filter tap.
+The within-channel detectability is defined as follows:
+\begin{align}
+    D_i = \frac{N_xS_i}{N_xM_i + C_a}
+\end{align}
+Here, $C_a$ is a calibration constant that models the absolute threshold of hearing.
+This can be understood by considering the case where $M_i = 0$.
+
+The total detectability $D(x[n],\epsilon[n])$ can then be computed by combining the within channel detectabilities.
+It is defined as follows:
+\begin{align}
+    D(x[n],\epsilon[n]) &= C_s L_\text{eff}\sum_{i=0}^{N_g} D_i \\
+                        &= C_s L_\text{eff}\sum_{i=0}^{N_g} 
+                        \frac{\sum_{k=0}^{N_x}\left|H_\text{om}[k]\right|^2\left|
+                            \Gamma_i[k]\right|^2\left|\mathcal{E}[k]\right|^2}
+                        {\sum_{k=0}^{N_x}\left|H_\text{om}[k]\right|^2\left|
+                            \Gamma_i[k]\right|^2\left|X[k]\right|^2 + C_a}
+\end{align}
+Here, $C_s$ is a calibration constant chosen such that a just noticeable disturbance signal results in a 
+detectability of $D(x[n],\epsilon[n]) = 1$. 
+The constant $L_\text{eff}$ is the integration time of the human auditory system.
+It can be chosen equal to the length of $x[n]$ and $\epsilon[n]$ in milliseconds.  
+
+\section{Calibration of the the Par Detectability}
+This section will describe the calibration of the Par Detectability.
+As mentioned, a just noticeable disturbance signal must result in a detectability $D(x[n],\epsilon[n])$ of $1$.
+In order to do so, calibration constants $C_a$ and $C_s$ are chosen in a certain way.
+
+This can be done in different ways, but the paper~\cite{van2005perceptual} 
+$C$ 

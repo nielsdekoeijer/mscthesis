@@ -1,0 +1,102 @@
+\section{Quality Measures}
+\subsection{STOI}
+The Short Time Objective Intelligibility (STOI) measure is a speech intelligibility metric~\cite{taal2011algorithm}.
+Intelligibility of speech can be understood as the percentage of words identified correctly given 
+a degraded speech signal.
+
+STOI was designed in order to predict the outcome of the intelligibility that results from formal listening tests.
+STOI can be used instead of formal listening tests for some parts of the development stages of algorithms. 
+This is useful as listening tests are labour and time intensive to conduct.
+
+STOI takes as input the clean and degraded speech signals.
+The clean and degraded speech signals are then converted into $1/3$ octave bands, and then segmented into short time frames.
+The final output value of STOI then the average correlation coefficient between the clean and degraded segmented input signals,
+averaged over all bands and all segments.
+
+STOI is a non-convex function of the clean and degraded speech inputs due to the calculation of the correlation coefficient,
+and non-differentiable due to a clipping operator. 
+
+\subsection{SIIB}
+The Speech Intelligibility In Bits (SIIB) measure is again a speech intelligibility metric~\cite{van2017instrumental}. 
+Similarly to STOI, it can be used to predict outcomes of formal listening tests.
+
+SIIB is computed through the mutual information between a clean speech signal and the speech signal received by a listener.
+As such, the idea behind SIIB is that the intelligibility of speech is related to the information shared between intended and 
+degraded speech~\cite{van2017instrumental}.
+In order to compute the mutual information, the paper models the transmission of an intended message from speaker to listener as a communication channel.
+Among other aspects, this transmission channel includes a model of the human auditory system.
+
+SIIB is in general non-convex and non-differentiable as it uses a K-nearest neighbor estimator to compute the mutual information.
+However, if the communication channel is approximated as gaussian, the mutual information can be computed in closed form, and SIIB becomes a differentiable
+measure.
+
+\subsection{PESQ}
+The Perceptual Evaluation of Speech Quality (PESQ) is a metric which attempts to determine the 
+perceived quality of speech \cite{rix2001perceptual}, and was standardized by the International Telecommunication Union 
+(ITU-T) in 2001.
+It does so by predicting the subjective opinions that follow from listening tests for speech quality.
+It operates on a ``clean'' reference speech signal and a distorted speech signal.
+
+In broad strokes, PESQ works as follows.
+PESQ is computed by first applying an auditory transform that maps the reference and degraded speech into a 
+time-frequency representation of the perceived loudness.
+So-called symmetric and So-called symmetric and asymmetric disturbances are determined 
+between the time-frequency bins of the reference and degraded speech. 
+A non-linear average is then taken over frequency bins the resulting in an average disturbances per time bin.
+This is then mapped by a linear output mapping to correspond to listening test outcomes.
+
+PESQ is not easy to optimize for, as determining the disturbances is highly non-linear and non-differentiable.
+Some attempts have been made to reformulate PESQ in order to make it more tractable for optimization 
+by approximating the disturbances by other functions~\cite{kim2019end}.
+
+\subsection{POLQA}
+The Perceptual Objective Listening Quality Assessment (POLQA) is another speech quality metric 
+\cite{beerends2013perceptual}.
+It was standardized by the International Telecommunication Union (ITU-T) in 2011.
+It is meant to be the successor of PESQ, with the intention of having more accurate predictions on a 
+wider range of distortions.
+
+POLQA works similarly to PESQ in that it also determines an internal representation of human auditory perception of the
+clean reference speech signal and the distorted speech signal.
+POLQA differs form PESQ in that it is designed to be capable of handing global temporal compression and expansions.
+
+POLQA is originally created for speech quality, but work has been done to adapt it for use in quality assessment of
+general audio.
+This adaptation is known under the name POLQA Music~\cite{povcta2015subjective}.
+
+As was the case with PESQ, POLQA is not easy to optimize for as it is a highly non-linear non-differentiable function of
+its inputs.
+
+
+\subsection{PEAQ}
+The Perceptual Evaluation of Audio Quality (PEAQ) is a audio quality metric standardized by the 
+International Telecommunication Union (ITU-T)~\cite{thiede2000peaq}.
+It is designed such that it predicts the outcome of listening tests for audio quality.
+
+PEAQ estimates a quality grade by first computing an internal representation based on the human auditory system of
+the reference and degraded audio signals.
+The differences between the two internal representations then results in a number of perceptually relevant features.
+PEAQ calls these features Model Output Variables (MOVs).
+These MOVs are then mapped to the final audio quality grade through a neural network.
+
+\subsection{ViSQOL v3}
+The Virtual Speech Quality Objective Listener (ViSQOL) is a metric developed in collaboration with Google.
+
+The original ViSQOL was a speech metric introduced in 2012 for similar reasons as POLQA: to have more accurate 
+predictions than PESQ in the case of temporal warping due to clock drift~\cite{hines2012visqol}.
+Later, in 2015, an adapted version of ViSQOL, ViSQOLAudio was released for the evaluation of audio quality rather than 
+speech quality~\cite{hines2015visqolaudio}.
+
+In contrast to the previous methods, which relied on internal human auditory system representations of the reference and 
+degraded speech inputs, ViSQOL and ViSQOLAudio primarily uses the Neurogram Similarly Index Measure 
+(NSIM) to make its predictions.
+Neurograms contain the neural firing activity of the auditory nerve in time-frequency bins.
+NSIM determines how similar the firing patterns of two neurograms are.
+This similarity is then related to the outcomes of listening tests through a laplacian fit~\cite{hines2012visqol}.
+
+ViSQOL v3 adds improvements upon the original design and provides an open-source C++ 
+implementation of ViSQOL and ViSQOLAudio~\cite{chinen2020visqol}.
+Similarly to POLQA and PESQ, ViSQOL and ViSQOLAudio are highly non-linear non-differentiable functions of their inputs.
+
+\subsection{DPAM}
+\subsection{Distraction}

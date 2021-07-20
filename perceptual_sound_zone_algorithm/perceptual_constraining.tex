@@ -1,0 +1,21 @@
+\section{Perceptual Constraining Approach}
+It turns out that the perceptual minimization approach doesn't always trade-off nicely between interference 
+suppression and reproduction error minimization.
+In order to do so, we can move certain terms to the constraints.
+That is done below:
+\begin{align}
+    \argmin{\tilde{x}_{\za,\mu}^{(l)}[n],\,\tilde{x}_{\zb,\mu}^{(l)}[n]\,\forall\,l}{
+       &\sum_{m\in B} \norm[2][2]{\vec{w}\left(\tilde{T}^{(m)}[k,\mu]\right)
+        \left[\tilde{P}_{\za}^{(m)}[k,\mu]\right]} + \\
+       &\sum_{m\in A} \norm[2][2]{\vec{w}\left(\tilde{T}^{(m)}[k,\mu]\right)
+        \left[\tilde{P}_{\zb}^{(m)}[k,\mu]\right]}
+    }\\
+    \subjectto{
+       &\norm[2][2]{
+        \vec{w}\left(\tilde{T}^{(m)}[k,\mu]\right)\left[\tilde{P}_{\za}^{(m)}[k,\mu] - \tilde{T}^{(m)}[k,\mu]\right]} 
+        \leq Q\quad\forall m\in\zb \\
+       &\norm[2][2]{\vec{w}\left(\tilde{T}^{(m)}[k,\mu]\right)
+        \left[\tilde{P}_{\zb}^{(m)}[k,\mu] - \tilde{T}^{(m)}[k,\mu]\right]} \leq Q\quad\forall m\in\za
+    }
+\end{align}
+Here, we are minimizing the perceptually-weighted leakage, subject to constraints limiting the detectability of the reproduction error per point $m$. 
