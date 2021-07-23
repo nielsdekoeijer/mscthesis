@@ -1,0 +1,36 @@
+This section will focus on the selection of a sound zone approach suitable for integration with the perceptual model selected in \autoref{ch:perceptual}.
+
+In \autoref{ch:perceptual} the Par detectability was selected as the most promising perceptual model.
+In order to select a suitable sound zone approach from the approaches considered in the review given in \autoref{ch:sound_zone:approach_review} the 
+mathematical properties of this model will be considered.
+
+\subsection{Mathematical Properties of Detectability}
+Recall from \autoref{ch:perceptual:implementation} that the detectability $D(x[n],\varepsilon[n])$ quantifies how detectable a disturbance
+$\varepsilon[n]\in\Real{N_x}$ is in presence of a masking signal $x[n]\in\Real{N_x}$.
+In \autoref{ch:perceptual:implementation} it was also noted that the detectability is computed in the frequency domain.
+To this end, $X[k]$ and $\mathcal{E}[k]$ denote the frequency domain representations of $x[n]$ and $\varepsilon[n]$ respectively.
+
+In \autoref{ch:perceptual:implementation:least_squares} it was found that the detectability could be expressed as in least-squares fashion as follows:
+\begin{align}
+    D(x[n],\varepsilon[n]) &= \norm[2][2]{\mat{W}\vecsymbol{\varepsilon}} 
+\end{align}
+Here, the matrix $\mat{W}\in\Real{N_x \times N_x}$ is a diagonal matrix that models the masking effects of $x[n]$.
+The vector $\vecsymbol{\varepsilon}$ contains the frequency domain representation $\mathcal{E}[k]$.
+As such, $\mat{W}$ weighs each frequency component contained $\vecsymbol{\varepsilon}$.
+
+Note the following about the detectability:
+\begin{enumerate}
+    \item It is computed in the frequency domain. 
+    \item It operates on a short time scale (20 to 200 ms).
+    \item It is a convex function of the disturbance $\vecsymbol{\varepsilon}$.
+\end{enumerate}
+
+\subsection{Selecting an Appropriate Sound Zone Approach}
+\todo{Write this}
+In \autoref{ch:sound_zone:approach_review} three different sound zone approaches were discussed: delay and sum beamforming (DS), pressure matching (PM),
+and acoustic contrast control (ACC).
+It was found that the delay and sum beamformer framework was too limiting to include any perceptual information, thus PM and ACC remain.
+
+As stated in \autoref{ch:sound_zone:approach_review}, the PM approach minimizes the squared error between the target sound pressure and the 
+sound pressure reproduced by the loudspeaker array.
+

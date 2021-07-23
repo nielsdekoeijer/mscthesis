@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+    \draw [draw=black] (0,0) rectangle (8,6);
+
+    % Speakers on the top wall
+    \pic[scale=0.7] at (2, 5.6) {Speaker};
+    \pic[scale=0.7] at (3, 5.6) {Speaker};
+    \pic[scale=0.7] at (4, 5.6) {Speaker};
+    \pic[scale=0.7] at (5, 5.6) {Speaker};
+    \pic[scale=0.7] at (6, 5.6) {Speaker};
+
+    % Speakers on the bottom wall
+    \pic[rotate=180, scale=0.7] at (2, 0.4) {Speaker};
+    \pic[rotate=180, scale=0.7] at (3, 0.4) {Speaker};
+    \pic[rotate=180, scale=0.7] at (4, 0.4) {Speaker};
+    \pic[rotate=180, scale=0.7] at (5, 0.4) {Speaker};
+    \pic[rotate=180, scale=0.7] at (6, 0.4) {Speaker};
+
+    \draw[opacity=0.4, fill=blue] (6,3) circle[radius=1.5];
+    \draw[thick] (6,3) circle (1.5) node[align=center] {\textbf{Bright Zone B}};
+    \draw[opacity=0.0, fill=red]  (2,3) circle[radius=1.5];
+    \draw[thick] (2,3) circle (1.5) node[align=center] {\textbf{Dark Zone B}};
+\end{tikzpicture}

@@ -1,5 +1,6 @@
 {
   "cSpell.words": [
+    "Beamforming",
     "DPAM",
     "Discretizing",
     "Donley",
@@ -22,9 +23,11 @@
     "STFT",
     "STOI",
     "Taewoong",
+    "beamformer",
     "detectabilities",
     "discretize",
     "discretized",
-    "intergratable"
+    "intergratable",
+    "subproblems"
   ]
 }

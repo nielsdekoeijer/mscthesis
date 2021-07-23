@@ -8,6 +8,7 @@
 \usepackage[]{listings}
 \usepackage[]{hyperref}
 \usepackage[]{nielsformat}
+\usepackage[]{subcaption}
 \usepackage[]{tikz}
 \usepackage[]{tikz-3dplot}
 
@@ -21,6 +22,7 @@
 \newcommand{\zz}{\mathcal{Z}}
 
 % For presenting the research questions, some stuff I stole of SO
+% NOTE: not used as of now
 \usepackage{enumitem}
 \newlist{questions}{enumerate}{2}
 \setlist[questions,1]{label=RQ\arabic*.,ref=RQ\arabic*}
@@ -124,6 +126,10 @@ Everything and anything can be changed as far as I'm concerned, I appreciate all
 \label{ch:sound_zone:block_based}
 \input{sound_zone_literature_review/short_time.tex}
 \newpage
+\section{Frequency Domain Conversion}
+\label{ch:sound_zone:frequency_domain_conversion}
+\input{sound_zone_literature_review/frequency_domain_conversion.tex}
+\newpage
 \section{Conclusion}
 \label{ch:sound_zone:conclusion}
 \input{sound_zone_literature_review/conclusion.tex}
@@ -133,10 +139,6 @@ Everything and anything can be changed as far as I'm concerned, I appreciate all
 \section{Introduction}
 \label{ch:perceptual_sound_zone:introduction}
 \input{perceptual_sound_zone_algorithm/introduction.tex}
-\newpage
-\section{Frequency Domain Conversion}
-\label{ch:perceptual_sound_zone:frequency_domain_conversion}
-\input{perceptual_sound_zone_algorithm/frequency_domain_conversion.tex}
 \newpage
 \section{Unconstrained Perceptual Pressure Matching}
 \label{ch:perceptual_sound_zone:perceptual_minimization}
