@@ -14,35 +14,32 @@ The organization of the three chapters is given below.
 
 \subsection{Search and Implementation of a Perceptual Model}
 \label{ch:introduction:objectives:perceptual}
+The goal of \autoref{ch:perceptual} is to find a perceptual model suitable for use in a perceptual sound zone algorithm.
+This chapter starts with a summary of necessary psycho-acoustics background in \autoref{ch:perceptual:background}.
+
 In order to construct a perceptual sound zone algorithm, a perceptual model is required.
-This begs the question: ``What perceptual models exist?''.
-To answer this question, this chapter starts with a summary of necessary psycho-acoustics background in 
-\autoref{ch:perceptual:background} followed by a literature review into state of the art perceptual models
-in \autoref{ch:perceptual:review}.
+In order to discover what perceptual models exist, a literature review into promising state of the art perceptual models 
+is given in \autoref{ch:perceptual:review}.
 
-To select a perceptual model suitable for combination with a sound zone algorithm, one must consider what 
-desired properties of such a model.
-These criteria and the resulting selection of one of the perceptual models from the 
-literature review is given in \autoref{ch:perceptual:selection}.
-
-The selected perceptual model is then discussed in greater detail in \autoref{ch:perceptual:implementation}. 
-Here, implementation details are given and analysis are performed to give the reader an intuition into the model.
+Next, \autoref{ch:perceptual:selection} reflects on what the desirable properties of a perceptual model are for
+the design of perceptual sound zone algorithm.
+These criteria are then used in the selection of one of the perceptual models from the literature review is given in \autoref{ch:perceptual:selection}.
+The selected perceptual model is then discussed in greater detail in \autoref{ch:perceptual:implementation}, concluding the chapter. 
 
 \subsection{Search and Implementation of a Sound Zone Approach}
 \label{ch:introduction:objectives:sound_zone}
-After selecting a perceptual model, a suitable sound zone approach must be selected.
-Before determining which sound zone approaches are suitable, a literature review is performed in
-\autoref{ch:sound_zone:approach_review} to document what sound zone approaches exist.
+Next, \autoref{ch:sound_zone} will document the search of a sound zone algorithm that is suitable for the selected perceptual model.
 
-The perceptual model will impose certain constraints on which sound zone algorithm is best suited for integration.
-As such, \autoref{ch:sound_zone:approach_selection} will reflect on these constraints to select one of the documented
-sound zone approaches as the most promising for integration.
+To this end, a literature review is performed in \autoref{ch:sound_zone:approach_review} to document what sound zone approaches exist.
+Using this review, \autoref{ch:sound_zone:approach_selection} will reflect on the selected perceptual model to select one of the 
+reviewed approaches.
 
-The sections that follow will discuss implementation details of the selected sound zone approach.
-In \autoref{ch:sound_zone:data_model} a general sound zone data model will be given, formalizing the sound zone problem
-and laying the mathematical foundation.
-This mathematical foundation is then used in \autoref{ch:sound_zone:approach_implementation} and 
-\autoref{ch:sound_zone:block_based} to derive a sound zone algorithm based on the selected sound zone approach.
+The implementation of the selected sound zone approach is then given by first formalizing the sound zone problem mathematically in 
+\autoref{ch:sound_zone:data_model}, giving the mathematical framework from which algorithms can be derived.
+The framework is then used to give the implementation in \autoref{ch:sound_zone:approach_implementation}.
+
+The following sections \autoref{ch:sound_zone:block_based} and \autoref{ch:sound_zone:frequency_domain_conversion} rewrite the problem slightly to 
+prepare for integration with the perceptual model.
 
 The derived sound zone algorithm will form the foundation on which the perceptual sound zone algorithm will be built.
 In addition to this, it will serve as a reference implementation with which the perceptual sound zone algorithm

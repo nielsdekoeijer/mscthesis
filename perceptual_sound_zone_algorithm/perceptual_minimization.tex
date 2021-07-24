@@ -1,15 +1,18 @@
-\section{Perceptual Minimization Approach}
-Detectability is defined as: 
-\begin{equation}
-    D(x[n],e[n]) = \norm[2][2]{\vec{w}(X[k]) \circ \vec{E}[k]}     
-\end{equation}
-The detectability quantifies how detectable masked signal $e[n]$ is in presence of masker signal $x[n]$.  
-It is calibrated such that $D(x[n],e[n]) = 1$ for a masker-masked signal pair
-Here, $\vec{E}[k]$ is a vector containing the DFT of the $e[n]$.
-The weighting vector $\vec{w}(X[k])$ is computed based on the psycho-acoustical masking properties of $x[n]$,
-which are calculated based on its frequency domain counterpart $X[k]$ . 
+In \autoref{ch:perceptual} the Par detectability $D(x[n],\varepsilon[n])$ was introduced as the most promising perceptual model.
+Recall that the Par detectability quantifies how detectable a disturbance signal $\varepsilon[n]$ is in presence of masking signal $x[n]$.
+It was shown in \autoref{ch:perceptual:implementation} that the Par detectability can be expressed as follows: 
+\begin{align}
+    D(x[n],\varepsilon[n]) &= \norm[2][2]{\mat{W}_{x}\vecsymbol{\mathcal{E}}} 
+\end{align}
+Here, the vector $\vecsymbol{\mathcal{E}}$ contains the frequency domain representation of the disturbance $\mathcal{E}[k]$.
+The matrix $\mat{W}_{x}$ is a diagonal matrix determined by the auditory masking properties of the masking signal $x[n]$ 
 
-The idea now is to integrate this into the previously introduced cost function:
+In \autoref{ch:sound_zone}, it was found that a pressure matching sound zone approach is most suitable for integration with the Par detectability
+due to their mathematical similarities.
+As shown, the detectability is defined as the squared L2 norm of the disturbance weighted by diagonal matrix $\mat{W}_{x}$ determined by the masking signal.
+Pressure matching minimizes the squared L2 sound pressure error between the target sound pressure and the sound pressure attained by the loudspeaker.
+
+Recall that the pressure matching cost function is given as follows.
 \begin{align}
     \argmin{\tilde{x}_{\za,\mu}^{(l)}[n],\,\tilde{x}_{\zb,\mu}^{(l)}[n]\,\forall\,l}{
        &\sum_{m\in A} \norm[2][2]{\tilde{P}_{\za}^{(m)}[k,\mu] - \tilde{T}^{(m)}[k,\mu]} +
@@ -18,6 +21,14 @@ The idea now is to integrate this into the previously introduced cost function:
         \sum_{m\in B} \norm[2][2]{\tilde{P}_{\za}^{(m)}[k,\mu]}
     }
 \end{align}
+Using the definition of detectability given above, consider the following:
+\begin{equation}
+    D(\tilde{t}^{(m)}[n,\mu],\,\tilde{p}_{\zz}^{(m)}[n,\mu] - \tilde{t}^{(m)}[n,\mu]) = 
+        \norm[2][2]{\mat{W}_{\tilde{t}^{(m)}[\mu]}\left(\tilde{P}_{\za}^{(m)}[k,\mu] - \tilde{T}^{(m)}[k,\mu]\right)} 
+\end{equation}
+
+
+
 Essentially, the approach is to replace the norms in the equation above by the perceptually weighted equivalent.
 For each norm, we consider the masking effects determined by the target sound pressure for the respective point $m$. 
 This results in the following cost function:

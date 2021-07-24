@@ -1,53 +1,50 @@
-In \autoref{ch:perceptual:review} a literature review of various models of the human auditory system was provided.
-This section will determine criteria with which one of the discussed perceptual models can be selected for use
-in integration into a sound zone algorithm.
+In \autoref{ch:perceptual:review} a literature review of various models of the human auditory system was given.
+This section will detail the selection of one of these perceptual models for use in a perceptual sound zone algorithm.
 The other perceptual models will still be of use however during the evaluation of the results of the perceptual
 sound zone algorithm that will be derived in \autoref{ch:perceptual_sound_zone}.
 
 The structure of this section is as follows.
-First, \autoref{ch:perceptual:selection:criteria} will discuss the criteria that will inform the decision.
-Next, in \autoref{ch:perceptual:selection:selection} said criteria will be used to select a suitable perceptual models 
-and reflect on this choice.
+First, \autoref{ch:perceptual:selection:criteria} will discuss the criteria that will be used to select the most suitable perceptual model for use in 
+a perceptual sound zone algorithm.
+The selection from the reviewed models will then be performed in \autoref{ch:perceptual:selection:selection} using said criteria.
 
 \subsection{Criteria for Selecting Perceptual Model}
 \label{ch:perceptual:selection:criteria}
+\todo{Rewrite this.}
 This section will define desirable criteria for the perceptual model for integration with a sound zone algorithm.
-Two criteria can be distinguished.
+
+Two criteria can be distinguished:
 \begin{enumerate}
     \item \textbf{Mathematical Tractability:}\\
         It is a desirable property for the perceptual model to be easy to include in optimization problems mathematically.
-        As will be shown in \autoref{ch:sound_zone}, many sound zone algorithms are posed as (convex) optimization 
-        problems.
 
-        Therefore if a perceptual model is too complicated to be integrated mathematically into optimization problems are
-        undesirable.
+        As will be shown in \autoref{ch:sound_zone}, many sound zone algorithms are posed as optimization problems.
+        Therefore, it is undesirable if perceptual model is too complicated to be integrated mathematically into optimization problems.
         For example, if the computation of a perceptual model involves conditional branching (i.e. if-statements), their
         integration into an existing optimization problem may be difficult.
 
-        Furthermore, as most sound zone algorithms can be posed as a convex optimization problem, it is also desirable that
-        the perceptual models preserve this convexity.
-        Convexity is a desirable property for optimization, as it guarantees that the optimization problem has a single, 
+        Furthermore, as most sound zone algorithms can be posed as a convex optimization problem.
+        Convexity is a desirable property for an optimization problem, as it guarantees that the optimization problem has a single, 
         global optimal value, rather than many locally optimal values~\cite{boyd2004convex}. 
+        Therefore, it is also desirable that the perceptual models preserve this convexity.
 
     \item \textbf{Computational Overhead:}\\
-        It is desirable for the inclusion of the perceptual model to add minimal computational load 
-        to the sound zone algorithm.
-        As such, the additional overhead of the perceptual model should not increased the run time of the sound zone 
-        algorithm by many orders of magnitude.
+        It is desirable for the inclusion of the perceptual model to add as little computational load to the sound zone algorithm as possible.
 \end{enumerate}
 
 \subsection{Selection of Perceptual Model}
 \label{ch:perceptual:selection:selection}
+\todo{Rewrite this.}
 This section will use the criteria defined by \autoref{ch:perceptual:selection:criteria} in order to select a perceptual
 model.
 In the literature review given in \autoref{ch:perceptual:review}, two classes of perceptual model were considered:
 perceptual models from audio coding and objective audio measures.
 
-All objective audio measures were found to be mathematically untractable, as all models are both non-differentiable and 
-non-convex functions of their input signals.
-As such, they are difficult to integrate into existing sound zone algorithms.
-However, as the objective audio measures predict the outcomes of listening tests, they are uniquely suited for evaluation
-of perceptual sound zone algorithm that is to be proposed in \autoref{ch:perceptual_sound_zone}.
+All objective audio measures were found to be mathematically untractable. 
+Every model showed a degree of non-differentiability and non-convexity in their computation.
+For some models, such as the distraction model, the complete computation could not be expressed easily with mathematical expressions.
+As such, they are difficult to integrate into convex optimization problems and will not be used in the perceptual sound zone algorithm.
+However, as the objective audio measures predict the outcomes of listening tests, they will be used for evaluation.
 
 All models from audio coding are mathematically tractable and of low computational overhead.
 The ISO MPEG models were found to be less promising than the Par and Taal detectability, as it does not immediately 

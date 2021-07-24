@@ -12,17 +12,17 @@ To this end, $X[k]$ and $\mathcal{E}[k]$ denote the frequency domain representat
 
 In \autoref{ch:perceptual:implementation:least_squares} it was found that the detectability could be expressed as in least-squares fashion as follows:
 \begin{align}
-    D(x[n],\varepsilon[n]) &= \norm[2][2]{\mat{W}\vecsymbol{\varepsilon}} 
+    D(x[n],\varepsilon[n]) &= \norm[2][2]{\mat{W}\vecsymbol{\mathcal{E}}} 
 \end{align}
 Here, the matrix $\mat{W}\in\Real{N_x \times N_x}$ is a diagonal matrix that models the masking effects of $x[n]$.
-The vector $\vecsymbol{\varepsilon}$ contains the frequency domain representation $\mathcal{E}[k]$.
-As such, $\mat{W}$ weighs each frequency component contained $\vecsymbol{\varepsilon}$.
+The vector $\vecsymbol{\mathcal{E}}$ contains the frequency domain representation $\mathcal{E}[k]$.
+As such, $\mat{W}$ weighs each frequency component contained $\vecsymbol{\mathcal{E}}$.
 
 Note the following about the detectability:
 \begin{enumerate}
     \item It is computed in the frequency domain. 
     \item It operates on a short time scale (20 to 200 ms).
-    \item It is a convex function of the disturbance $\vecsymbol{\varepsilon}$.
+    \item It is a convex function of the disturbance $\vecsymbol{\mathcal{E}}$.
 \end{enumerate}
 
 \subsection{Selecting an Appropriate Sound Zone Approach}

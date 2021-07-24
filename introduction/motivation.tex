@@ -14,7 +14,6 @@ a way that different areas in a room have different sound content.
 One class of algorithms that attempt to do so are known as sound zone algorithms~\cite{betlehem2015personal}.
 Sound zone algorithms partition the space of the room into multiple so-called sound zones.
 Each sound zone is assigned different audio content.
-
 The sound zone algorithms decides how to use the sound system to reproduce audio content in each zone.
 Using the principals of constructive and destructive interference, this is done in such a way that minimal 
 content of one zone is audible in the others.
@@ -35,14 +34,11 @@ An image depicting the situation is given in \autoref{fig:introduction:motivatio
 \end{figure}
 
 In practice however, sound zone algorithms do not always do a perfect job.
-
 The performance of algorithms depends on the environment and the available sound system.
 Depending on the situation, the interference between zones can typically only be reduced by so much.
 As such, audio content of one zone is often still audible in other zones.
-In addition to this, reducing interference between zones can also come at the cost of reducing quality of the 
-reproduced audio in the zones.
 
-Improving sound zone algorithms is still an active topic of research.
+Improving sound zone algorithms is thus still an active topic of research.
 One recent approach is to include a model of the human auditory system to model how sound is perceived.
 Typically, sound zone algorithms model physical quantities such as sound pressure, which doesn't always capture
 what is important for the perception of sound.
@@ -52,8 +48,8 @@ that matter perceptually.
 Early results show that the perceptual sound zone approach is promising.
 Recent work by Donley et al. explored including the absolute threshold of hearing, which models the lowest sound pressure
 humans can hear, into sound zone algorithms.
-In this pursuit it was found that the quality of the reproduced audio in the zones~\cite{donley2015multizone}.
-Later, Lee et al. showed that including a perceptually-motivated weighting in the sound zone algorithm outperforms 
+This pursuit found an increased quality of the reproduced audio in the zones~\cite{donley2015multizone}.
+Other work by Lee et al. showed that including a perceptually-motivated weighting in the sound zone algorithm outperforms 
 traditional algorithms~\cite{lee2019towards,lee2020signal}.
 
 This work will seek to further explore this perceptual approach by proposing a novel perceptual sound zone algorithm.
