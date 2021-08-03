@@ -1,11 +1,10 @@
 In \autoref{ch:perceptual} the Par detectability $D(x[n],\varepsilon[n])$ was introduced as the most promising perceptual model.
 Recall that the Par detectability quantifies how detectable a disturbance signal $\varepsilon[n]$ is in presence of masking signal $x[n]$.
+
 It was shown in \autoref{ch:perceptual:implementation} that the Par detectability can be expressed as follows: 
 \begin{align}
-    D(x[n],\varepsilon[n]) &= \norm[2][2]{\mat{W}_{x}\vecsymbol{\mathcal{E}}} 
+    D(x[n],\varepsilon[n]) &= \norm[2][2]{W_{x}[k]\mathcal{E}[k]} 
 \end{align}
-Here, the vector $\vecsymbol{\mathcal{E}}$ contains the frequency domain representation of the disturbance $\mathcal{E}[k]$.
-The matrix $\mat{W}_{x}$ is a diagonal matrix determined by the auditory masking properties of the masking signal $x[n]$ 
 
 In \autoref{ch:sound_zone}, it was found that a pressure matching sound zone approach is most suitable for integration with the Par detectability
 due to their mathematical similarities.
@@ -26,8 +25,6 @@ Using the definition of detectability given above, consider the following:
     D(\tilde{t}^{(m)}[n,\mu],\,\tilde{p}_{\zz}^{(m)}[n,\mu] - \tilde{t}^{(m)}[n,\mu]) = 
         \norm[2][2]{\mat{W}_{\tilde{t}^{(m)}[\mu]}\left(\tilde{P}_{\za}^{(m)}[k,\mu] - \tilde{T}^{(m)}[k,\mu]\right)} 
 \end{equation}
-
-
 
 Essentially, the approach is to replace the norms in the equation above by the perceptually weighted equivalent.
 For each norm, we consider the masking effects determined by the target sound pressure for the respective point $m$. 

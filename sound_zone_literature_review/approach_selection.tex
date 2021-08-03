@@ -1,36 +1,32 @@
-This section will focus on the selection of a sound zone approach suitable for integration with the perceptual model selected in \autoref{ch:perceptual}.
+In \autoref{ch:perceptual} it was determined that the Par detectability is the perceptual model most suited for use in a 
+perceptual sound zone algorithm.
+Previously, in \autoref{ch:sound_zone:problem}, three different sound zone techniques were discussed:
+delay-and-sum beamforming (DS), pressure matching (PM), and acoustic contrast control (ACC). 
 
-In \autoref{ch:perceptual} the Par detectability was selected as the most promising perceptual model.
-In order to select a suitable sound zone approach from the approaches considered in the review given in \autoref{ch:sound_zone:approach_review} the 
-mathematical properties of this model will be considered.
+In this section, a reflection will be made on what sound zone approach is must suited for integration with the Par
+detectability.
+This will be done by first reflecting on its mathematical properties in \autoref{ch:sound_zones:approach_selection:mathematical}.
+Next, \autoref{ch:sound_zones:approach_selection:selection} will argue why pressure matching is a promising approach for 
+the Par detectability.
 
-\subsection{Mathematical Properties of Detectability}
+\subsection{Mathematical Properties of Par Detectability}
+\label{ch:sound_zones:approach_selection:mathematical}
+This section will reflect on the mathematical properties of the Par detectability.
 Recall from \autoref{ch:perceptual:implementation} that the detectability $D(x[n],\varepsilon[n])$ quantifies how detectable a disturbance
 $\varepsilon[n]\in\Real{N_x}$ is in presence of a masking signal $x[n]\in\Real{N_x}$.
-In \autoref{ch:perceptual:implementation} it was also noted that the detectability is computed in the frequency domain.
-To this end, $X[k]$ and $\mathcal{E}[k]$ denote the frequency domain representations of $x[n]$ and $\varepsilon[n]$ respectively.
 
-In \autoref{ch:perceptual:implementation:least_squares} it was found that the detectability could be expressed as in least-squares fashion as follows:
+The detectability is computed using the frequency domain representation of its input signals.
+To this end, $X[k]$ and $\mathcal{E}[k]$ were introduced to denote the frequency domain representations of $x[n]$ and $\varepsilon[n]$ respectively.
+In addition to this it is important to note that the Par detectability operates short-time scales (20 to 200 ms).
+
+Finally, in \autoref{ch:perceptual:implementation:least_squares} it was found that the detectability could be expressed as in least-squares fashion as follows:
 \begin{align}
-    D(x[n],\varepsilon[n]) &= \norm[2][2]{\mat{W}\vecsymbol{\mathcal{E}}} 
+    D(x[n],\varepsilon[n]) &= \norm[2][2]{W_x[k]\mathcal{E}[k]} 
 \end{align}
-Here, the matrix $\mat{W}\in\Real{N_x \times N_x}$ is a diagonal matrix that models the masking effects of $x[n]$.
-The vector $\vecsymbol{\mathcal{E}}$ contains the frequency domain representation $\mathcal{E}[k]$.
-As such, $\mat{W}$ weighs each frequency component contained $\vecsymbol{\mathcal{E}}$.
-
-Note the following about the detectability:
-\begin{enumerate}
-    \item It is computed in the frequency domain. 
-    \item It operates on a short time scale (20 to 200 ms).
-    \item It is a convex function of the disturbance $\vecsymbol{\mathcal{E}}$.
-\end{enumerate}
+Here, perceptual weighting $W_x[k]$ models the masking effects of the masking signal $x[n]$.
+Note that the detectability is a convex function of the disturbance signal $\mathcal{E}[k]$. 
 
 \subsection{Selecting an Appropriate Sound Zone Approach}
-\todo{Write this}
-In \autoref{ch:sound_zone:approach_review} three different sound zone approaches were discussed: delay and sum beamforming (DS), pressure matching (PM),
+\label{ch:sound_zones:approach_selection:selection}
+In \autoref{ch:sound_zone:approach_review} two different sound zone approaches were discussed: pressure matching (PM)
 and acoustic contrast control (ACC).
-It was found that the delay and sum beamformer framework was too limiting to include any perceptual information, thus PM and ACC remain.
-
-As stated in \autoref{ch:sound_zone:approach_review}, the PM approach minimizes the squared error between the target sound pressure and the 
-sound pressure reproduced by the loudspeaker array.
-

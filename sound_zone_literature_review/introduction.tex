@@ -1,22 +1,16 @@
 The goal of this chapter is find a suitable sound zone approach for integration with the perceptual model selected in \autoref{ch:perceptual}.
-The chapter will start with \autoref{ch:sound_zone:approach_review} which will provide a review of various sound zone approaches from literature to provide a selection to choose 
-from.
 
-After documenting the state of the art, one sound zone algorithm will be selected in \autoref{ch:sound_zone:approach_selection} as the most promising 
-for combination with the perceptual model selected in \autoref{ch:perceptual}.
-This is done by reflecting on the mathematical properties of the selected perceptual model.
+The chapter will start with a brief description of sound zones in \autoref{ch:sound_zone:problem} to give the reader 
+the necessary background information on the sound zone problem.
+Afterwards, \autoref{ch:sound_zone:data_model} will flesh out the sound zone further by presenting a data model
+used to describe the sound zone problem.
 
-After selecting a sound zone approach, the rest of the chapter will focus on the derivation and the implementation of a sound zone algorithm that takes 
-said approach.
-This algorithm will serve as the basis upon which the perceptual sound zone algorithm will be built.
+One of these three approaches will be used to construct a perceptual sound zone algorithm using the model selected in \autoref{ch:perceptual}.
+To this end, \autoref{ch:sound_zone:constraints} will reflect on the mathematical properties of the Par detectability.
+From this, a sound zone approach will be selected.
+
+After selecting a sound zone approach, \autoref{ch:sound_zone:data_model} to \autoref{ch:sound_zone:frequency_domain_conversion} will focus on its implementation.
+This algorithm will serve as the basis upon which the perceptual sound zone algorithm will be built in \autoref{ch:perceptual_sound_zone}.
 In addition to this, it will serve as a reference with which the perceptual sound zone algorithm can be compared.
-
-To derive said sound zone algorithm, \autoref{ch:sound_zone:data_model} will start by formalizing the sound zone problem by introducing it in a 
-mathematical framework.
-This is followed by the implementation of the selected algorithm in \autoref{ch:sound_zone:approach_implementation}.
-
-The implementation is then extended in \autoref{ch:sound_zone:block_based} to operate in a short-time block-based fashion, 
-giving the algorithm the potential to run in real-time.
-A frequency-domain version of the algorithm is then given in \autoref{ch:sound_zone:frequency_domain_conversion}.
 
 The chapter ends with a summary and concluding remarks in \autoref{ch:sound_zone:conclusion}.

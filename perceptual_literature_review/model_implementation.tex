@@ -6,7 +6,7 @@ understanding of the model.
 
 This section is organized as follows.
 First, \autoref{ch:perceptual:implementation:intuition} gives a high-level description of the detectability, providing 
-an intuitive understanding of the detectability and introducing some of the notation that will be used.
+an intuitive understanding and introducing some of the notation that will be used.
 Next, the steps to computing the detectability are described in \autoref{ch:perceptual:implementation:computation}.
 Afterwards, \autoref{ch:perceptual:implementation:calibration} discusses the calibration of the Par detectability.
 Finally, \autoref{ch:perceptual:implementation:least_squares} rewrites the detectability to a more mathematically tractable expression.
@@ -15,24 +15,25 @@ Finally, \autoref{ch:perceptual:implementation:least_squares} rewrites the detec
 \label{ch:perceptual:implementation:intuition}
 In this section, a high-level description of the Par detectability will be given.
 This is done to give the reader a basic understanding of the model before going into greater detail.
-The Par detectability defines a function $D(x[n],\varepsilon[n])$.
-Here, $x[n]\in\Real{N_x}$ is the the masking signal, 
-and $\varepsilon[n]\in\Real{N_x}$ is the disturbance signal.
+The Par detectability maps two input sequences to a positive real value, i.e. $D: (\Real{N_x}, \Real{N_x})\mapsto \Real{+}$.
+The two input sequences will denoted as the masking signal $x[n]\in\Real{N_x}$ the disturbance signal $\varepsilon[n]\in\Real{N_x}$.
+The detectability of these two sequences will be denoted as $D(x[n], \varepsilon[n])$. 
 
-It is assumed that a human is listening to both the masking signal and the disturbance signal at the same time.
-The detectability can then be understood as the probability that a human listener can detect the disturbance signal 
-$\varepsilon[n]$ in presence of the masking signal $x[n]$~\cite{van2005perceptual}.
-The signal $x[n]$ is referred to as the masking signal because it masks the disturbance signal 
+It is assumed that a human is listening to both the masking signal $x[n]$ and the disturbance signal $\varepsilon[n]$ at the same time.
+The detectability $D(x[n], \varepsilon[n])$ can then be understood as how easily a human listener can detect the disturbance signal 
+$\varepsilon[n]$ in presence of the masking signal $x[n]$.
+The signal $x[n]$ is referred to as the masking signal because it is assumed to masks the disturbance signal 
 $\varepsilon[n]$ to a degree.
 
-For the model to be accurate, the signals $x[n]$ and $\varepsilon[n]$ should be short-time signals.
-The paper uses a signal length $N_x$ corresponding to between 20 to 200 milliseconds.    
+For this interpretation to be accurate, the signals $x[n]$ and $\varepsilon[n]$ should be short-time signals.
+The paper uses a signal length $N_x$ corresponding to a length in time between 20 to 200 milliseconds.    
 This is important, as the model assumes that the psycho-acoustical properties of $x[n]$ 
 and $\varepsilon[n]$ are stationary.  
 
 The metric is normalized in such a way that the detectability $D(x[n],\varepsilon[n])$ is equal to 1 when the 
-disturbance signal $\varepsilon[n]$ is just noticeable in presence of masking signal $x[n]$.
+disturbance signal $\varepsilon[n]$ is ``just noticeable'' in presence of masking signal $x[n]$.
 That is to say: if the detectability is 1, the disturbance is on the verge of being noticeable and not noticeable.
+
 The detectability $D(x[n],\varepsilon[n])$ can also attain a value larger than $1$.
 The larger values of the detectability correspond with an increased perceived presence of the
 disturbance signal $\varepsilon[n]$.
@@ -40,19 +41,20 @@ disturbance signal $\varepsilon[n]$.
 \subsection{Computation Details of the Par Detectability}
 \label{ch:perceptual:implementation:computation}
 This section will explore calculating the Par detectability.
-The first thing to note about the Par detectability is that it operates in the frequency domain. 
+The first thing to note about the Par detectability is that it is computed using the frequency domain representations of its inputs. 
 To this end, let $X[k]$ and $\mathcal{E}[k]$ denote the frequency domain representations of the masking signal $x[n]$ and 
 the disturbance signal $\varepsilon[n]$ respectively.
 
 After determining the frequency domain representations, the Par detectability computes an internal representation of the input signals $X[k]$ and $\mathcal{E}[k]$.
-This internal representation models how the input stimuli appear to the human auditory system, and is computed by filtering the input stimuli.
+This internal representation models how the input stimuli appear to the human auditory system, and is modeled by applying a filter to the input stimuli.
 
-The the internal representation of hte input stimuli can be obtained by applying two subsequent filters.
-The first step models how parts of the ear filter the incoming sound with an outer- and middle-ear filter $H_\text{om}[k]$. 
+Two subsequent filters are applied.
+The first filter models how parts of the ear filter the incoming sound with an outer- and middle-ear filter $H_\text{om}[k]$. 
 Next, a $4^\text{th}$ order Gammatone filter bank is applied, modeling the frequency-place transform that occurs in 
 basilar membrane inside of the ear~\cite{van2005perceptual}.
 
-The Gammatone filter bank consists of $N_g$ filters, and each individual filter is denoted by $\Gamma_i[k]$, for $1 \leq i \leq N_g$. 
+The Gammatone filter bank consists of $N_g$ filters.
+The frequency domain representation of each individual filter is denoted by $\Gamma_i[k]$, for $1 \leq i \leq N_g$. 
 The filters in the filter bank $\Gamma_i[k]$ have a bandwidth given by the equivalent 
 rectangular bandwidth (ERB) and center frequencies given by the corresponding equivalent rectangular bandwidth number
 scale (ERBS)~\footnote{Expressions for the gammatone filters $\Gamma_i[k]$ are provided by the original paper~\cite{van2005perceptual}.}.
@@ -226,40 +228,74 @@ To see how this is done, the reader is referred to the original paper~\cite{van2
 
 \subsection{Least-Squares Formulation of the Par Detectability}
 \label{ch:perceptual:implementation:least_squares}
-\todo{Rewrite / check this.... It's fishy.}
 This section will rewrite the previously introduced detectability into a least-squares representation. 
 This representation is more mathematically tractable than \autoref{eq:perceptual:implementation:computation:detectability} and thus 
 will allow for easier integration into existing sound zone algorithms.
 
-To allow for a more compact notation, following matrices and vectors are introduced:
+To obtain this expression, the sum of squares will be expressed as a L2-norm.
+Consider the following rewrite of the detectability given in \autoref{eq:perceptual:implementation:computation:detectability}: 
+\begin{align*}
+    D(x[n],\varepsilon[n]) &= C_s L_\text{eff}\sum_{i=0}^{N_g}
+                        \frac{\sum_{k=0}^{N_x-1}\left|H_\text{om}[k]\right|^2\left|
+                            \Gamma_i[k]\right|^2\left|\mathcal{E}[k]\right|^2}
+                        {\sum_{k=0}^{N_x-1}\left|H_\text{om}[k]\right|^2\left|
+                            \Gamma_i[k]\right|^2\left|X[k]\right|^2 + C_a} \\
+                           &= \sum_{i=0}^{N_g}
+                           \left(\frac{C_s L_\text{eff}}{\norm[2][2]{H_\text{om}[k]\Gamma_i[k]X[k]} + C_a}\right)
+                        \sum_{k=0}^{N_x-1}\left|H_\text{om}[k]\right|^2\left|
+                        \Gamma_i[k]\right|^2\left|\mathcal{E}[k]\right|^2 \\
+                           &= \sum_{k=0}^{N_x-1}\left(\sum_{i=0}^{N_g}\frac{C_s L_\text{eff}}{\norm[2][2]{H_\text{om}[k]\Gamma_i[k]X[k]} + C_a}\right)
+                        \left|H_\text{om}[k]\right|^2\left|\Gamma_i[k]\right|^2\left|\mathcal{E}[k]\right|^2 \\
+                           &= \sum_{k=0}^{N_x-1}\left|W_x[k]\right|^2\left|\mathcal{E}[k]\right|^2 \\
+                           &= \norm[2][2]{W_x[k]\mathcal{E}[k]} 
+\end{align*}
+The rewrite above introduced perceptual weighting $W_x[k]\in\Complex{N_x}$ describing the masking effects of the masking signal $x[n]$. 
+The perceptual weighting $W_x[k]$ is defined as follows: 
 \begin{equation}
-    \begin{array}{llrrrrrll}
-        \mat{H}_\text{om}   &=  &\text{diag}([& H_\text{om}[0],& H_\text{om}[1],&    \hdots,& H_\text{om}[N_x - 1]&]^T)& \\
-        \mat{\Gamma}_i      &=  &\text{diag}([&    \Gamma_i[0],&    \Gamma_i[1],&    \hdots,&    \Gamma_i[N_x - 1]&]^T)& \\
-        \vec{X}             &=  &            [&           X[0],&           X[1],&    \hdots,&           X[N_x - 1]&]^T& \\
-  \vecsymbol{\mathcal{E}}   &=  &            [& \mathcal{E}[0],& \mathcal{E}[1],&    \hdots,& \mathcal{E}[N_x - 1]&]^T& \\
-    \end{array}
+    W_x[k] = \left(\sqrt{\sum_{i=0}^{N_g}\frac{C_s L_\text{eff}}{\norm[2][2]{H_\text{om}[k]\Gamma_i[k]X[k]} + C_a}}\right)
+                        H_\text{om}[k]\Gamma_i[k] 
 \end{equation}
-The detectability given in \autoref{eq:perceptual:implementation:computation:detectability} can than be expressed as follows:
-\begin{align}
-    D(x[n],\varepsilon[n]) &= C_s L_\text{eff}\sum_{i=0}^{N_g} 
-        \frac{\vecsymbol{\mathcal{E}}\herm\mat{\Gamma}_i\herm\mat{H}_\text{om}\herm\mat{H}_\text{om}\mat{\Gamma}_i\vecsymbol{\mathcal{E}}}
-        {\vec{X}\herm\mat{\Gamma}_i\herm\mat{H}_\text{om}\herm\mat{H}_\text{om}\mat{\Gamma}_i\vec{X} + C_a\mat{I}_{N_x}} \\
-                           &= \vecsymbol{\mathcal{E}}\herm\left(C_s L_\text{eff}\sum_{i=0}^{N_g} 
-        \frac{\mat{\Gamma}_i\herm\mat{H}_\text{om}\herm\mat{H}_\text{om}\mat{\Gamma}_i}
-        {\vec{X}\herm\mat{\Gamma}_i\herm\mat{H}_\text{om}\herm\mat{H}_\text{om}\mat{\Gamma}_i\vec{X} + C_a\mat{I}_{N_x}}\right)\vecsymbol{\mathcal{E}}
-\end{align}
-Now define diagonal matrix $\mat{W}$ as follows: 
-\begin{align}
-    \mat{W} &= \sqrt{C_s L_\text{eff}\sum_{i=0}^{N_g} 
-        \frac{\mat{\Gamma}_i\herm\mat{H}_\text{om}\herm\mat{H}_\text{om}\mat{\Gamma}_i}
-    {\vec{X}\herm\mat{\Gamma}_i\herm\mat{H}_\text{om}\herm\mat{H}_\text{om}\mat{\Gamma}_i\vec{X} + C_a\mat{I}_{N_x}}}
-\end{align}
-As such, 
-\begin{align}
-    D(x[n],\varepsilon[n]) &= \vecsymbol{\mathcal{E}}\herm\mat{W}\herm\mat{W}\vecsymbol{\mathcal{E}} \\
-                           &= \norm[2][2]{\mat{W}\vecsymbol{\mathcal{E}}} 
-\end{align}
-As can be seen, the detectability can be expressed as a weighted squared L2-norm of the disturbance signal. 
-The weighting is entirely determined by the masking signal $x[n]$. 
+Note from this formulation that the perceptual weighting is only a function of the masking signal $x[n]$.
+Note also that the resulting detectability $D(x[n],\varepsilon[n])$ is a convex function of the disturbance signal $\varepsilon[n]$. 
+
+
+% To allow for a more compact notation, following matrices and vectors are introduced:
+% \begin{equation}
+%     \begin{array}{llrrrrrll}
+%         \mat{H}_\text{om}   &=  &\text{diag}([& H_\text{om}[0],& H_\text{om}[1],&    \hdots,& H_\text{om}[N_x - 1]&]^T)& \\
+%         \mat{\Gamma}_i      &=  &\text{diag}([&    \Gamma_i[0],&    \Gamma_i[1],&    \hdots,&    \Gamma_i[N_x - 1]&]^T)& \\
+%         \vec{X}             &=  &            [&           X[0],&           X[1],&    \hdots,&           X[N_x - 1]&]^T& \\
+%   \vecsymbol{\mathcal{E}}   &=  &            [& \mathcal{E}[0],& \mathcal{E}[1],&    \hdots,& \mathcal{E}[N_x - 1]&]^T& \\
+%     \end{array}
+% \end{equation}
+
+% Using this new notation, 
+% \begin{align}
+%     D(x[n],\varepsilon[n]) &= C_s L_\text{eff}\sum_{i=0}^{N_g} 
+%         \frac{\norm[2][2]{\mat{H}_\text{om}\mat{\Gamma}_i\vecsymbol{\mathcal{E}}}}
+%         {\norm[2][2]{\mat{H}_\text{om}\mat{\Gamma}_i\vec{X}} + C_a} \\
+%                            &= \sum_{i=0}^{N_g} 
+%         \norm[2][2]{\left(\sqrt{\frac{C_s L_\text{eff}}{\norm[2][2]{\mat{H}_\text{om}\mat{\Gamma}_i\vec{X}} + C_a}}\right)
+%         \mat{H}_\text{om}\mat{\Gamma}_i\vecsymbol{\mathcal{E}}} \\
+%                            &= \sum_{i=0}^{N_g} \norm[2][2]{\mat{W}_i\vecsymbol{\mathcal{E}}} 
+% \end{align}
+% Here, diagonal matrix $\mat{W}_i$ is defined as follows: 
+% \begin{align}
+%     \mat{W}_i &= \left(\sqrt{\frac{C_s L_\text{eff}}{\norm[2][2]{\mat{H}_\text{om}\mat{\Gamma}_i\vec{X}} + C_a}}\right)\mat{H}_\text{om}\mat{\Gamma}_i
+% \end{align}
+% This can be made more compact by rewriting the expression as follows:
+% \begin{align}
+%     D(x[n],\varepsilon[n]) &= \sum_{i=0}^{N_g} \vecsymbol{\mathcal{E}}\herm\mat{W}_i\herm\mat{W}_i\vecsymbol{\mathcal{E}} \\
+%                            &= \vecsymbol{\mathcal{E}}\herm\left(\sum_{i=0}^{N_g} \mat{W}_i\herm\mat{W}_i\right)\vecsymbol{\mathcal{E}} \\
+%                            &= \norm[2][2]{\mat{W}\vecsymbol{\mathcal{E}}} 
+% \end{align}
+% Here, diagonal matrix $\mat{W}$ is defined as follows: 
+% \begin{equation}
+%     \sqrt{\left(\sum_{i=0}^{N_g} \mat{W}_i\herm\mat{W}_i\right)}
+% \end{equation}
+% The square root operation is taken element-wise.
+% This is possible as the $\mat{W}_i$ matrices are diagonal.
+
+% As can be seen, the detectability can be expressed as a weighted squared L2-norm of the disturbance signal. 
+% The weighting is entirely determined by the masking signal $x[n]$. 
 

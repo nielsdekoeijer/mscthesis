@@ -2,10 +2,8 @@ This section will document a literature review into perceptual models of the hum
 As stated in the introduction, this literature review is performed to determine which perceptual models are currently 
 available in the state of the art.
 This review will then be later used in \autoref{ch:perceptual:selection} to select a perceptual model most 
-suitable for integration into sound zone algorithms.
+suitable for integration with a sound zone algorithm.
 
-For this literature review, the goal is to document the perceptual models that were either promising for 
-the integration into algorithms.
 Especially promising are models that attach some ``score'' or ``rating'' to the perceptual quality of input signals.
 These ratings can then be used in algorithms to obtain an optimal rating through optimization.
 In addition to this, they can possibly used to quantify the quality of results from later algorithms.
@@ -16,7 +14,7 @@ that most accurately emulate the behavior of the human ear, but rather on algori
 To this end, two categories of perceptual models are considered.
 First in \autoref{ch:perceptual:review:objective}, ``objective measures'' are discussed.
 These are models which attempt to predict the perceptual quality ratings from listening tests. 
-Next perceptual models from ``audio coding'' are discussed in \autoref{ch:perceptual:review:audio_coding}.
+Next, perceptual models from ``audio coding'' are discussed in \autoref{ch:perceptual:review:audio_coding}.
 These models are used to quantify how audible the artifacts of audio compression are.
 
 \subsection{Objective Measures}
@@ -24,7 +22,7 @@ These models are used to quantify how audible the artifacts of audio compression
 In order to determine the perceived quality of audio one approach is to use listening tests.
 These are tests in which subjects are asked to rate a property (or properties) of a set of audio stimuli.
 One example where listening tests are used is for the evaluation of speech intelligibility of listening aids~\cite{taal2011algorithm}.
-Other examples include determining which loudspeaker has the best perceived sound quality.
+Another example is determining which loudspeaker has the best perceived sound quality.
 
 Performing listening tests is however often cumbersome due to the large amount of human labour involved.
 This motivates the use of objective quality measures, which attempt to predict the outcomes of these listening tests.
@@ -40,7 +38,7 @@ Most of the discussed models take the following approach.
 First, they convert the input stimuli to their so-called internal representations, which models how the 
 human auditory system perceives the stimuli.
 Various features are then derived from the internal representation of the stimuli.
-The features are then fit to the results of listening tests.
+The features are then mapped to a prediction of the results of a listening test.
 
 These objective quality measures are promising for integration into sound zone algorithms as they summarize the 
 quality of a signal into a single value, which can be potentially optimized for. 
@@ -191,16 +189,16 @@ the number of short-time blocks that exceed a certain threshold.
 \label{ch:perceptual:review:audio_coding}
 The second class of perceptual models that will be considered are the perceptual models used in audio coding.
 Audio coding algorithms attempt to find an low-bitrate representation of an audio input signal, which is a 
-form of of lossy compression.
+form of lossy compression.
 As such, reducing the bitrate introduces errors.
 These errors can be a detriment to the listening experience.
 
-As such, most audio coding algorithms use a perceptual model to quantify how disturbing the distortions are.
+As such, most audio coding algorithms use a perceptual model to quantify how disturbing the introduced distortions are.
 The perceptual model is used to introduce encoding errors in such a way that the audio output
 signal is perceptually indistinguishable from the audio input signal~\cite{taal2012low}.
 The perceptual model typically takes form of a distortion function which determines how
 audible the difference between a reference input audio signal and a distorted output audio signal is.
-This function can used to encode an input audio signal such that it has minimal distortion for a
+This function can used to for example encode an input audio signal such that it has minimal distortion for a
 specified bitrate.
 
 The perceptual models used in audio coding are promising for integration into a sound zone algorithm, as they are 
@@ -208,6 +206,8 @@ often mathematically tractable.
 As stated, these perceptual models typically take the form of some sort of distortion function that quantifies
 how perceptually disturbing the introduced artifacts are. 
 One approach could be to define sound zone algorithms that minimize a distortion function for example.
+
+As such this section will explore three perceptual models from audio coding.
 
 \subsubsection{ISO MPEG Models}
 The ISO/IEC 11172-3 standard specifies a coded representation for audio files~\cite{ISO11172-3}, 

@@ -1,0 +1,99 @@
+An initial description of the sound zone problem was given in the introduction.
+This section seeks to build on this description in order to provide the necessary background on sound zones to 
+understand the rest of this work.
+
+In sound zones, the goal is to control the spatial distribution of sound inside an enclosure.
+This is done by controlling the audio that is produced by an array of loudspeakers.
+The space inside the enclosure is divided up into multiple zones.
+Each zone is assigned target sound pressure that we would like to have reproduced inside of it.
+The reproduction is to be done in such a way that there is minimal interference between zones.
+To understand this, consider the example given by \autoref{fig:sound_zones:background:content}.
+
+\begin{figure}[h]
+    \centering
+    \scalebox{1.0}{\input{tikz/tikz_2D_room_concept_content.tex}}
+    \caption{A room is divided into two zones: a red zone and a blue zone.
+        Each zone is assigned different content: content A and content B.
+        The loudspeakers array that is present in the room is to be controlled by the sound zone algorithm 
+        in such a way that the desired content is reproduced.
+        As mentioned, this is to be done in a way that results in minimal interference, e.g. it is undesirable
+        to be able to hear content B when inside the red zone.}
+    \label{fig:sound_zones:background:content}
+\end{figure}
+
+An important concept for understanding sound zone literature is the concept of bright zones and dark zones.
+Sound zone problems are typically decomposed into multiple subproblems consisting of a bright zone and 
+one or more dark zone(s).
+
+The goal of each subproblems is to reproduce a specified target sound pressure in the bright zone while restricting the 
+sound pressure in the dark zones(s).
+In doing so, the target sound pressure is essentially reproduced locally in the bright zone,
+while the sound pressure leaking into the dark zone(s) is kept low.
+
+When the subproblems are combined, the sound zone problem is solved as all target sound pressures 
+are reproduced locally in their respective zones.
+To ease the understanding of this concept, an example of this decomposition is given in 
+\autoref{fig:sound_zones:background:bright_dark_example}.
+
+\begin{figure}[]
+    \centering
+    \begin{subfigure}{0.49\linewidth}
+        \centering
+        \scalebox{0.9}{\input{tikz/tikz_2D_room_concept_bright_dark_zone_A.tex}}
+    \end{subfigure}
+    \begin{subfigure}{0.49\linewidth}
+        \centering
+        \scalebox{0.9}{\input{tikz/tikz_2D_room_concept_bright_dark_zone_B.tex}}
+    \end{subfigure}
+    \caption{Decomposition of the example given in \autoref{fig:sound_zones:background:content} into 
+        two bright-dark zone pairs.
+        For the first problem, the goal is to reproduce content A in bright zone A while minimizing 
+        the amount of sound pressure in dark zone A.
+        Similarly for the second problem: reproduce content B in bright zone B while minimizing the 
+        amount of sound pressure in dark zone B.
+        Combining the two solutions results in a solution with content reproduced in both zones with 
+        minimal interference between zones.}
+    \label{fig:sound_zones:background:bright_dark_example}
+\end{figure}
+% \subsection{Sound Zone Approaches}
+% \label{ch:sound_zone:problem:solutions}
+% With the sound zone problem sufficiently explained, this section will now cover various sound zone approaches.
+% These approaches describe a general manner of solving the sound zone problem.
+
+% \subsubsection{Delay and Sum Beamforming}
+% One traditional approach to creating sound zones is delay and sum (DS) beamforming~\cite{olik2013comparative}.
+% In beamforming an array of loudspeakers is used to focus a ``beam'' of audio.
+% This is done using the principals of constructive and destructive interference by playing with slight delays from each loudspeaker in the array (hence, 
+% the name ``delay and sum'').
+% The beam is constructed through constructive interference, whereas outside of the beam the audio content is partially canceled through destructive interference.
+
+% For sound zone applications, the angle of the beam is chosen such that the target audio is directed towards its respective bright zone.
+% Beamforming is somewhat limited for sound zone applications as it limits the spatial control to an angled beam.
+% The other sound zone algorithms that will be discussed in this section can be considered a generalization of beamforming, as their framework supports more
+% spatial control.
+
+% \subsubsection{Pressure Matching Approach}
+% In pressure matching approaches (PM), one attempts to control the output of the loudspeaker array in such a way that resulting sound pressure in the zone 
+% matches the specified target sound pressure for that zone.
+% While doing so, the PM approach attempts to minimize the sound pressure that results in other zones as to minimize the interference or crosstalk between zones
+% ~\cite{olik2013comparative, betlehem2015personal}.
+
+% PM is usually implemented as an optimization problem which minimizes the least-squares error between the target and resulting sound pressures in the bright zone.
+% The optimization problem often includes constraints which limit the squared resulting sound pressure in the dark zone(s).
+% The minimization of the least-squares error has been done in both the frequency and the time domain.
+
+% \subsubsection{Acoustic Contrast Control Approach}
+% The acoustic contrast control (ACC) approach to sound zones attempts to maximize the acoustic contrast between the bright zone and the dark zone for 
+% each specified target sound pressure.
+% The acoustic contrast is defined as the ratio of the acoustic potential energy of the bright zone and the dark zone.
+% Just as with PM, ACC is defined as an optimization problem.
+
+% Typically, ACC is performed in the frequency domain.
+% This is done in a narrow band fashion, where the solution computed separately per frequency band ~\cite{olik2013comparative, betlehem2015personal}.
+% However, Elliot et al. explored a broadband approach to ACC in 2011 which was further refined by Cai et al in 2014 called broad band acoustic contrast control 
+% (BACC)~\cite{elliott2011regularisation, cai2014time}.
+% This was done by translating the ACC problem into the time domain rather than the frequency domain.
+
+% ACC approaches typically have good acoustic contrast, but reproduce the target sound pressure less faithfully than PM approaches~\cite{lee2020signal}.
+% As such, hybrid approaches such as ACC-PM~\cite{galvez2015time} and BACC-PM~\cite{lee2018unified} have been proposed recently which allow for what is
+% essentially a compromise between ACC and PM.

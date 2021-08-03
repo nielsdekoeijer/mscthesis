@@ -1,16 +1,20 @@
+In the previous section, the sound zone problem was introduced heuristically.
 In this section a mathematical framework for a room containing sound zones will be introduced.
 This framework will be used in the derivation of the sound zone algorithms.
 
 The contents of this section are as follows.
+First, \autoref{ch:sound_zones:data_model:room_model} introduces a spatial description of a room containing
+two zones and a loudspeaker array.
+Then, \autoref{ch:sound_zones:data_model:target_pressure} defines the objective of the sound zone algorithm
+as realizing target sound pressure at discrete points in the room.
 
-First, \autoref{sec:sound_zones:data_model:room_model} introduces a spatial description of a room containing two zones and a loudspeaker array.
-Then, \autoref{sec:sound_zones:data_model:target_pressure} defines the objective of the sound zone algorithm as realizing target sound pressure at discrete points in the room.
-
-The relation between the sound pressure in the room and loudspeaker input signals will then be given in \autoref{sec:sound_zones:data_model:realizing_pressure}, completing the mathematical framework.
-This is then used in \autoref{sec:sound_zones:data_model:target_pressure_choice} to select a suitable target sound pressure which will be used in the remainder of this thesis.
+The relation between the sound pressure in the room and loudspeaker input signals will then be given in
+\autoref{ch:sound_zones:data_model:realizing_pressure}, completing the mathematical framework.
+This is then used in \autoref{ch:sound_zones:data_model:target_pressure_choice} to select a suitable target
+sound pressure which will be used in the remainder of this thesis.
 
 \subsection{Room Topology}
-\label{ch:sound_zone:data_model:room_topology}
+\label{ch:sound_zone:data_model:room_model}
 In this section, a description of the room in which sound zones are to be reproduced will be given.
 In general, the room can contain any number of zones, but this thesis will focus on the two zone case. 
 
@@ -41,7 +45,7 @@ specified target sound pressure is attained.
 The rest of this section will focus on formalizing this notion mathematically.
 
 \subsection{Defining Target Pressure}
-\label{sec:sound_zones:data_model:target_pressure}
+\label{ch:sound_zones:data_model:target_pressure}
 As mentioned, the goal of the sound zone algorithm is to realize a specified target sound pressure
 in the different zones $\za$ and $\zb$ in the room $R$.
 
