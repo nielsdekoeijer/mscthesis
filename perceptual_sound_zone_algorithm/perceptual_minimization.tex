@@ -1,30 +1,52 @@
 In \autoref{ch:perceptual} the Par detectability $D(x[n],\varepsilon[n])$ was introduced as the most promising perceptual model.
-Recall that the Par detectability quantifies how detectable a disturbance signal $\varepsilon[n]$ is in presence of masking signal $x[n]$.
+Later, in \autoref{ch:sound_zone:approach_selection} it was found that a pressure matching could be formulated using said perceptual model.
+This section will detail the combination of the two, resulting in a detectability-based pressure matching algorithm.
 
-It was shown in \autoref{ch:perceptual:implementation} that the Par detectability can be expressed as follows: 
+\subsection{Summary of Par Detectability}
+The Par detectability $D(x[n],\varepsilon[n])$ quantifies how detectable a disturbance signal $\varepsilon[n]$ is in presence of masking signal $x[n]$.
+Essentially, it assigns a grade to how well a human can detect $\varepsilon[n]$ when also listening to $x[n]$.  
+
+It was shown in \autoref{ch:perceptual:implementation} that the Par detectability $D(x[n],\varepsilon[n])$ can be expressed as follows: 
 \begin{align}
     D(x[n],\varepsilon[n]) &= \norm[2][2]{W_{x}[k]\mathcal{E}[k]} 
 \end{align}
+Here, perceptual weighting $W_{x}[k]$ defines a frequency weighting dependant on the masking properties of the masking signal $x[n]$.
+The perceptual weighting is applied to the frequency domain representation of the disturbance signal $\mathcal{E}[k]$ to obtain the detectability grade.
 
-In \autoref{ch:sound_zone}, it was found that a pressure matching sound zone approach is most suitable for integration with the Par detectability
-due to their mathematical similarities.
-As shown, the detectability is defined as the squared L2 norm of the disturbance weighted by diagonal matrix $\mat{W}_{x}$ determined by the masking signal.
-Pressure matching minimizes the squared L2 sound pressure error between the target sound pressure and the sound pressure attained by the loudspeaker.
+If the masking signal $x[n]$ is held constant, the detectability is convex in the disturbance signal $\varepsilon[n]$.
 
-Recall that the pressure matching cost function is given as follows.
+\subsection{Summary of Pressure Matching}
+In pressure matching, the goal is to minimize the sound pressure leaking into the dark zone while also minimizing the difference between the target and achieved sound pressure in the bright zone.
+In \autoref{ch:sound_zone:approaches} it was shown that the pressure matching algorithm can be given as follows:
 \begin{align}
-    \argmin{\tilde{x}_{\za,\mu}^{(l)}[n],\,\tilde{x}_{\zb,\mu}^{(l)}[n]\,\forall\,l}{
-       &\sum_{m\in A} \norm[2][2]{\tilde{P}_{\za}^{(m)}[k,\mu] - \tilde{T}^{(m)}[k,\mu]} +
-        \sum_{m\in A} \norm[2][2]{\tilde{P}_{\zb}^{(m)}[k,\mu]} + \\
-       &\sum_{m\in B} \norm[2][2]{\tilde{p}_{\zb}^{(m)}[k,\mu] - \tilde{T}^{(m)}[k,\mu]} + 
-        \sum_{m\in B} \norm[2][2]{\tilde{P}_{\za}^{(m)}[k,\mu]}
+    \argmin{x_\za^{(l)}[n],\,x_\zb^{(l)}[n]\,\forall\,l}{
+       &\text{RE}_\za + \text{LE}_\za + \text{RE}_\zb + \text{LE}_\zb
     }
 \end{align}
-Using the definition of detectability given above, consider the following:
-\begin{equation}
-    D(\tilde{t}^{(m)}[n,\mu],\,\tilde{p}_{\zz}^{(m)}[n,\mu] - \tilde{t}^{(m)}[n,\mu]) = 
-        \norm[2][2]{\mat{W}_{\tilde{t}^{(m)}[\mu]}\left(\tilde{P}_{\za}^{(m)}[k,\mu] - \tilde{T}^{(m)}[k,\mu]\right)} 
-\end{equation}
+In this optimization problem, the loudspeaker input signals $x_\za^{(l)}[n]$ and $x_\za^{(l)}[n]$ for all loudspeakers $l$ are determined such that they minimize the 
+reproduction errors $\text{RE}_\za$ and $\text{RE}_\zb$, and the leakage errors $\text{LE}_\za$ and $\text{LE}_\zb$.
+
+The reproduction errors $\text{RE}_\za$ and $\text{RE}_\zb$ represent the error between target and achieved sound pressure, whereas the leakage errors $\text{LE}_\za$ and $\text{LE}_\zb$ represent 
+the leakage of bright zone content to the dark zone.
+Recall that they were defined as follows:
+\begin{align}
+    \text{RE}_\zz &= \sum_{m\in Z} \norm[2][2]{p_\zz^{(m)}[n] - t^{(m)}[n]} \\
+    \text{LE}_\zz &= \sum_{m\notin Z} \norm[2][2]{p_\zz^{(m)}[n]} 
+\end{align}
+Here, $p_\zz^{(m)}[n]$ is the achieved sound pressure at control point $m$ and $t^{(m)}[n]$ is the target sound pressure for control point $m$. 
+
+As the detectability operates on short-time scales, a short-time version of pressure matching was proposed in 
+
+\subsection{Detectability Based Pressure Matching}
+Previously, \autoref{ch:sound_zone:approach_selection} found that pressure matching approach could be formulated using the detectability.
+Consider the following definitions for the perceptual reproduction error and the perceptual leakage error:
+\begin{align}
+    \text{PRE}_\zz &= \sum_{m\in Z} D(t^{(m)}[n],\,p_\zz^{(m)}[n] - t^{(m)}[n]) \\
+    \text{PLE}_\zz &= \sum_{m\notin Z} D(t^{(m)}[n],\,p_\zz^{(m)}[n])  
+\end{align}
+Rather than optimizing over the 
+
+\subsection{Proposed Approach}
 
 Essentially, the approach is to replace the norms in the equation above by the perceptually weighted equivalent.
 For each norm, we consider the masking effects determined by the target sound pressure for the respective point $m$. 

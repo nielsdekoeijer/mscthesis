@@ -1,0 +1,24 @@
+Just writing out my outline because it became too confusing.
+
+Ch 1. Introduction
+-> Motivation: 
+	1. Describe sound zone problem, note that perceptual approach is promising
+-> Research Question:
+	1. How can perceptual information improve sound zones?
+-> Organization: 
+	1. Literature review into possible perceptual models for use in algorithm or for validation.
+	2. Discussion of Pressure Matching, a sound zone approach that was found to be easily intratable with the most promising perceptual model.
+	3. Implementation and Review of two Perceptual Sound Zone Algorithms
+
+Ch 2. Perceptual Model Selection
+-> Perceptual Background
+-> Perceptual Model Literature Review
+	1. Audio Coding
+	2. Objective Measures
+-> Selection Criteria:
+	1. Good properties for optimization
+	2. It's the Par detectability
+-> Description of Par detectability
+
+Ch 3. Pressure Matching 
+-> 

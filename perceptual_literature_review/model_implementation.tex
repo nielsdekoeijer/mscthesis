@@ -249,53 +249,12 @@ Consider the following rewrite of the detectability given in \autoref{eq:percept
                            &= \sum_{k=0}^{N_x-1}\left|W_x[k]\right|^2\left|\mathcal{E}[k]\right|^2 \\
                            &= \norm[2][2]{W_x[k]\mathcal{E}[k]} 
 \end{align*}
-The rewrite above introduced perceptual weighting $W_x[k]\in\Complex{N_x}$ describing the masking effects of the masking signal $x[n]$. 
+The rewrite above introduced perceptual weighting $W_x[k]\in\Real{N_x}$ describing the masking effects of the masking signal $x[n]$. 
 The perceptual weighting $W_x[k]$ is defined as follows: 
 \begin{equation}
     W_x[k] = \left(\sqrt{\sum_{i=0}^{N_g}\frac{C_s L_\text{eff}}{\norm[2][2]{H_\text{om}[k]\Gamma_i[k]X[k]} + C_a}}\right)
-                        H_\text{om}[k]\Gamma_i[k] 
+                        \left|H_\text{om}[k]\right|\left|\Gamma_i[k]\right|
 \end{equation}
 Note from this formulation that the perceptual weighting is only a function of the masking signal $x[n]$.
 Note also that the resulting detectability $D(x[n],\varepsilon[n])$ is a convex function of the disturbance signal $\varepsilon[n]$. 
-
-
-% To allow for a more compact notation, following matrices and vectors are introduced:
-% \begin{equation}
-%     \begin{array}{llrrrrrll}
-%         \mat{H}_\text{om}   &=  &\text{diag}([& H_\text{om}[0],& H_\text{om}[1],&    \hdots,& H_\text{om}[N_x - 1]&]^T)& \\
-%         \mat{\Gamma}_i      &=  &\text{diag}([&    \Gamma_i[0],&    \Gamma_i[1],&    \hdots,&    \Gamma_i[N_x - 1]&]^T)& \\
-%         \vec{X}             &=  &            [&           X[0],&           X[1],&    \hdots,&           X[N_x - 1]&]^T& \\
-%   \vecsymbol{\mathcal{E}}   &=  &            [& \mathcal{E}[0],& \mathcal{E}[1],&    \hdots,& \mathcal{E}[N_x - 1]&]^T& \\
-%     \end{array}
-% \end{equation}
-
-% Using this new notation, 
-% \begin{align}
-%     D(x[n],\varepsilon[n]) &= C_s L_\text{eff}\sum_{i=0}^{N_g} 
-%         \frac{\norm[2][2]{\mat{H}_\text{om}\mat{\Gamma}_i\vecsymbol{\mathcal{E}}}}
-%         {\norm[2][2]{\mat{H}_\text{om}\mat{\Gamma}_i\vec{X}} + C_a} \\
-%                            &= \sum_{i=0}^{N_g} 
-%         \norm[2][2]{\left(\sqrt{\frac{C_s L_\text{eff}}{\norm[2][2]{\mat{H}_\text{om}\mat{\Gamma}_i\vec{X}} + C_a}}\right)
-%         \mat{H}_\text{om}\mat{\Gamma}_i\vecsymbol{\mathcal{E}}} \\
-%                            &= \sum_{i=0}^{N_g} \norm[2][2]{\mat{W}_i\vecsymbol{\mathcal{E}}} 
-% \end{align}
-% Here, diagonal matrix $\mat{W}_i$ is defined as follows: 
-% \begin{align}
-%     \mat{W}_i &= \left(\sqrt{\frac{C_s L_\text{eff}}{\norm[2][2]{\mat{H}_\text{om}\mat{\Gamma}_i\vec{X}} + C_a}}\right)\mat{H}_\text{om}\mat{\Gamma}_i
-% \end{align}
-% This can be made more compact by rewriting the expression as follows:
-% \begin{align}
-%     D(x[n],\varepsilon[n]) &= \sum_{i=0}^{N_g} \vecsymbol{\mathcal{E}}\herm\mat{W}_i\herm\mat{W}_i\vecsymbol{\mathcal{E}} \\
-%                            &= \vecsymbol{\mathcal{E}}\herm\left(\sum_{i=0}^{N_g} \mat{W}_i\herm\mat{W}_i\right)\vecsymbol{\mathcal{E}} \\
-%                            &= \norm[2][2]{\mat{W}\vecsymbol{\mathcal{E}}} 
-% \end{align}
-% Here, diagonal matrix $\mat{W}$ is defined as follows: 
-% \begin{equation}
-%     \sqrt{\left(\sum_{i=0}^{N_g} \mat{W}_i\herm\mat{W}_i\right)}
-% \end{equation}
-% The square root operation is taken element-wise.
-% This is possible as the $\mat{W}_i$ matrices are diagonal.
-
-% As can be seen, the detectability can be expressed as a weighted squared L2-norm of the disturbance signal. 
-% The weighting is entirely determined by the masking signal $x[n]$. 
 

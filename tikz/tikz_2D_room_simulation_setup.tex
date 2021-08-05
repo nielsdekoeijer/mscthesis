@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+    \draw [draw=black] (0,0) rectangle (5,5);
+
+    % Speakers on the top wall
+    \pic[scale=0.7] at (1.00, 4.25) {Speaker};
+    \pic[scale=0.7] at (4.00, 4.25) {Speaker};
+
+    % Speakers on the bottom wall
+    \pic[rotate=180, scale=0.7] at (1.00, 0.75) {Speaker};
+    \pic[rotate=180, scale=0.7] at (4.00, 0.75) {Speaker};
+
+    \draw[opacity=0.4, fill=blue, draw=white] (1.25, 2.00) circle[radius=0.15];
+    \draw[opacity=0.4, fill=blue, draw=white] (2.25, 2.00) circle[radius=0.15];
+    \draw[opacity=0.4, fill=red, draw=white] (3.75, 2.00) circle[radius=0.15];
+    \draw[opacity=0.4, fill=red, draw=white] (2.75, 2.00) circle[radius=0.15];
+\end{tikzpicture}
