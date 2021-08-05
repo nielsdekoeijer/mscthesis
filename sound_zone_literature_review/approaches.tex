@@ -1,18 +1,21 @@
 The two main approaches in sound zone literature are pressure matching (PM) and acoustic contrast control (ACC).
 One of these two approaches will be used in the perceptual sound zone algorithm to be introduced in \autoref{ch:perceptual_sound_zone}.
-This section will mathematically introduce both approaches with the goal of sketching their mathematical properties.
-This will then later be used determine in \autoref{} if it is suitable for integration with the Par detectability discussed in \autoref{ch:perceptual}.
+This section will mathematically introduce both approaches with the previously derived data model with the goal of sketching their mathematical properties.
+This will then later be used in \autoref{ch:sound_zone:approach_selection} to determine  which is suitable for integration with the 
+Par detectability discussed in \autoref{ch:perceptual}.
 
-In the typical sound zone approach, the resulting loudspeaker input signals $x^{(l)}[n]$ are determined for just a bright-dark zone pair.
-Here, the loudspeaker input signals are found such that the a target audio is achieved in the bright zone, while leakage is minimized in the dark zone.
-If the solution for multiple zones is desired, than multiple problems must be solved and their resulting loudspeaker input signals combined, as discussed
-in \autoref{ch:sound_zone:problem}. 
+In the typical sound zone approach the sound zone problem is divided up into subproblems as described in \autoref{ch:sound_zone:problem}.
+The resulting loudspeaker input signals $x^{(l)}[n]$ are determined for a single bright-dark zone pair:
+the loudspeaker input signals are found such that the a target audio is achieved in the bright zone, while leakage is minimized in the dark zone.
+If the solution for multiple zones is desired, then multiple problems must be solved and their resulting loudspeaker input signals combined.
 
+There is another approach however.
 In a multi-zone approach, the loudspeaker input signals are instead determined for jointly for all zones, rather than decomposing into bright-dark zone pairs.
-This is the approach that will be taken in this thesis.
-For simplicity, this thesis will focus on a situation with two zones\footnote{The approach is however generalizable to any multiplicity of zones}.
+This is the approach that will be taken in this thesis, as it was found to be more general and simple to present.
+For simplicity, this thesis will limit the number of zones to two.
+The approach is however generalizable to any multiplicity of zones.
 
-In a two zone approach, the loudspeaker input signals $x^{(l)}[n]$ are decomposed into two parts as follows:
+In a two zone multi-zone approach, the loudspeaker input signals $x^{(l)}[n]$ will be decomposed into two parts as follows:
 \begin{equation}
     x^{(l)}[n] = x_\za^{(l)}[n] + x_\zb^{(l)}[n]
 \end{equation}
@@ -23,35 +26,37 @@ Through this decomposition, it is possible to consider the sound pressure that a
 \begin{align}
     p_\zz^{(m)}[n] &= \sum_{l=0}^{N_L} \left(h^{(l,m)} \ast x_\zz^{(l)}\right)[n] 
 \end{align}
+\label{eq:sound_zone:approaches:pressure}
 Where $\zz \in \left(\za,\,\zb\right)$ represents either zones.
 Here, $p_\za^{(m)}[n]$ and $p_\zb^{(m)}[n]$ can be understood to be the pressure that arises due to 
-playing loudspeaker input signals $x_\za^{(l)}[n]$ and $x_\zb^{(l)}[n]$ respectively. 
-The total sound pressure is then given by the addition of the two sound pressures:
+playing loudspeaker input signals $x_\za^{(l)}[n]$ and $x_\zb^{(l)}[n]$ respectively at a specified control point. 
+The total sound pressure at control point $m$ is then given by the addition of the two sound pressures:
 \begin{equation}
     p^{(m)}[n] = p_\za^{(m)}[n] + p_\zb^{(m)}[n]
 \end{equation}
 
-What follows is using this decomposition to describe a multi-zone variant of both pressure matching in \autoref{ch:sound_zone:approaches:pressure_matching}
-and acoustic contrast control in \autoref{ch:sound_zone:approaches:acoustic_contrast_control}.
+What follows is using this decomposition to describe a multi-zone variant of both a pressure matching approach 
+in \autoref{ch:sound_zone:approaches:pressure_matching}
+and acoustic contrast control approach in \autoref{ch:sound_zone:approaches:acoustic_contrast_control}.
 
 \subsection{Pressure Matching}
 \label{ch:sound_zone:approaches:pressure_matching}
 The ``Pressure Matching'' (PM) is widely used in literature to solve the sound zone problem.
-In this section, a ``Multi-Zone Pressure Matching'' (MZ-PM) algorithm will be derived using the previously derived data model.
+In this section, a ``Multi-Zone Pressure-Matching'' (MZ-PM) algorithm will be derived using the previously derived data model.
 
-In pressure matching approaches (PM), one attempts to control the output of the loudspeaker array in such a way that resulting sound pressure in the zone 
-matches the specified target sound pressure for that zone.
-While doing so, the PM approach attempts to minimize the sound pressure that results in other zones as to minimize the interference or crosstalk between zones
-~\cite{olik2013comparative, betlehem2015personal}.
+In pressure matching approaches, one attempts to control the output of the loudspeaker array in such a way that resulting sound pressure in the zone 
+matches the specified target sound pressure for that zone, 
+while simultaneously minimizing the sound pressure that results in other zones as to minimize the interference or crosstalk between zones
+~\cite{betlehem2015personal, olik2013comparative}.
 
-The idea in this approach is to chose $x_\za^{(l)}[n]$ and such that the resulting pressure $p_\za^{(m)}[n]$ attains the target sound pressure $t^{(m)}[n]$ in all $m \in A$.   
+The idea in this approach is to chose $x_\za^{(l)}[n]$ and such that the resulting pressure 
+$p_\za^{(m)}[n]$ attains the target sound pressure $t^{(m)}[n]$ in all control points $m \in A$.   
+At the same time however, $p_\za^{(m)}[n]$ should result minimal sound pressure in all control points $m \in B$.
+Any sound pressure resulting from $x_\za^{(l)}[n]$ in zone $\zb$ is can be understood as leakage, or cross-talk between zones. 
 
-At the same time however, $p_\za^{(m)}[n]$ should not result in any sound pressure in all $m \in B$.
-Any sound pressure resulting from $x_\za^{(l)}[n]$ in zone $\zb$ is essentially leakage, or cross-talk between zones. 
 Similar arguments can be given for $x_\zb^{(l)}[n]$.
 
-In the MZ-PM approach, the loudspeaker input signals $x_\za^{(l)}[n]$ and $x_\zb^{(l)}[n]$ that attain the target with minimal leakage can be found by 
-minimizing the difference between the intended pressure and the realized pressure as follows:
+An optimization problem that achieves this goal can be formulated as follows:
 \begin{align}
     \argmin{x_\za^{(l)}[n],\,x_\zb^{(l)}[n]\,\forall\,l}{
        &\sum_{m\in A} \norm[2][2]{p_\za^{(m)}[n] - t^{(m)}[n]} +
@@ -60,26 +65,32 @@ minimizing the difference between the intended pressure and the realized pressur
         \sum_{m\in B} \norm[2][2]{p_\za^{(m)}[n]}
     }
 \end{align}
+Here, the $\norm[2][2]{\,\,\cdot\,\,}$ operates denotes the squared L2-norm. 
+In this case, this corresponds to taking the sum of the squares of the elements of a time-domain input sequence.
 
-Here, the first two terms can be understood as the reproduction error and the leakage for zone $\za$.
-Similarly, the last two terms are the reproduction error and leakage for zone $\zb$. 
-To make this more clear, the following definitions are introduced:
+To further understand how optimization problem operates, consider the following definitions: 
 \begin{align}
-    \text{RE}_\zz &= \sum_{m\in A} \norm[2][2]{p_\za^{(m)}[n] - t^{(m)}[n]} \\
-    \text{LE}_\zz &= \sum_{m\in A} \norm[2][2]{p_\zb^{(m)}[n]} 
+    \text{RE}_\zz &= \sum_{m\in Z} \norm[2][2]{p_\zz^{(m)}[n] - t^{(m)}[n]} \\
+    \text{LE}_\zz &= \sum_{m\notin Z} \norm[2][2]{p_\zz^{(m)}[n]} 
 \end{align}
+Here, $\text{RE}_\zz$ is the reproduction error for zone $\zz \in \left(\za,\,\zb\right)$.
+This is error corresponds to how well the achieved sound pressure $p_\zz^{(m)}[n]$ matches the target sound pressure $t^{(m)}[n]$ for all control points in the
+bright zone $Z$. 
 
-Here, $\text{RE}_\zz$ is the reproduction error and $\text{LE}_\zz$ is the leakage error in zone $\zz \in \left(\za,\,\zb\right)$.
-This allows for the following rewrite of the previously introduced optimization problem:
+$\text{LE}_\zz$ is the leakage error in zone $\zz \in \left(\za,\,\zb\right)$.
+This can be understood as the sound pressure that ``leaks'' into zones other than $\zz$ when attempting to reproduce the target sound pressure $t^{(m)}[n]$ in 
+zone $\zz$. 
+This can be otherwise be considered as the ``interference'' or ``cross-talk'' between zones.
 
+Using these new definition allows for the following rewrite of the optimization problem:
 \begin{align}
     \argmin{x_\za^{(l)}[n],\,x_\zb^{(l)}[n]\,\forall\,l}{
        &\text{RE}_\za + \text{LE}_\za + \text{RE}_\zb + \text{LE}_\zb
     }
 \end{align}
-
 From this it becomes clear that this approach results in trade-off between minimizing the reproduction errors $\text{RE}_\zz$ 
-and leakages $\text{LE}_\zz$. 
+and leakage errors $\text{LE}_\zz$. 
+
 Some pressure matching approaches attempt to control this trade-off by introducing weights for the different error terms, 
 or by adding constraints.
 Choosing constraints can however be challenging as the mean square pressure error is difficult to interpret.
@@ -87,42 +98,37 @@ Choosing constraints can however be challenging as the mean square pressure erro
 \subsection{Acoustic Contrast Control}
 \label{ch:sound_zone:approaches:acoustic_contrast_control}
 ``Acoustic Contrast Control'' is another widely used sound zone approach from literature.
-The acoustic contrast control (ACC) approach to sound zones attempts to maximize the acoustic contrast between the bright zone and the dark zone for 
-each specified target sound pressure.
-
-The acoustic contrast is defined as the ratio of the acoustic potential energy of the bright zone and the dark zone.
-Essentially, the goal is to maximize the difference in sound between the bright and dark zone.
+The acoustic contrast control (ACC) approach to sound zones attempts to maximize the acoustic contrast between the bright zone and the dark zone. 
+Acoustic contrast is defined as the ratio of the total sound energy of the bright zone and the dark zone.
+Essentially, the goal is to maximize the difference in sound pressure level between the bright and dark zones.
 
 In this section, a ``Multi-Zone Acoustic Contrast Control'' (MZ-ACC) algorithm will be described.
 As the previously described data model is in the time domain, this approach will take inspiration from a time-domain approach found in literature known as the
 broadband acoustic contrast control (BACC) approach~\cite{elliott2011regularisation, cai2014time, moller2016sound}.
 
 In contrast to the MZ-PM approach, the MZ-ACC approach does not optimize directly over the loudspeaker input signals $x_\za^{(l)}[n]$ and $x_\zb^{(l)}[n]$.
-Instead, it optimizes over filter coefficients $w_\za^{(l)}[n]\in\Real{N_w}$ and $w_\zb^{(l)}[n]\in\Real{N_w}$.
-
+Instead, it indirectly controls the loudspeaker input signals by optimizing over 
+FIR filter coefficients $w_\za^{(l)}[n]\in\Real{N_w}$ and $w_\zb^{(l)}[n]\in\Real{N_w}$.
 These filters are applied to the desired playback signals $s_\za^{(l)}$ and $s_\zb^{(l)}$ respectively to form the final loudspeaker input signals.
-This relationship be expressed as follows:
+
+This relationship between the loudspeaker input signals and the filter coefficients is thus given as follows:
 \begin{equation}
     x_\zz^{(l)}[n] &= \left(w_\zz^{(l)} \ast s_\zz\right)[n] 
 \end{equation}
-As such, the MZ-ACC approach optimizes indirectly over the loudspeaker input signals.
-Note that this definition also relates the filter coefficients and the resulting sound pressure as given by \autoref{}.
+This definition also relates the filter coefficients to the resulting sound pressure through \autoref{eq:sound_zone:approaches:pressure}.
 
-As mentioned, the goal of the ACC approach is to maximize the acoustic contrast between bright and dark zones.
-Consider the acoustic contrast for zone $\za$.
-This can be defined as the ratio of the total acoustic potential energy of the sound pressure in bright zone $\za$, and the total acoustic potential energy in 
-dark zone $\zb$: 
+As mentioned, the goal of the ACC approach is to maximize the acoustic contrast between bright and dark zones,
+which was defined as the ratio between the sound energy in the bright and dark zones.
+The total sound energy in a zone will be defined as the sum of squares of the sound pressure in a control point.
+As such, the acoustic contrast $\text{AC}_\zz$ for a zone $\zz$ can be defined as follows: 
 \begin{equation}
-    \text{AC}_{\za} = \frac{\sum_{m\in A} \norm[2][2]{p_\za^{(m)}}}{\sum_{m\in B} \norm[2][2]{p_\za^{(m)}}} 
+    \text{AC}_{\zz} = \frac{\sum_{m\in Z} \norm[2][2]{p_\zz^{(m)}[n]}}{\sum_{m\notin Z} \norm[2][2]{p_\zz^{(m)}[n]}} 
 \end{equation}
-
-In an ACC approach, this contrast is maximized. 
-To this end, consider the following optimization problem:
+In an ACC approach the goal is to maximize the total acoustic contrast.
+Thus, consider the following optimization problem:
 \begin{align}
     \argmax{w_\za^{(l)}[n],\,w_\zb^{(l)}[n]\,\forall\,l}{
        &\text{AC}_\za + \text{AC}_\zb
     }
 \end{align}
-Here, the total acoustic contrast is maximized.
-
-As mentioned, the optimization is over the loudspeaker filter coefficients rather than over the loudspeaker input signals.
+As mentioned, the optimization is performed over the loudspeaker filter coefficients rather than over the loudspeaker input signals.

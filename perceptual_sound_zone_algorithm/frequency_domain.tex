@@ -1,4 +1,4 @@
-In the previous section, the Block-Based Multi-Zone Pressure-Matching (BB-MZ-PM) algorithm was derived.
+In the previous section, a block-based multi-zone pressure matching algorithm was derived.
 When deriving this algorithm it was stated that it's advantages are twofold.
 
 Firstly, one advantage of using this algorithm over its non block-based counterpart is that it can work in real-time.
@@ -6,23 +6,23 @@ Secondly, the block-based approach can operate on short time-scales.
 This is useful, as the perceptual model that we wish to integrate operates on time-scales of the order of 20 to 200 milliseconds.
 
 There is however an additional adjustment that needs to be made before the perceptual model can be integrated. 
-Currently, the BB-MZ-PM algorithm minimizes L2-error in the time-domain, whereas the detectability is computed in the 
+Currently, the block based pressure matching algorithm minimizes the sound pressure errors in the time-domain, whereas the detectability is computed in the 
 frequency domain.
 In order to integrate the perceptual model and the sound zone algorithm, they must operate in the same domain.
 
-In this case, it was chosen to use convert the existing sound zone algorithm to the frequency domain.
+In this case, it was chosen to use convert the existing sound zone algorithm to one that operates in the frequency domain.
 This was chosen as to remain close to the definition of the detectability.
 Approximating detectability in the time domain was not explored further and could potentially be of interest for future work.
 
-To this end, this section will adjust the existing time domain BB-MZ-PM algorithm to an equivalent frequency domain formulation.
+To this end, this section will adjust the existing time domain block based pressure matching algorithm to an equivalent frequency domain formulation.
 This will be done by first introducing a suitable transformation relating the time and frequency domain quantities.
-The transformed quantities can than be used define the frequency domain version of the BB-MZ-PM algorithm.
+The transformed quantities can than be used define the frequency domain version of the block based pressure matching algorithm.
 
 \subsection{Frequency Domain Transformation}
 A suitable transform to obtain the frequency domain representation of a signal is the DFT.
 However, it is important to take a number of precautions before applying the DFT directly,
 as the computation of the sound pressures used in the optimization problem introduced previously involves taking the 
-linear convolution of the loudspeaker input signals.
+linear convolution of the loudspeaker input signals with the room impulse responses.
 
 Time domain circular convolution can be computed in the frequency domain through the Hadamard product.
 Time domain circular convolution coincides with time domain linear convolution only if the two operands are zero-padded sufficiently.

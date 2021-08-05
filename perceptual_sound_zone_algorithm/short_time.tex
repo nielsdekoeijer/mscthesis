@@ -1,20 +1,24 @@
+In \autoref{ch:sound_zone:approach_selection} it was determined that the pressure matching approach introduced in 
+\autoref{ch:sound_zone:approachs} was suitable for integration with the Par detectability.
+The Par detectability assumes that its inputs are given in short-time segments of 20 to 200 milliseconds.
+The previously discussed pressure matching approach however attempts to compute the loudspeaker input signals in their entirety.
+
+Thus, in this section, the existing pressure matching approach is reformulated to operate on short-time segments through a ``block-based'' approach, 
+where small ``blocks'' of samples are processed block-by-block rather than the entirety of the signal.
+
+Aside from ease of integrating a perceptual model, there is another motivation for using a block-based approach.
 In the preceding section it is assumed that the desired playback signals $s_\za[n]$ and $s_\zb[n]$ were known in their entirety.
 In practice however, this is not a valid assumption as a user can change the desired playback content in real-time.
 This is the case for example when a user changes the song they are playing on their system.
 
-In reality, the sound zone system can only have knowledge of the most recent samples and all previous samples.
-In order to deal with this limitation, one option is to buffer a large number of incoming samples and apply the existing MZ-PM approach.
-However, this would introduce significant latency to the system.
-
+% In reality, the sound zone system can only have knowledge of the most recent samples and all previous samples.
+% In order to deal with this limitation, one option is to buffer a large number of incoming samples and apply the existing MZ-PM approach.
+% However, this would introduce significant latency to the system.
 Instead, a block-based approach can be used where the incoming samples of the desired playback signals are used in real-time as they become available.
 The system buffers a block of $H$ incoming samples samples, and then solves the sound zone problem finding the newest block of loudspeaker input signals.
 
-In addition to this, block-based approach is also practical for the integration of the perceptual model.
-The perceptual model is designed to operate on short time segments in the order of 20 to 200 milliseconds.
-Block-based approaches would allow the algorithm to operate on segments of this time scale.
-
-For these reasons, this section will adapt existing Multi-Zone Pressure Matching approach introduced in 
-\autoref{sec:data_model:pressure_matching} to accommodate for block based processing.
+For these reasons, this section will adapt existing pressure matching approach introduced in 
+\autoref{ch:sound_zone:approaches} to accommodate for block based processing.
 This will be done by first modeling the knowledge limitation of the block-based processing on the desired playback signals.
 
 \subsection{Modeling Block Based Knowledge Limitations}

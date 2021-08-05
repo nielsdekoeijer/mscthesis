@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+    \begin{axis}[xlabel=$Q$, ylabel=PESQ]
+        \addplot [color=blue, mark=*, error bars/.cd, y dir=both, y explicit]
+        table [x expr=\thisrow{Q}, y expr=\thisrow{A__0.wav__target_reconstruction_pesq_mean}, 
+            y error expr=\thisrow{A__0.wav__target_reconstruction_pesq_std}, col sep=comma] 
+            {data/constraining.csv};
+        \addplot [color=red, mark=*, error bars/.cd, y dir=both, y explicit]
+        table [x expr=\thisrow{Q}, y expr=\thisrow{A__0.wav__target_result_pesq_mean}, 
+            y error expr=\thisrow{A__0.wav__target_result_pesq_std}, col sep=comma] 
+            {data/constraining.csv};
+    \end{axis}
+\end{tikzpicture}
