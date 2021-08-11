@@ -1361,11 +1361,11 @@ Dated: \DATE
 
 \ifx\SECONDADVISOR\empty
 	\noindent%
-	Advisor:     \hfill\underline{ \hspace{7cm} }\\
+	Daily Supervisor:     \hfill\underline{ \hspace{7cm} }\\
 	\mbox{}      \hfill{\small\FIRSTADVISOR}
 \else 
 	\noindent%
-	Advisors:     \hfill\underline{ \hspace{7cm} }\\
+	Daily Supervisors:     \hfill\underline{ \hspace{7cm} }\\
 	\mbox{}      \hfill{\small\FIRSTADVISOR}
 	
 	\vspace{\sigskip}

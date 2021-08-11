@@ -13,16 +13,19 @@ Each zone is assigned target sound pressure that we would like to have reproduce
 This target sound pressure could be various audio content, for example music or the sound of a movie.
 
 To understand this principal, consider the example given by \autoref{fig:sound_zones:background:content}.
+The loudspeakers array that is present in the room is to be controlled by the sound zone algorithm 
+in such a way that the desired content is reproduced in each zone.
+As mentioned, this is to be done in a way that results in minimal interference, e.g. it is undesirable
+to be able to hear content B when inside the red zone.
 
 \begin{figure}[h]
     \centering
     \scalebox{1.0}{\input{tikz/tikz_2D_room_concept_content.tex}}
-    \caption{A room is divided into two zones: a red zone and a blue zone.
+    \caption{A birds-eye view of a room is depicted.
+        It is divided into two zones: a red zone and a blue zone.
         Each zone is assigned different content: content A and content B.
-        The loudspeakers array that is present in the room is to be controlled by the sound zone algorithm 
-        in such a way that the desired content is reproduced in each zone.
-        As mentioned, this is to be done in a way that results in minimal interference, e.g. it is undesirable
-        to be able to hear content B when inside the red zone.}
+        In the northern and southern parts of the room, a loudspeaker array is mounted on the walls.
+        }
     \label{fig:sound_zones:background:content}
 \end{figure}
 
@@ -33,12 +36,19 @@ Sound zone problems are typically decomposed into a separate subproblem for ever
 Each one of these subproblems considers only two zones: one bright zone and one dark zone.
 The goal of each subproblems is to reproduce a specified target sound pressure in the bright zone while restricting the 
 sound pressure in the dark zones.
-In doing so, the target sound pressure is essentially reproduced locally in the bright zone,
-while the sound pressure leaking into the dark zone is kept low.
 
 The combination of all subproblems provides a solution to the sound zone problem. 
 To ease the understanding of this concept, consider an example of this decomposition is given in 
 \autoref{fig:sound_zones:background:bright_dark_example}.
+
+Here, a decomposition of the example given in \autoref{fig:sound_zones:background:content} into 
+two bright-dark zone pairs.
+For the first problem, the goal is to reproduce content A in bright zone A while minimizing 
+the amount of sound pressure in dark zone A.
+Similarly for the second problem: reproduce content B in bright zone B while minimizing the 
+amount of sound pressure in dark zone B.
+Combining the two solutions results in a solution with content reproduced in both zones with 
+minimal interference between zones.
 
 \begin{figure}[]
     \centering
@@ -50,19 +60,28 @@ To ease the understanding of this concept, consider an example of this decomposi
         \centering
         \scalebox{0.9}{\input{tikz/tikz_2D_room_concept_bright_dark_zone_B.tex}}
     \end{subfigure}
-    \caption{Decomposition of the example given in \autoref{fig:sound_zones:background:content} into 
-        two bright-dark zone pairs.
-        For the first problem, the goal is to reproduce content A in bright zone A while minimizing 
-        the amount of sound pressure in dark zone A.
-        Similarly for the second problem: reproduce content B in bright zone B while minimizing the 
-        amount of sound pressure in dark zone B.
-        Combining the two solutions results in a solution with content reproduced in both zones with 
-        minimal interference between zones.}
+    \caption{A birds-eye view of a room is depicted twice containing two different sound zone problems.}
     \label{fig:sound_zones:background:bright_dark_example}
 \end{figure}
 
 This concludes the introduction to the sound zone problem.
-To further understanding, in the next section, the sound zone problem will be formulated mathematically by introducing the data model.
+The goal of the rest of this chapter is find a suitable sound zone approach 
+for integration with the perceptual model selected in \autoref{ch:perceptual}.
+
+Before selecting an approach, a review of sound zone literature is given.
+As such, the chapter will start with a brief description of sound zones in \autoref{ch:sound_zone:problem} to give the reader 
+the necessary background information on the sound zone problem.
+Afterwards, \autoref{ch:sound_zone:data_model} will present the mathematical framework  
+used to describe the sound zone problem.
+
+This mathematical framework is then used to describe the two main sound zone approaches, ``Pressure Matching'' and ``Acoustic Contrast Control'', 
+in \autoref{ch:sound_zone:approaches}.
+One of these approaches will be used in the perceptual sound zone algorithm.
+
+In order to determine which one is most suited, \autoref{ch:sound_zone:approach_selection} will reflect on the mathematical 
+properties of the 
+Par detectability selected in \autoref{ch:perceptual}.
+From this, one approach will be selected.
 
 % \subsection{Sound Zone Approaches}
 % \label{ch:sound_zone:problem:solutions}

@@ -1,40 +1,41 @@
 \section{Objectives and Organization}
 \label{ch:introduction:objectives}
-This section will state the goals of the thesis and organization of the rest of this document.
+This section states the goals of the thesis and organization of the rest of this document.
 
 This thesis seeks to answer two research questions:
 \begin{itemize}
-    \item \textbf{Research Question 1:} {\textit{``How can models of human auditory perception be included in sound zone algorithms?''}}
-    \item \textbf{Research Question 2:} {\textit{``What are the benefits of including models of human auditory perception in sound zone algorithms?''}}
+    \item \textbf{RQ1:} {\textit{``How can auditory perceptual models be included in sound zone algorithms?''}}
+    \item \textbf{RQ2:} {\textit{``What are the benefits of including auditory perceptual models in sound zone algorithms?''}}
 \end{itemize}
 
 What follows is how these research questions will be answered, alongside the structure of the rest of this document.
 
-\subsection{Answering Research Question 1}
-The first research question, 
+\subsection{Creation of Perceptual Sound Zone Algorithms}
+The first research question RQ1, 
 
 \begin{center}
-    {\textit{``How can models of human auditory perception be included in sound~zone~algorithms?''}}
+    {\textit{``How can auditory perceptual models be included in sound~zone~algorithms?''}}
 \end{center}
 
-will be answered in \autoref{ch:perceptual}, \autoref{ch:sound_zone}, and \autoref{ch:perceptual_sound_zone}.
-These chapters will document the design of a perceptual sound zone algorithm.
+is answered in \autoref{ch:perceptual}, \autoref{ch:sound_zone}, and \autoref{ch:perceptual_sound_zone}.
+These chapters document the design of a perceptual sound zone algorithm.
 The chapters are structured as follows.
 \begin{itemize}
-    \item First, in \autoref{ch:perceptual}
-    \item Next, in \autoref{ch:sound_zone}
-    \item Finally, in \autoref{ch:perceptual_sound_zone}
+    \item First, in \autoref{ch:perceptual} a literature review is performed to determine which perceptual models are suitable for use in a 
+        sound zone algorithm.
+        In this pursuit, one perceptual model is found to be the most promising is selected and discussed in further detail.
+    \item Next, in \autoref{ch:sound_zone} motivates and discusses which existing sound zone approaches can be used to formulate a perceptual sound zone 
+        algorithm.
+        This is done by reviewing sound zone literature and reflecting on the mathematical properties of the selected perceptual model.
+    \item Finally, in \autoref{ch:perceptual_sound_zone} proposes two perceptual sound zone algorithms using the determined approaches.
 \end{itemize}
 
-\subsection{Answering Research Question 2}
-The second research question, 
+\subsection{Determining Benefits of Perceptual Sound Zone Algorithms}
+The second research question RQ2, 
 
 \begin{center}
-    {\textit{``What are the benefits of including models of human auditory perception in sound~zone~algorithms?''}}
+    {\textit{``What are the benefits of including auditory perceptual models in sound~zone~algorithms?''}}
 \end{center}
 
-will be answered in \autoref{ch:results}.
-This will be done by comparing the perceptual sound zone algorithm from Research Question 1 with a reference sound zone algorithm.
-The chapter is structured as follows.
-
-
+is answered in \autoref{ch:results}.
+This is done by comparing the perceptual sound zone algorithms derived in answering RQ1 with a reference sound zone algorithm.

@@ -41,18 +41,18 @@ and acoustic contrast control approach in \autoref{ch:sound_zone:approaches:acou
 
 \subsection{Pressure Matching}
 \label{ch:sound_zone:approaches:pressure_matching}
-The ``Pressure Matching'' (PM) is widely used in literature to solve the sound zone problem.
+The ``Pressure Matching'' (PM) is widely used in the literature to solve the sound zone problem.
 In this section, a ``Multi-Zone Pressure-Matching'' (MZ-PM) algorithm will be derived using the previously derived data model.
 
-In pressure matching approaches, one attempts to control the output of the loudspeaker array in such a way that resulting sound pressure in the zone 
+In pressure matching approaches, one attempts to control the output of the loudspeaker array in such a way that the resulting sound pressure in the zone 
 matches the specified target sound pressure for that zone, 
 while simultaneously minimizing the sound pressure that results in other zones as to minimize the interference or crosstalk between zones
 ~\cite{betlehem2015personal, olik2013comparative}.
 
 The idea in this approach is to chose $x_\za^{(l)}[n]$ and such that the resulting pressure 
 $p_\za^{(m)}[n]$ attains the target sound pressure $t^{(m)}[n]$ in all control points $m \in A$.   
-At the same time however, $p_\za^{(m)}[n]$ should result minimal sound pressure in all control points $m \in B$.
-Any sound pressure resulting from $x_\za^{(l)}[n]$ in zone $\zb$ is can be understood as leakage, or cross-talk between zones. 
+At the same time however, $p_\za^{(m)}[n]$ should result in minimal sound pressure in all control points $m \in B$.
+Any sound pressure resulting from $x_\za^{(l)}[n]$ in zone $\zb$ is can be understood as leakage, or cross-talk between the zones. 
 
 Similar arguments can be given for $x_\zb^{(l)}[n]$.
 
@@ -65,35 +65,35 @@ An optimization problem that achieves this goal can be formulated as follows:
         \sum_{m\in B} \norm[2][2]{p_\za^{(m)}[n]}
     }
 \end{align}
-Here, the $\norm[2][2]{\,\,\cdot\,\,}$ operates denotes the squared L2-norm. 
-In this case, this corresponds to taking the sum of the squares of the elements of a time-domain input sequence.
+Here, the $\norm[2][2]{\,\,\cdot\,\,}$ operates denotes the squared L2-norm, which corresponds to taking the sum of the squares the input sequence. 
 
 To further understand how optimization problem operates, consider the following definitions: 
-\begin{align}
-    \text{RE}_\zz &= \sum_{m\in Z} \norm[2][2]{p_\zz^{(m)}[n] - t^{(m)}[n]} \\
-    \text{LE}_\zz &= \sum_{m\notin Z} \norm[2][2]{p_\zz^{(m)}[n]} 
-\end{align}
-Here, $\text{RE}_\zz$ is the reproduction error for zone $\zz \in \left(\za,\,\zb\right)$.
-This is error corresponds to how well the achieved sound pressure $p_\zz^{(m)}[n]$ matches the target sound pressure $t^{(m)}[n]$ for all control points in the
+\begin{alignat}{2}
+    \text{RE}^{(m)}_\zz &= \norm[2][2]{p_\zz^{(m)}[n] - t^{(m)}[n]} \qquad&& \forall\,\, m\in Z \label{eq:sound_zone:approaches:RE}\\
+    \text{LE}^{(m)}_\zz &= \norm[2][2]{p_\zz^{(m)}[n]} \qquad&& \forall\,\, m\notin Z \label{eq:sound_zone:approaches:LE} 
+\end{alignat}
+Here, $\text{RE}^{(m)}_\zz$ is the reproduction error for zone $\zz \in \left(\za,\,\zb\right)$ for a control point $m \in Z$ .
+This is error corresponds to how well the achieved sound pressure $p_\zz^{(m)}[n]$ matches the target sound pressure $t^{(m)}[n]$ for a control point in the 
 bright zone $Z$. 
 
-$\text{LE}_\zz$ is the leakage error in zone $\zz \in \left(\za,\,\zb\right)$.
-This can be understood as the sound pressure that ``leaks'' into zones other than $\zz$ when attempting to reproduce the target sound pressure $t^{(m)}[n]$ in 
-zone $\zz$. 
+$\text{LE}^{(m)}_\zz$ is the leakage error in zone $\zz \in \left(\za,\,\zb\right)$ for a control point $m \notin Z$.
+This can be understood as the sound pressure that ``leaks'' into control point $m$ in zones other than $\zz$ when attempting to 
+reproduce the target sound pressure $t^{(m)}[n]$ in zone $\zz$. 
 This can be otherwise be considered as the ``interference'' or ``cross-talk'' between zones.
 
 Using these new definition allows for the following rewrite of the optimization problem:
 \begin{align}
     \argmin{x_\za^{(l)}[n],\,x_\zb^{(l)}[n]\,\forall\,l}{
-       &\text{RE}_\za + \text{LE}_\za + \text{RE}_\zb + \text{LE}_\zb
+       &\sum_{m\in A} \text{RE}^{(m)}_\za +  \sum_{m\in B} \text{LE}^{(m)}_\za + \sum_{m\in B} \text{RE}^{(m)}_\zb + \sum_{m\in A} \text{LE}^{(m)}_\zb
     }
 \end{align}
-From this it becomes clear that this approach results in trade-off between minimizing the reproduction errors $\text{RE}_\zz$ 
-and leakage errors $\text{LE}_\zz$. 
+From this it becomes clear that this approach results in trade-off between minimizing the reproduction errors $\text{RE}^{(m)}_\zz$ 
+and leakage errors $\text{LE}^{(m)}_\zz$. 
 
 Some pressure matching approaches attempt to control this trade-off by introducing weights for the different error terms, 
 or by adding constraints.
-Choosing constraints can however be challenging as the mean square pressure error is difficult to interpret.
+Choosing constraints can however be challenging as the squared L2 pressure error does not always correlate well with how
+the error is perceived.
 
 \subsection{Acoustic Contrast Control}
 \label{ch:sound_zone:approaches:acoustic_contrast_control}
@@ -113,7 +113,7 @@ These filters are applied to the desired playback signals $s_\za^{(l)}$ and $s_\
 
 This relationship between the loudspeaker input signals and the filter coefficients is thus given as follows:
 \begin{equation}
-    x_\zz^{(l)}[n] &= \left(w_\zz^{(l)} \ast s_\zz\right)[n] 
+    x_\zz^{(l)}[n] = \left(w_\zz^{(l)} \ast s_\zz\right)[n] 
 \end{equation}
 This definition also relates the filter coefficients to the resulting sound pressure through \autoref{eq:sound_zone:approaches:pressure}.
 

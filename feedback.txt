@@ -1,0 +1,62 @@
+Improvements Mentioned by Martin
+0. General
+* Captions are descriptive, purely what is shown.
+* Refer rather than re-explain
+* Different introductions, go to content immediately.
+
+2. Perceptual
+* Calibration to appendix
+* 2.4.3 Detail taal vs par computational complexity (from paper)
+
+4. PSZA
+* 4.2: Citation for the overlapping windows => Julius Smith what Martin sent me earlier
+* 4.2: Cut down the introduction to the block based processing
+* 4.2: Careful on the use of H: Use for block size as well as hop size :(
+* Merge 4.2 and 4.3 
+* Define 5.2.3 in terms of the mathematical quantities first, then describe intiuiton
+
+5. Results
+* Add waveform discussion
+
+6.
+* Discussion
+
+Improvements Mentioned by Jorge
+
+0. General
+* CAS nummer vragen aan Richard, daarna Alle-Jan
+* In general, reflect content in titles
+* Conclusion title should be more verbose
+* In a scientific journal geen tijd. (WILL STATE => IS STATED)
+* MORE CONFIDENCE => I state my facts, cite where I found it. People can disagree, thats OK. No need to nuance a priori!
+* EVERYTHING THAT ISNT MINE => CITE. Makes it clear what is and isnt mind
+
+1. Introduction
+
+2. Perceptual
+* 2.1 Drop "This structured as follows"
+* 2.1 => 2.0, add things we exploit ``masking'' and ``threshold of quiet'', add tons of references
+* Actually, "2.0 => 2.1", "Perceptual Background". Structure at end
+* Drop psycho-acoustical background chapter
+* 2.3, tell the reader which measures will be later used. I.e. in 2.3.1 zeggen "deze worden later nog gebruikt"
+* 2.3 add more references.
+* 2.3 Relationship between the audio coding and objective measures, deeper relationship: model how audio is experienced
+* 2.4 title: "Selected Perceptual Model for use in Perceptual Sound Zone Algorithm" PRESENT TIME
+* 2.4.3 Mijn contribution over de taal model niet noemen. 
+* 2.4.2 and 2.4.3 "Considering", more verbose
+* 2.4.4 Convex opmerking wel doen. Kort noemen waarom e en WE convex is.
+
+3. Sound zone
+* 3.1 and 3.2 => 3.0, reduce sections
+* Actually, "3.0 => 3.1", "Sound Zones Background", Structure at end
+
+4. Perceptual Sound Zones
+* 4.1 => 4.0
+
+5. Results
+* 5.1 => 5.0
+
+6. Conclusion
+* title of chapter should be more verbose
+* answers of resesarch questions
+* future work

@@ -1,36 +1,36 @@
-In \autoref{ch:perceptual:selection}, it was determined that the Par detectability was the 
-most suited model for the perceptual sound zone algorithm of all perceptual models considered in 
+In \autoref{ch:perceptual:selection}, it was determined that the Par detectability measure is 
+the most suited model for the perceptual sound zone algorithm of all perceptual models considered in 
 the literature review given in \autoref{ch:perceptual:review}.
-In this section, the Par detectability is considered in greater detail in order to give the reader a greater
-understanding of the model.
+In this section, in order to give the reader a greater understanding of the model, 
+the Par detectability measure is considered in greater detail.
 
 This section is organized as follows.
-First, \autoref{ch:perceptual:implementation:intuition} gives a high-level description of the detectability, providing 
-an intuitive understanding and introducing some of the notation that will be used.
+First, \autoref{ch:perceptual:implementation:intuition} gives a high-level description of the Par detectability measure, providing 
+an intuitive understanding and introducing some of the notation that is used.
 Next, the steps to computing the detectability are described in \autoref{ch:perceptual:implementation:computation}.
-Afterwards, \autoref{ch:perceptual:implementation:calibration} discusses the calibration of the Par detectability.
-Finally, \autoref{ch:perceptual:implementation:least_squares} rewrites the detectability to a more mathematically tractable expression.
+Finally, \autoref{ch:perceptual:implementation:least_squares} rewrites the detectability as a squared L2-norm.
 
-\subsection{Introduction to Par Detectability}
+\subsection{High-Level Description of the Par Detectability Measure}
 \label{ch:perceptual:implementation:intuition}
-In this section, a high-level description of the Par detectability will be given.
+In this section, a high-level description of the Par detectability measure is given.
 This is done to give the reader a basic understanding of the model before going into greater detail.
-The Par detectability maps two input sequences to a positive real value, i.e. $D: (\Real{N_x}, \Real{N_x})\mapsto \Real{+}$.
-The two input sequences will denoted as the masking signal $x[n]\in\Real{N_x}$ the disturbance signal $\varepsilon[n]\in\Real{N_x}$.
-The detectability of these two sequences will be denoted as $D(x[n], \varepsilon[n])$. 
 
-It is assumed that a human is listening to both the masking signal $x[n]$ and the disturbance signal $\varepsilon[n]$ at the same time.
-The detectability $D(x[n], \varepsilon[n])$ can then be understood as how easily a human listener can detect the disturbance signal 
+The Par detectability maps two input sequences to a positive real value, i.e. $D: (\Real{N_x}, \Real{N_x})\mapsto \Real{+}$.
+The two input sequences are the masking signal $x[n]\in\Real{N_x}$ and the disturbance signal $\varepsilon[n]\in\Real{N_x}$.
+The detectability of these two sequences is denoted as $D(x[n], \varepsilon[n])$. 
+
+Imagine a human that is listening to both the masking signal $x[n]$ and the disturbance signal $\varepsilon[n]$ at the same time.
+The detectability $D(x[n], \varepsilon[n])$ can be understood as how easily a human listener can detect the disturbance signal 
 $\varepsilon[n]$ in presence of the masking signal $x[n]$.
-The signal $x[n]$ is referred to as the masking signal because it is assumed to masks the disturbance signal 
-$\varepsilon[n]$ to a degree.
+The signal $x[n]$ is referred to as the masking signal because its masking properties are model to determine how well it masks the disturbance signal 
+$\varepsilon[n]$.
 
 For this interpretation to be accurate, the signals $x[n]$ and $\varepsilon[n]$ should be short-time signals.
-The paper uses a signal length $N_x$ corresponding to a length in time between 20 to 200 milliseconds.    
+The paper uses a signal length of to 20 to 200 milliseconds.    
 This is important, as the model assumes that the psycho-acoustical properties of $x[n]$ 
 and $\varepsilon[n]$ are stationary.  
 
-The metric is normalized in such a way that the detectability $D(x[n],\varepsilon[n])$ is equal to 1 when the 
+The measure is normalized in such a way that the detectability $D(x[n],\varepsilon[n])$ is equal to 1 when the 
 disturbance signal $\varepsilon[n]$ is ``just noticeable'' in presence of masking signal $x[n]$.
 That is to say: if the detectability is 1, the disturbance is on the verge of being noticeable and not noticeable.
 
@@ -40,13 +40,15 @@ disturbance signal $\varepsilon[n]$.
 
 \subsection{Computation Details of the Par Detectability}
 \label{ch:perceptual:implementation:computation}
-This section will explore calculating the Par detectability.
-The first thing to note about the Par detectability is that it is computed using the frequency domain representations of its inputs. 
+This section explores calculating the Par detectability.
+The first thing to note about the Par detectability is that it is computed using the frequency domain representations of its inputs~\cite{van2005perceptual}. 
 To this end, let $X[k]$ and $\mathcal{E}[k]$ denote the frequency domain representations of the masking signal $x[n]$ and 
 the disturbance signal $\varepsilon[n]$ respectively.
 
-After determining the frequency domain representations, the Par detectability computes an internal representation of the input signals $X[k]$ and $\mathcal{E}[k]$.
-This internal representation models how the input stimuli appear to the human auditory system, and is modeled by applying a filter to the input stimuli.
+After determining the frequency domain representations, 
+the Par detectability computes an internal representation of the input signals $X[k]$ and $\mathcal{E}[k]$.
+This internal representation models how the input stimuli appear to the human auditory system.
+For the Par detectability measure, this is modeled by filtering the input stimuli.
 
 Two subsequent filters are applied.
 The first filter models how parts of the ear filter the incoming sound with an outer- and middle-ear filter $H_\text{om}[k]$. 
@@ -57,19 +59,20 @@ The Gammatone filter bank consists of $N_g$ filters.
 The frequency domain representation of each individual filter is denoted by $\Gamma_i[k]$, for $1 \leq i \leq N_g$. 
 The filters in the filter bank $\Gamma_i[k]$ have a bandwidth given by the equivalent 
 rectangular bandwidth (ERB) and center frequencies given by the corresponding equivalent rectangular bandwidth number
-scale (ERBS)~\footnote{Expressions for the gammatone filters $\Gamma_i[k]$ are provided by the original paper~\cite{van2005perceptual}.}.
+scale (ERBS).
+Expressions for the gammatone filters $\Gamma_i[k]$ are provided by the original paper~\cite{van2005perceptual}.
 
 After filtering, the power per Gammatone filter tap is computed.
 Let $M_i$ and $S_i$ denote the output power of the $i^\text{th}$ filter tap for the masking signal $X[k]$ and 
 the disturbance signal $\mathcal{E}[k]$ respectively.
+This output power can be understood as the amount of power perceived per frequency band of the human ear. 
 The relationship between the input quantities and the output power of the filter taps can be given as follows:
 \begin{align}
     M_i &= \frac{1}{N_x}\sum_{k=0}^{N_x-1}\left|H_\text{om}[k]\right|^2\left|\Gamma_i[k]\right|^2\left|X[k]\right|^2 \\
     S_i &= \frac{1}{N_x}\sum_{k=0}^{N_x-1}\left|H_\text{om}[k]\right|^2\left|\Gamma_i[k]\right|^2\left|\mathcal{E}[k]\right|^2 
 \end{align}
 The output powers can then be used to define the within-channel detectability $D_i$ per filter tap $i$.
-This can be thought of the detectability per filter tap.
-The within-channel detectability is defined as follows:
+This can be thought of the detectability per frequency band of the human ear, and is defined as follows:
 \begin{align}
     D_i = \frac{N_xS_i}{N_xM_i + C_a}
 \end{align}
@@ -77,6 +80,8 @@ Here, $C_a$ is a calibration constant that ensures that the absolute threshold o
 This can be understood by considering the case where no masking signal $x[n]$ is present, 
 in which case $M_i = 0$ for all $i$.
 If not for the calibration constant $C_a$, the detectability of any non-zero disturbance $\varepsilon[n]$ would be infinite.
+In order to take the frequency-dependence of the threshold of hearing into account, the previously described outer- and middle ear filters are defined as the
+inverse of the threshold of hearing~\cite{van2005perceptual}.
 
 The total detectability $D(x[n],\varepsilon[n])$ can then be computed as the scaled sum of all within channel detectabilities.
 It is defined as follows:
@@ -98,133 +103,22 @@ In order to further understand detectability, consider the behavior of the expre
 Imagine that the spectrum of the masking signal is much larger than the disturbance signal, 
 i.e. $X[k] \gg \mathcal{E}[k]$ for all frequency bins $k$.
 In this case, the detectability of $\varepsilon[n]$ will be small due to the masking of the masking signal $x[n]$ or
-inaudible due to the threshold of hearing determined by the calibration constant $C_a$.
+due to the threshold of hearing (determined by the calibration constant $C_a$).
 
 Conversely consider the case that the spectrum of the masking signal is much smaller than the disturbance signal,
 i.e. $X[k] \ll \mathcal{E}[k]$ for all frequency bins $k$.
-In this case, the resulting detectability is determined greatly by the calibration coefficient $C_a$. 
-If the total energy of the filtered disturbance signal is much larger than the calibration constant 
+In this case, the resulting detectability is determined greatly by the calibration coefficient $C_a$: 
+\begin{itemize}
+    \item If the total energy of the filtered disturbance signal is much larger than the calibration constant 
 $S_i \gg C_a$ for all $i$, the detectability becomes large.
 This models the case that the disturbance signal is large relative to the threshold of hearing.
-Alternatively, if $S_i \ll C_a$ for all $i$, the disturbance signal is inaudible due to the threshold of hearing and 
+    \item Alternatively, if $S_i \ll C_a$ for all $i$, the disturbance signal is inaudible due to the threshold of hearing and 
 the detectability will be low accordingly.
+\end{itemize}
 
 This concludes the analysis of the Par model.
-What follows is the discussion of the calibration of the Par model in \autoref{ch:perceptual:implementation:calibration},
-where calibration constants $C_a$ and $C_s$ are determined.
-Afterwards, the model above will be given as a least-squares formulation in order to ease the integration
-into optimization in \autoref{ch:perceptual:implementation:least_squares}.
+The determination of the calibration constants $C_a$ and $C_s$ is discussed in \autoref{ch:perceptual:implementation:calibration}.
 
-\subsection{Calibration of the the Par Detectability}
-\label{ch:perceptual:implementation:calibration}
-A calibration is necessary for the Par detectability to provide the correct output.
-In the previous section, it was shown that the constants $C_a$ and $C_s$ are used to this end.
-A correct calibration of the Par detectability must satisfy the following:
-\begin{enumerate}
-    \item The just noticeable disturbance signal must result in a detectability of $1$.
-    \item The threshold of hearing takes effect appropriately.
-\end{enumerate}
-Both the concepts of just noticeable distortion and the threshold of hearing require knowledge of the 
-sound pressure level of the stimuli.
-Thus, before determining the calibration coefficients, it is important to first discuss the 
-relationship between the input signals $x[n]$ and $\varepsilon[n]$ and reproduced sound pressure level.
-This is the topic of \autoref{ch:perceptual:implementation:calibration:sound_pressure_level}.
-Afterwards, \autoref{ch:perceptual:implementation:calibration:coefficients} discusses the determination of 
-the coefficients $C_a$ and $C_s$. 
-
-\subsubsection{Relating Digital Representation and Sound Pressure Level}
-\label{ch:perceptual:implementation:calibration:sound_pressure_level}
-One difficulty of taking the threshold of hearing into account is that it is typically given in terms of sound pressure level (SPL), measured in dB. 
-The one-sided spectrum of the threshold of hearing in dB SPL can be approximated by the following function~\cite{painter2000perceptual}:
-\begin{equation}
-    T_q(f) = 3.64\left(\frac{f}{1000}\right)^{-0.8} + 0.001\left(\frac{f}{1000}\right)^4 - 6.5\exp\left[-0.6\left(\frac{f}{1000}-3.3\right)^2\right]
-\end{equation}
-The signals $x[n]$ and $\varepsilon[n]$ are however given digital representation of audio. 
-
-For example, they might be given in a pulse code modulated (PCM) format within which they attain integer values between -32786 and 32787.
-
-As such, to meaningfully integrate the threshold of quiet, the digital representation and the sound pressure levels must be related.
-This relationship can be modeled as follows:
-\begin{equation}
-    X_\text{dB}(f) = 10\log_{10}(\left|X(f)\right|^2) + O_\text{dB}
-    \label{eq:perceptual:implementation:calibration:sound_pressure_level:dB_representation}
-\end{equation}
-Here, $X_\text{dB}(f)$ is the dB SPL representation of a given spectrum $X(f)$.
-Furthermore, $O_\text{dB}$ is an offset to ensure the digital representation corresponds to the correct sound pressure level. 
-In order to use this relationship to determine the appropriate digital equivalent of the threshold in quiet, a definition of the offset $O_\text{dB}$
-must be determined.
-
-One way of determining the offset $O_\text{dB}$ is by relating the sound pressure level and the digital representation of a full-scale sinusoid.
-A full-scale sinusoid is a sinusoid that has an amplitude of the maximum value that can be attained in the digital representation.
-
-In our previous example, one way of doing so would be to state that a full-scale sinusoid with amplitude 32787 corresponds to 
-e.g. a sound pressure level of 100 dB SPL.
-The interpretation of this is that playing a full-scale sinusoid will result in a sound pressure of 100 dB SPL when played from the sound system.
-
-To do so, let the digital representation of the full-scale sinusoid be modeled by a sinusoid with amplitude $A$ and frequency $f_0$.
-Consider the one-sided fourier representation of the digital representation of this full-scale sinusoid: 
-\begin{equation}
-    \mathcal{F}\left\{A\cos\left(2\pi f_0 t\right)\right\} = A\delta\left(f - f_0\right)
-\end{equation}
-It is assumed that playing the digital representation of this sinusoid results in a sound pressure level of $A_\text{dB}$ db SPL. 
-Substituting these definitions into \autoref{eq:perceptual:implementation:calibration:sound_pressure_level:dB_representation} 
-results in the following definition for $O_\text{dB}$: 
-\begin{align}
-    O_\text{dB} &= 10\log_{10}\left(\left|A\right|^2\right) - A_\text{dB} 
-\end{align}
-The offset fully defines the relationship between digital representation and sound pressure level, and allows for the conversion of the threshold of hearing
-to digital representation.
-
-\subsubsection{Determing Calibration Constants}
-\label{ch:perceptual:implementation:calibration:coefficients}
-There are various ways of calibrating this model, but this section will discuss the method of calibrating 
-that is given in the original paper~\cite{van2005perceptual}.
-The given approach is to find the two unknowns $C_a$ and $C_s$ by solving a system of two equations that model the previously stated calibration requirements.
-
-The first requirement is that a just noticeable disturbance signal must result in a detectability of 1.
-From perceptual literature it is known that a sinusoidal disturbance signal at a given frequency $f_0$ is just noticeable 
-in presence of an in-phase sinusoidal masking signal that is 18 dB SPL louder~\cite{van2005perceptual}.
-To model this, consider the following masking and disturbance signals. 
-\begin{align}
-    x_\text{JND}[n] &= A_{70}\cos\left(2\pi f_0 n / f_s\right) \\
-    \varepsilon_\text{JND}[n] &= A_{52}\cos\left(2\pi f_0 n / f_s\right)
-\end{align}
-Here, $x_\text{JND}[n]$ is a sinusoid with an amplitude $A_{70}$, which corresponds to 70 dB SPL.
-Furthermore, $\varepsilon_\text{JND}[n]$ is a sinusoid with an amplitude $A_{52}$, which is 18 dB SPL less.
-Note that the amplitudes are both given in digital representation, not sound pressure level representation.
-The digital representation amplitudes are found through \autoref{eq:perceptual:implementation:calibration:sound_pressure_level:dB_representation}.
-
-Thus, $\varepsilon_\text{JND}[n]$ must be just noticeable in presence of $x_\text{JND}[n]$.
-This can be expressed as follows:
-\begin{equation}
-    D(x_\text{JND}[n],\varepsilon_\text{JND}[n]) = 1
-    \label{eq:perceptual:implementation:calibration:coefficients:first}
-\end{equation}
-This expression forms the first equation in the system of equations that can be solved to calibrate the Par detectability.
-
-The second requirement is that the threshold of hearing must be included correctly.
-The threshold of hearing defines the sound pressure levels that are the verge between audible and inaudible sound as a function of frequency.
-To this end, consider the following masking and disturbance signals:
-\begin{align}
-    x_\text{THR}[n] &= 0 \\
-    \varepsilon_\text{THR}[n] &= A_{\text{tq}}\cos\left(2\pi f_0 n / f_s\right)
-\end{align}
-Here the masking signal $x_\text{THR}[n]$ is zero. 
-The disturbance signal is a sinusoid of frequency $f_0$ with amplitude $A_{\text{tq}}$, which is chosen such that it attains 
-the threshold of quiet at $f_0$, i.e. $T_q(f_0)$. 
-
-As the threshold of quiet is the verge between audible and inaudible sound, it is assumed that a disturbance signal in presence of no masking signal that has
-an amplitude equal to the threshold of quiet is just noticeable.
-Recall that for just noticeable stimuli the detectability must be equal to 1.
-This allows us to specify the second equation in the system of equations:
-\begin{equation}
-    D(0,\varepsilon_\text{THR}[n]) = 1
-    \label{eq:perceptual:implementation:calibration:coefficients:second}
-\end{equation}
-
-The system of equations defined by \autoref{eq:perceptual:implementation:calibration:coefficients:first} and 
-\autoref{eq:perceptual:implementation:calibration:coefficients:second} can be solved through the bisection method.
-To see how this is done, the reader is referred to the original paper~\cite{van2005perceptual}.
 
 \subsection{Least-Squares Formulation of the Par Detectability}
 \label{ch:perceptual:implementation:least_squares}
@@ -244,17 +138,20 @@ Consider the following rewrite of the detectability given in \autoref{eq:percept
                            \left(\frac{C_s L_\text{eff}}{\norm[2][2]{H_\text{om}[k]\Gamma_i[k]X[k]} + C_a}\right)
                         \sum_{k=0}^{N_x-1}\left|H_\text{om}[k]\right|^2\left|
                         \Gamma_i[k]\right|^2\left|\mathcal{E}[k]\right|^2 \\
-                           &= \sum_{k=0}^{N_x-1}\left(\sum_{i=0}^{N_g}\frac{C_s L_\text{eff}}{\norm[2][2]{H_\text{om}[k]\Gamma_i[k]X[k]} + C_a}\right)
-                        \left|H_\text{om}[k]\right|^2\left|\Gamma_i[k]\right|^2\left|\mathcal{E}[k]\right|^2 \\
+                           &= \sum_{k=0}^{N_x-1}\left(\sum_{i=0}^{N_g}\frac{C_s L_\text{eff}\left|\Gamma_i[k]\right|^2}{\norm[2][2]{H_\text{om}[k]\Gamma_i[k]X[k]} + C_a}\right)
+                        \left|H_\text{om}[k]\right|^2\left|\mathcal{E}[k]\right|^2 \\
                            &= \sum_{k=0}^{N_x-1}\left|W_x[k]\right|^2\left|\mathcal{E}[k]\right|^2 \\
                            &= \norm[2][2]{W_x[k]\mathcal{E}[k]} 
 \end{align*}
 The rewrite above introduced perceptual weighting $W_x[k]\in\Real{N_x}$ describing the masking effects of the masking signal $x[n]$. 
 The perceptual weighting $W_x[k]$ is defined as follows: 
 \begin{equation}
-    W_x[k] = \left(\sqrt{\sum_{i=0}^{N_g}\frac{C_s L_\text{eff}}{\norm[2][2]{H_\text{om}[k]\Gamma_i[k]X[k]} + C_a}}\right)
-                        \left|H_\text{om}[k]\right|\left|\Gamma_i[k]\right|
+    W_x[k] = \left(\sqrt{\sum_{i=0}^{N_g}\frac{C_s L_\text{eff}\left|\Gamma_i[k]\right|^2}{\norm[2][2]{H_\text{om}[k]\Gamma_i[k]X[k]} + C_a}}\right)
+                        \left|H_\text{om}[k]\right|
 \end{equation}
 Note from this formulation that the perceptual weighting is only a function of the masking signal $x[n]$.
-Note also that the resulting detectability $D(x[n],\varepsilon[n])$ is a convex function of the disturbance signal $\varepsilon[n]$. 
 
+Note also that the resulting detectability $D(x[n],\varepsilon[n])$ is a convex function of the disturbance signal $\varepsilon[n]$. 
+The frequency-domain representation $\mathcal{E}[k]$ is related to the time-domain representation $\varepsilon[n]$ through the DFT, which is a linear operator.
+The perceptual weighting of $\mathcal{E}[k]$ performed by $W[k]$ is also a linear operation.
+As such, $W[k]\mathcal{E}[k]$ is an affine function of $\varepsilon[n]$.

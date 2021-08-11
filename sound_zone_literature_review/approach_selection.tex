@@ -3,10 +3,10 @@ perceptual sound zone algorithm.
 Previously, in \autoref{ch:sound_zone:approaches}, two different sound zone techniques were discussed 
 pressure matching (PM), and acoustic contrast control (ACC). 
 
-In this section, a selection will be made on what sound zone approach is must suited for integration with the Par
-detectability.
-This will be done by first reflecting on its mathematical properties in \autoref{ch:sound_zones:approach_selection:mathematical}.
-Next, \autoref{ch:sound_zones:approach_selection:selection} will argue which approach is most promising.
+In this section proposes how the Par detectability measure can be combined with the previously discussed sound zone approaches.
+This is done by first reflecting on the mathematical properties of the Par detectability measure 
+in \autoref{ch:sound_zones:approach_selection:mathematical}.
+Next, \autoref{ch:sound_zones:approach_selection:selection} introduces the proposed perceptual sound zone approach.
 
 \subsection{Mathematical Properties of Par Detectability}
 \label{ch:sound_zones:approach_selection:mathematical}
@@ -19,7 +19,7 @@ The Par detectability assumes that the time-scale of its inputs are short, in th
 The detectability is computed using the frequency domain representation of its input signals.
 To this end, $X[k]$ and $\mathcal{E}[k]$ were introduced to denote the frequency domain representations of $x[n]$ and $\varepsilon[n]$ respectively.
 
-In \autoref{ch:perceptual:implementation:least_squares} it was found that the detectability could be expressed as in least-squares fashion as follows:
+In \autoref{ch:perceptual:implementation:least_squares} it was found that the detectability could be expressed in least-squares fashion as follows:
 \begin{align}
     D(x[n],\varepsilon[n]) &= \norm[2][2]{W_x[k]\mathcal{E}[k]} 
     \label{eq:perceptual:approach_selection:detectability}
@@ -27,75 +27,72 @@ In \autoref{ch:perceptual:implementation:least_squares} it was found that the de
 Here, perceptual weighting $W_x[k]$ models the psycho-acoustical masking effects of the masking signal $x[n]$.
 The weights are applied to the frequency bins of the disturbance signal $\mathcal{E}[k]$, and the sum of squares is used determine the final detectability rating.
 
-Note that the detectability is a convex function of the disturbance signal $\mathcal{E}[k]$ when the masking is held fixed. 
-Convexity is a very desirable property for optimization purposes as it guarantees a unique global minimum or maximum for the optimization~\cite{boyd2004convex}.
-In addition, there are many efficient solvers for convex problems.
-
+It was noted in \autoref{ch:perceptual:implementation:least_squares} that the Par detectability measure
+is a convex function of the disturbance signal $\mathcal{E}[k]$ when the masking signal is held constant. 
 As such, one approach is to specify a sound zone algorithm which leverages the optimization over this disturbance signal in some way.
 This will be done by adopting a model for the disturbance $\mathcal{E}[k]$.
 For example, the disturbance could model the sound pressure error.
 
 In summary, the detectability has the following properties that must be taken into account:
 \begin{enumerate}
-    \item It is computed in the frequency domain.
-    \item It operates on short-time scales.
+    \item It is computed in the short-time frequency-domain.
     \item It is convex when optimizing over the disturbance signal $\mathcal{E}[k]$.
 \end{enumerate}
 
-\subsection{Selecting an Appropriate Sound Zone Approach}
+\subsection{Introducing Proposed Perceptual Sound Zone Approach}
 \label{ch:sound_zones:approach_selection:selection}
 In \autoref{ch:sound_zone:approaches} two different sound zone approaches were discussed: pressure matching (PM)
 and acoustic contrast control (ACC).
-In this section it will be determined which approach of these two approaches is most promising for integration with a perceptual model.
+Currently, neither approach operates in the frequency domain on short-time scales.
+However, it has been shown in literature that formulations of both ACC and PM exist that satisfy this condition~\cite{lee2018unified}.
 
-Currently, neither approach introduced in \autoref{ch:sound_zone:approaches} operates in the frequency domain on short-time scales.
-However, it has been shown in literature that both ACC and PM can be adapted to meet this need.
-
-As such, the decision between ACC and PM will depend on which approach can more naturally use the detectability.
-Through inspection, it was found that the PM formulation can easily be extended to include Par detectability directly.
+Either ACC or PM can be used.
+Through inspection, it was found that the Par detectability measure can be used to formulate a PM approach directly
+by modeling the errors minimized by PM as disturbance signals. 
+As such, in this work the focus will be on the PM approach.
 
 To see this, recall in the discussion of PM given in \autoref{ch:sound_zone:approaches} that PM was shown to minimize the sum of the 
-reproduction error in the bright zone $\text{RE}_\zz$ and the leakage to the dark zone $\text{LE}_\zz$. 
-Their definitions were given as follows:
-\begin{align}
-    \text{RE}_\zz &= \sum_{m\in Z} \norm[2][2]{p_\zz^{(m)}[n] - t^{(m)}[n]}
-    \label{eq:perceptual:approach_selection:errors_RE}\\
-    \text{LE}_\zz &= \sum_{m\notin Z} \norm[2][2]{p_\zz^{(m)}[n]} 
-    \label{eq:perceptual:approach_selection:errors_LE}
-\end{align}
-Here, the reproduction error $\text{RE}_\zz$ can be understood as the total error between the achieved and target sound pressure in the bright zone of zone $\zz$. 
-The leakage $\text{LE}_\zz$ can be understood as the sound pressure that arises in zones other than $\zz$, essentially ``leaking'' into other zones,
+reproduction error in the bright zone $\text{RE}^{(m)}_\zz$ and the leakage to the dark zone $\text{LE}^{(m)}_\zz$. 
+The definitions of $\text{RE}^{(m)}_\zz$ and $\text{LE}^{(m)}_\zz$ are given by \autoref{eq:sound_zone:approaches:RE} 
+and \autoref{eq:sound_zone:approaches:LE} respectively.
+Here, the reproduction error $\text{RE}^{(m)}_\zz$ can be understood as the total error between the 
+achieved and target sound pressure in the bright zone of zone $\zz$. 
+The leakage $\text{LE}^{(m)}_\zz$ can be understood as the sound pressure that arises in zones other than $\zz$, essentially ``leaking'' into other zones,
 when reproducing the target in the bright zone.
 
 Both can be thus be considered as ``errors'' that we wish to minimize.
 Viewing it this way, one choice for model these errors as the disturbance signals $\varepsilon[n]$.
-To this end, consider the perceptual reproduction error $\text{PRE}_\zz$ and the perceptual leakage error $\text{PLE}_\zz$.
-From now, take no mind to the fact that the quantities defined so far do not satisfy the short-time requirements. 
+To this end, consider the perceptual reproduction error $\text{PRE}^{(m)}_\zz$ and the perceptual leakage error $\text{PLE}^{(m)}_\zz$.
+Fom now, ignore to the fact that the quantities for target and achieved sound pressure defined so far do not satisfy the short-time requirements. 
 The perceptual errors are defined as: 
-\begin{align}
-    \text{PRE}_\zz &= \sum_{m\in Z} D(t^{(m)}[n],\,p_\zz^{(m)}[n] - t^{(m)}[n]) \\
-    \text{PLE}_\zz &= \sum_{m\notin Z} D(t^{(m)}[n],\,p_\zz^{(m)}[n])  
-\end{align}
-The perceptual reproduction error $\text{PRE}_\zz$ is determined by the detectability of the sound pressure difference between the achieved sound
+\begin{alignat}{2}
+    \text{PRE}^{(m)}_\zz &= D(t^{(m)}[n],\,p_\zz^{(m)}[n] - t^{(m)}[n]) \qquad&& \forall\,\, m\in Z \label{eq:sound_zone:approach_selection:PRE}\\
+    \text{PLE}^{(m)}_\zz &= D(t^{(m)}[n],\,p_\zz^{(m)}[n]) \qquad&& \forall\,\, m\notin Z \label{eq:sound_zone:approach_selection:PLE} 
+\end{alignat}
+The perceptual reproduction error $\text{PRE}^{(m)}_\zz$ is determined by the detectability of the sound pressure difference between the achieved sound
 pressure $p_\zz^{(m)}[n]$ and the target sound pressure $t^{(m)}[n]$ for the control point $m$.
 This sound pressure difference can be understood as the ``error'' in sound pressure.
 
-The target sound pressure is used as the masking signal, in doing so the masking properties of the target sound pressure is used.
-The $\text{PRE}_\zz$ models how detectable the deviation from target sound pressure is
-One interpretation of minimizing $\text{PRE}_\zz$ is finding the sound pressure difference which is least detectable. 
+The target sound pressure is used as the masking signal, in doing so the masking properties of the target sound pressure $t^{(m)}[n]$ is used.
+Note that this is an approximation: in reality, it cannot be assumed that the sound algorithm exactly attains the target sound pressure.
+In the ideal case, the masking properties of the total achieved sound pressure would be used instead.
 
-Similarly, the perceptual leakage error $\text{PLE}_\zz$ is determined by how detectable the sound pressure of zone $\zz$ is in other zones.
+However, this quantity depends on the loudspeaker input signals over which the optimization is performed, and is thus not available a priori. 
+One approach would be to include the masking signal in the optimization, but this would violate convexity, as stated in 
+\autoref{ch:perceptual:implementation:least_squares}.
+As such, by the masking effects of the achieved pressure are modeled by those of the target sound pressure.
+
+The $\text{PRE}^{(m)}_\zz$ models how detectable the deviation from target sound pressure is
+One interpretation of minimizing $\text{PRE}^{(m)}_\zz$ is finding the sound pressure difference which is least detectable. 
+
+Similarly, the perceptual leakage error $\text{PLE}^{(m)}_\zz$ is determined by how detectable the sound pressure of zone $\zz$ is in other zones.
 Note as $m\notin\zz$, this definition considers all points outside of the bright zone for $\zz$.  
 Here, the masking signal is again chosen as the target sound pressure of the control point in question.
-$\text{PLE}_\zz$ models how detectable the leakage of zone $\zz$ is in presence of the intended target sound pressure. 
-Minimizing $\text{PLE}_\zz$ could thus be understood as finding the leakage that is minimally-detectable in presence of the target sound pressure.
+$\text{PLE}^{(m)}_\zz$ models how detectable the leakage of zone $\zz$ is in presence of the intended target sound pressure. 
+Minimizing $\text{PLE}^{(m)}_\zz$ could thus be understood as finding the leakage that is minimally-detectable in presence of the target sound pressure.
 
-These perceptually modified errors were found to be a promising way of combining pressure matching and the Par detectability,
-due to the mathematical similarities between the definition of the Par detectability given by \autoref{eq:perceptual:approach_selection:detectability}
-and the errors used in the pressure matching problem given by \autoref{eq:perceptual:approach_selection:errors_RE} and 
-\autoref{eq:perceptual:approach_selection:errors_LE}.
+These perceptually modified errors are found to be a promising way of combining pressure matching and the Par detectability,
+and are used to state perceptual sound zone algorithms in \autoref{ch:perceptual_sound_zone}.
+The short-time frequency-domain quantities required for the definitions of $\text{PRE}^{(m)}_\zz$ and $\text{PLE}^{(m)}_\zz$ are introduced in this chapter.
 
-In the ACC approach, it was found that there was not an as obvious choice for the disturbance and masking signals.
-As such, the PM approach will be used in the perceptual sound zone algorithm in \autoref{ch:perceptual_sound_zone}.
-As mentioned, the PM approaches given by \autoref{ch:sound_zone:approaches} are not given in neither the frequency domain nor operate on short time scales.
-This will be addressed in the same chapter, in \autoref{ch:perceptual_sound_zone:block_based} and \autoref{ch:perceptual_sound_zone:frequency_domain}.
+Using the ACC approach to formulate perceptual sound zone algorithms is not explored further in this work, but is found to be promising future work.

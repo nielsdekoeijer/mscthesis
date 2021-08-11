@@ -1,3 +1,68 @@
+In \autoref{ch:perceptual_sound_zone:perceptual_minimization} two perceptual sound zone algorithms were introduced. 
+First, an unconstrained perceptual pressure matching approach where the detectability of the sound pressure errors is minimized.
+Secondly, a constrained perceptual pressure matching approach which leverages the fact that the detectability has a consistent 
+perceptual interpretation to constrain the detectability of the reproduction error.
+
+This section will explore the results of both approaches.
+
+\subsection{Evaluating Unconstrained Perceptual Pressure Matching}
+In this section, the unconstrained perceptual pressure matching algorithm will be evaluated.
+This algorithm minimized the total detectability of the reproduction and the leakage error.
+As mentioned in \autoref{ch:results:methodology}, the perceptual pressure matching approaches will be evaluated with respect to the 
+reference pressure matching algorithm introduced in \autoref{ch:sound_zone:approaches}.
+The unconstrained reference algorithm instead minimizes the total reproduction and leakage error.
+
+The experiment consists of 12 simulations which use speech signals for both zones.
+For evaluation, 3 metrics are used as introduced by \autoref{ch:results:methodology}.
+First, Overall PESQ, which quantifies the quality of the total experience: achieved intended audio and interference.
+Secondly, Target PESQ, which quantifies the quality of just the achieved intended audio (excluding interference).
+Finally, Distraction, which determines how distracting the interference is.
+These three quantities were found to be representative for the sound zone experience.
+
+\begin{table}[]
+    \centering
+\begin{tabular}{|l|l|c|c|}
+\hline
+\multicolumn{2}{|l|}{Statistic}                                                  
+& \multicolumn{1}{l|}{\textbf{Reference}} & \multicolumn{1}{l|}{\textbf{Perceptual}} \\ \hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Overall PESQ}}} 
+& Mean               & 2.61                                    & 3.15                                     \\ \cline{2-4} 
+\multicolumn{1}{|c|}{}                                      
+& Standard Deviation & 0.247                                   & 0.240                                    \\ \hline
+\multirow{2}{*}{\textbf{Target PESQ}}                        
+& Mean               & 4.11                                    & 3.35                                     \\ \cline{2-4} 
+& Standard Deviation & 0.065                                   & 0.254                                    \\ \hline
+\multirow{2}{*}{\textbf{Distraction}}                       
+& Mean               & 12.7                                    & 7.8                                      \\ \cline{2-4} 
+& Standard Deviation & 7.46                                    & 5.89                                     \\ \hline
+\end{tabular}
+\caption{
+    Summary of results for the evaluation of the unconstrained perceptual pressure matching approach,
+    using the evaluation metrics defined in \autoref{ch:results:methodology}.
+}
+\label{ch:results:results:unconstrained_results}
+\end{table}
+
+The results of the experiment are summarized in \autoref{ch:results:results:unconstrained_results}.
+This table depicts the mean and standard deviation of the metrics taken over all 4 control points and all 12 experiments.
+From this, the following conclusions are drawn:
+\begin{itemize}
+    \item The perceptual sound zone algorithm outperforms the reference sound zone algorithm in Overall PESQ.
+        Thus, this implies that perceptual sound zone algorithm delivers greater quality of speech.
+    \item The reference sound zone algorithm outperforms the perceptual sound zone algorithm in Target PESQ.
+        This implies that the reference algorithm, when disregarding interference, delivers greater quality for the intended speech signal.
+    \item The perceptual sound zone algorithm outperforms the reference with regards to Distraction.
+        This can be understood as the reference results in more distracting sound zones than the perceptual sound zone algorithm.
+\end{itemize}
+From the results above, the Overall PESQ and the Distraction indicate that the perceptual sound zone algorithm seems to 
+achieve an better overall experience.
+The reference sound zone algorithm achieves a greater Target PESQ, however after adding the interference, the Overall PESQ is lower.
+
+This implies that the the perceptual sound zone algorithm makes a better overall perceptual trade-off between producing the target content 
+and minimizing the leakage.
+
+\subsection{Evaluating Constrained Perceptual Pressure Matching}
+
 \constrainingplot
 {A__0.wav__target_reconstruction_pesq_mean}
 {A__0.wav__target_reconstruction_pesq_std}

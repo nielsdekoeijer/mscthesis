@@ -13,6 +13,10 @@
 \usepackage[]{tikz-3dplot}
 \usepackage[]{pgfplots}
 \usepackage[]{pgfplotstable}
+\usepackage[]{multirow}
+
+\pgfplotsset{compat=1.16}
+\usetikzlibrary{pgfplots.groupplots}
 
 % =Definitions===========================================================================
 \usepackage[]{nielstex}
@@ -35,7 +39,7 @@
 
 % =Document Attributes===================================================================
 \msctitle{Sound Zones with a Cost Function based on Human Hearing}
-\mscsubtitle{Subtitle Compulsory?}
+\mscsubtitle{}
 \msckeywords{perceptual sound zones, sound field control, perceptual models, pressure matching}
 \mscauthor{Niels Evert Marinus de Koeijer B.Sc.}
 \msccity{Delft}
@@ -48,14 +52,13 @@
 \mscdepartment{Microelectronics \& Computer Engineering}
 \mscgroup{Circuits and Systems}
 \chairperson{dr.ir. R.C. Hendriks}
-\advisorone{dr. M. Bo M\o ller}
-\advisortwo{dr. P. Martinez Nuevo}
 \memberone{dr. M. Mastrangeli}
-\membertwo{dr. J. Martinez Casta{\~n}eda }
+\membertwo{dr. M. Bo M\o ller}
+\memberthree{dr. P. Mart\'{\i}nez-Nuevo}
+\advisorone{dr. J. Mart\'{\i}nez-Casta{\~n}eda }
 
 % =Abstract==============================================================================
-\def\ABSTRACT{\todo{Currently, this contains the draft of my thesis. 
-Everything and anything can be changed as far as I'm concerned, I appreciate all feedback!}}
+\def\ABSTRACT{}
 
 % =Document==============================================================================
 \begin{document}
@@ -75,47 +78,48 @@ Everything and anything can be changed as far as I'm concerned, I appreciate all
 % =Content===============================================================================
 \chapter{Introduction}
 \label{ch:introduction}
+\input{tikz/tikz_masking_effect.tex}
 \input{introduction/preface.tex}
 \newpage
 \input{introduction/objectives.tex}
 
 \chapter{Perceptual Model Review and Implementation}
 \label{ch:perceptual}
-\section{Introduction}
-\label{ch:perceptual:introduction}
-\input{perceptual_literature_review/introduction.tex}
-\newpage
+% \section{Introduction}
+% \label{ch:perceptual:introduction}
+% \input{perceptual_literature_review/introduction.tex}
+% \newpage
 \section{Perceptual Background}
 \label{ch:perceptual:background}
 \input{perceptual_literature_review/perceptual_background.tex}
 \newpage
-\section{Review of Perceptual Models}
+\section{Review of Perceptual Models from Literature}
 \label{ch:perceptual:review}
 \input{perceptual_literature_review/model_review.tex}
 \newpage
-\section{Selection of Perceptual Model}
+\section{Selection of Perceptual Model for Perceptual Sound Zone Algorithms}
 \label{ch:perceptual:selection}
 \input{perceptual_literature_review/model_selection.tex}
 \newpage
-\section{Implementation of Selected Perceptual Model}
+\section{Discussion and Implementation of the Par Detectability Measure}
 \label{ch:perceptual:implementation}
 \input{perceptual_literature_review/model_implementation.tex}
 \newpage
-\section{Conclusion}
-\label{ch:perceptual:conclusion}
-\input{perceptual_literature_review/conclusion.tex}
+% \section{Conclusion}
+% \label{ch:perceptual:conclusion}
+% \input{perceptual_literature_review/conclusion.tex}
 
 \chapter{Sound Zone Approach Review and Implementation}
 \label{ch:sound_zone}
-\section{Introduction}
-\label{ch:sound_zone:introduction}
-\input{sound_zone_literature_review/introduction.tex}
-\newpage
-\section{Description of Sound Zone Problem}
+% \section{Introduction}
+% \label{ch:sound_zone:introduction}
+% \input{sound_zone_literature_review/introduction.tex}
+% \newpage
+\section{Introduction of Sound Zone Problem}
 \label{ch:sound_zone:problem}
 \input{sound_zone_literature_review/problem.tex}
 \newpage
-\section{Sound Zone Data Model}
+\section{Mathematical Sound Zone Data Model}
 \label{ch:sound_zone:data_model}
 \input{sound_zone_literature_review/data_model.tex}
 \newpage
@@ -123,13 +127,13 @@ Everything and anything can be changed as far as I'm concerned, I appreciate all
 \label{ch:sound_zone:approaches}
 \input{sound_zone_literature_review/approaches.tex}
 \newpage
-\section{Selection of Sound Zone Approach}
+\section{Motivation of a Perceptual Sound Zone Approach}
 \label{ch:sound_zone:approach_selection}
 \input{sound_zone_literature_review/approach_selection.tex}
 \newpage
-\section{Conclusion}
-\label{ch:sound_zone:conclusion}
-\input{sound_zone_literature_review/conclusion.tex}
+% \section{Conclusion}
+% \label{ch:sound_zone:conclusion}
+% \input{sound_zone_literature_review/conclusion.tex}
 
 \chapter{Implementation of Perceptual Sound Zone Algorithms}
 \label{ch:perceptual_sound_zone}
@@ -137,21 +141,17 @@ Everything and anything can be changed as far as I'm concerned, I appreciate all
 \label{ch:perceptual_sound_zone:introduction}
 \input{perceptual_sound_zone_algorithm/introduction.tex}
 \newpage
-\section{Short-Time Reformulation of Pressure Matching}
+\section{Short-Time Frequency-Domain Reformulation of the Pressure Matching Approach}
 \label{ch:perceptual_sound_zone:block_based}
 \input{perceptual_sound_zone_algorithm/short_time.tex}
 \newpage
-\section{Frequency Domain Reformulation of Pressure Matching}
-\label{ch:perceptual_sound_zone:frequency_domain}
-\input{perceptual_sound_zone_algorithm/frequency_domain.tex}
-\newpage
-\section{Unconstrained Perceptual Pressure Matching}
+% \section{Frequency Domain Reformulation of Pressure Matching}
+% \label{ch:perceptual_sound_zone:frequency_domain}
+% \input{perceptual_sound_zone_algorithm/frequency_domain.tex}
+% \newpage
+\section{Perceptual Pressure Matching}
 \label{ch:perceptual_sound_zone:perceptual_minimization}
 \input{perceptual_sound_zone_algorithm/perceptual_minimization.tex}
-\newpage
-\section{Constrained Perceptual Pressure Matching}
-\label{ch:perceptual_sound_zone:perceptual_constraining}
-\input{perceptual_sound_zone_algorithm/perceptual_constraining.tex}
 \newpage
 \section{Conclusion}
 \label{ch:perceptual_sound_zone:conclusion}
@@ -175,11 +175,15 @@ Everything and anything can be changed as far as I'm concerned, I appreciate all
 
 \chapter{Conclusion}
 
-\bibliographystyle{ieeetran.bst}
 \bibliography{bibliography}
+\bibliographystyle{ieeetran.bst}
 
 % =Appendix==============================================================================
 \appendix
+\chapter{Calibration of the the Par Detectability Measure}
+\label{ch:perceptual:implementation:calibration}
+\input{appendices/par_calibration.tex}
+\newpage
 \chapter{Extra Results}
 \input{results/extra_results.tex}
 \newpage
