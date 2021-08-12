@@ -7,6 +7,21 @@ Improvements Mentioned by Martin
 2. Perceptual
 * Calibration to appendix
 * 2.4.3 Detail taal vs par computational complexity (from paper)
+* 2.4.3 GEEF ALS MIJN CONTRIBUTIE
+	=> PROPOSED
+	=> Begin 2.4.3 of eind 2.4.2 "Previous work was from the paper"
+	=> Why is that in important? Why mathematical tractable
+	=> 2.4.4 in 2.4.3. NO SUBSUBSUBSECTION
+* Taal model WEIGHTING in time domain, but computed in STFT domain.
+
+3. 
+* 3.1.1 "The two non-overlapping zones => Relateer cal{A} en cal{B} terug aan de examples in de introduction"
+	=> LINK HEEL BELANGERIJk 
+* Reverse A and cal{A}?
+* 3.3 "In later parts, pressure matching will be used. ACC is only included for completeness"
+* 3.4 ACC not chosen as Detectability was shown to convex in the error.
+	ALSO ACC works with relative pressures rather than absolute pressures, which is problematic because we use the threshold in quiet.
+* analysis of PROPOSED Least squares representation in 3.4.1
 
 4. PSZA
 * 4.2: Citation for the overlapping windows => Julius Smith what Martin sent me earlier

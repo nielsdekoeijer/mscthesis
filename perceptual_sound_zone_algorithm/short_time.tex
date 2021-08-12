@@ -13,35 +13,7 @@ frequency-domain pressure matching approach.
 First, the existing pressure matching approach is reformulated to operate on short-time segments through a ``block-based'' approach. 
 Here, where smaller ``blocks'' of samples are processed block-by-block rather than processing the full-length input sequence in its entirety.
 
-% Aside from ease of integrating a perceptual model, there is another motivation for using a block-based approach.
-% In the preceding section it is assumed that the desired playback signals $s_\za[n]$ and $s_\zb[n]$ were known in their entirety.
-% In practice however, this is not a valid assumption as a user can change the desired playback content in real-time.
-% This is the case for example when a user changes the song they are playing on their system.
-
-% In reality, the sound zone system can only have knowledge of the most recent samples and all previous samples.
-% In order to deal with this limitation, one option is to buffer a large number of incoming samples and apply the existing MZ-PM approach.
-% However, this would introduce significant latency to the system.
-% Instead, a block-based approach can be used where the incoming samples of the desired playback signals are used in real-time as they become available.
-% The system buffers a block of $H$ incoming samples samples, and then solves the sound zone problem finding the newest block of loudspeaker input signals.
-
-% For these reasons, this section will adapt existing pressure matching approach introduced in 
-% \autoref{ch:sound_zone:approaches} to accommodate for block based processing.
-% This will be done by first modeling the knowledge limitation of the block-based processing on the desired playback signals.
-
 \subsection{Block-Based Data Model}
-% For the block-processing based sound zone approach, the incoming samples of the desired playback signals 
-% $s_\zz[m]$ for $\zz\in\left\{\za,\zb\right\}$ are assumed to be buffered into blocks of size $H$.
-% This means that the system waits until it has a block of size $H$ before revealing the new samples to the sound zone system.
-
-% This introduces a knowledge limitation in the desired playback signals, which requires the sound zone algorithm to be redesigned.
-% In this section, this knowledge limitation will be modeled.
-
-% The sound zone system only has knowledge of all previous blocks and the most recent block, indexed by block index $\mu$.
-% The relation between the global time index $n$ and block index $\mu$ is given as follows:  
-% \begin{equation}
-%     \mu(n) = \lfloor n / H \rfloor
-% \end{equation}
-% Thus at a time $n$, up to and including the $\mu^\text{th}$ blocks of desired playback signals $s_\zz[n]$ are known.
 In order to operate on short-time segments, all quantities introduced in the data model from \autoref{ch:sound_zone:data_model}
 are converted to their short-time equivalent representations.
 This is done by considering overlapping blocks of samples of the quantities.
@@ -125,10 +97,10 @@ the block-based equivalents of the target and achieved sound pressure $\tilde{t}
         This results in the following: 
         \begin{equation}
             \begin{aligned}
-                \tilde{p}_\zz^{(m)}[n, \mu] &= \sum_{l=0}^{N_L-1} \left(h^{(l,m)} \ast \tilde{x}^{(l)}_\zz[\mu]\right)[n]\\
-                                            &= \sum_{l=0}^{N_L - 1}\sum_{k=-\infty}^{\mu}\left(h^{(l,m)}\ast\tilde{x}^{(l)}_{\zz,k}w_k\right)[n] \\
-                                            &= \sum_{l=0}^{N_L-1}\left(h^{(l,m)}\ast\tilde{x}^{(l)}_{\zz,\mu}w_\mu\right)[n] + \tilde{p}_\zz^{(m)}[n, \mu - 1]  
- 
+                \tilde{p}_\zz^{(m)}[n, \mu] &= \sum_{l=0}^{N_L-1}                       \left(h^{(l,m)} \ast \tilde{x}^{(l)}_{\zz}[\mu]\right)[n]\\
+                                            &= \sum_{l=0}^{N_L-1}\sum_{k=-\infty}^{\mu} \left(h^{(l,m)} \ast \tilde{x}^{(l)}_{\zz,k}w_k\right)[n] \\
+                                            &= \sum_{l=0}^{N_L-1}                       \left(h^{(l,m)} \ast \tilde{x}^{(l)}_{\zz,\mu}w_\mu\right)[n] +
+                                                \tilde{p}_\zz^{(m)}[n, \mu - 1]  
             \end{aligned}
         \end{equation}
         The definition above again holds for all points $m\in Z$.  
@@ -136,20 +108,19 @@ the block-based equivalents of the target and achieved sound pressure $\tilde{t}
         As can be seen, the block based resulting sound pressure for the block $\mu$ can also be computed recursively.
 \end{itemize}
 
-With this,  all quantities required for the block-based formulation of the pressure matching approach are defined.
-The next section will use these quantities to state the block-based MZ-PM algorithm.
+With this, all quantities required for the block-based formulation of the pressure matching approach are defined.
 
-\subsection{Derivation of Block-Based Multi-Zone Pressure-Matching}
-After translating the loudspeaker input signals and the target sound pressure into their block-wise counterparts, 
-the Block-Based Multi-Zone Pressure-Matching (BB-MZ-PM) algorithm can be stated.
+\subsection{Block-Based Pressure-Matching}
+In the previous section it is shown that all quantities can be computed recursively.
+This is used in the block-based pressure matching approach by computing the blocks of the loudspeaker input signal
+$x_\zz^{(l)}$ one by one. 
 
-As mentioned before, the approach that will be taken is to compute the $\mu^\text{th}$ coefficient of the loudspeaker input signal
-$\tilde{x}^{(l)}_{\zz,\mu}$ such that the resulting sound pressure $\tilde{p}_\zz^{(m)}[n, \mu]$ best matches the target sound pressure 
+As such, the $k^\text{th}$ loudspeaker input signal coefficient $\tilde{x}^{(l)}_{\zz,\mu}[n]$ is computed such 
+that the resulting resulting sound pressure $\tilde{p}_\zz^{(m)}[n, \mu]$ best matches the target sound pressure 
 $\tilde{t}^{(m)}[n, \mu]$. 
 
-Note that in this approach only the most recent loudspeaker coefficients $\tilde{x}^{(l)}_{\zz,\mu}$ are being controlled. 
-The previous coefficients are assumed to have already been played.
-As such, they are held fixed.
+Note that in this approach only newest loudspeaker coefficients $\tilde{x}^{(l)}_{\zz,\mu}$ are being controlled. 
+Thus, the previous coefficients $-\infty \leq k \leq \mu - 1$ are held fixed.
 
 The block-based optimization problem can be found by simply replacing all quantities in the previously derived optimization problem
 with their block-based counterparts.
@@ -162,63 +133,42 @@ The problem is given as follows:
        \sum_{m\in B} \norm[2][2]{\tilde{p}_{\za}^{(m)}[n,\mu]}
     }
 \end{align}
-Note that this problem implicitly contains the target sound pressure and resulting sound pressure of the previous blocks $\mu - 1$ due to
+Note that this problem implicitly contains the target sound pressure and resulting sound pressure of the previous blocks $-\infty \leq k \leq \mu - 1$ due to
 the aforementioned recursive definitions.
 As a result, the history of what has been transmitted by the loudspeaker previously is included in the optimization.
 
-The problem above is solved recursively for all loudspeaker input signal coefficients $\tilde{x}_{\za,\mu}^{(l)}[n]$ and $\tilde{x}_{\zb,\mu}^{(l)}[n]$
-as new blocks $\tilde{s}_{\za,\mu}[n]$ and $\tilde{s}_{\zb,\mu}[n]$ are revealed.
-The final loudspeaker input signals $\tilde{x}_\zz^{(l)}[n, \infty]$  can then be found by means of \autoref{}.
+The problem above is solved recursively for all loudspeaker input signal coefficients $\tilde{x}_{\za,\mu}^{(l)}[n]$ and $\tilde{x}_{\zb,\mu}^{(l)}[n]$.
+The final loudspeaker input signals $x_\zz^{(l)}[n]$  can then be found by means of \autoref{}.
 
-\todo{FREQ DOMAIN START}
-In the previous section, a block-based multi-zone pressure matching algorithm was derived.
-When deriving this algorithm it was stated that it's advantages are twofold.
+\subsection{Block-Based Frequency-Domain Pressure-Matching}
+This section will adjust the block-based data model equivalent frequency domain formulation in order to propose a block-based frequency-domain
+pressure-matching algorithm.
+This is done by first introducing a transformation relating the time and frequency domain quantities.
 
-Firstly, one advantage of using this algorithm over its non block-based counterpart is that it can work in real-time.
-Secondly, the block-based approach can operate on short time-scales.
-This is useful, as the perceptual model that we wish to integrate operates on time-scales of the order of 20 to 200 milliseconds.
-
-There is however an additional adjustment that needs to be made before the perceptual model can be integrated. 
-Currently, the block based pressure matching algorithm minimizes the sound pressure errors in the time-domain, whereas the detectability is computed in the 
-frequency domain.
-In order to integrate the perceptual model and the sound zone algorithm, they must operate in the same domain.
-
-In this case, it was chosen to use convert the existing sound zone algorithm to one that operates in the frequency domain.
-This was chosen as to remain close to the definition of the detectability.
-Approximating detectability in the time domain was not explored further and could potentially be of interest for future work.
-
-To this end, this section will adjust the existing time domain block based pressure matching algorithm to an equivalent frequency domain formulation.
-This will be done by first introducing a suitable transformation relating the time and frequency domain quantities.
-The transformed quantities can than be used define the frequency domain version of the block based pressure matching algorithm.
-
-\subsection{Frequency Domain Transformation}
-A suitable transform to obtain the frequency domain representation of a signal is the DFT.
-However, it is important to take a number of precautions before applying the DFT directly,
-as the computation of the sound pressures used in the optimization problem introduced previously involves taking the 
+A suitable transform is the discrete Fourier transform (DFT).
+However, it is important to take a number of precautions before applying the DFT directly.
+As shown in \autoref{} the computation of the sound pressures used in the optimization problem introduced previously involves taking the 
 linear convolution of the loudspeaker input signals with the room impulse responses.
 
 Time domain circular convolution can be computed in the frequency domain through the Hadamard product.
 Time domain circular convolution coincides with time domain linear convolution only if the two operands are zero-padded sufficiently.
-To be specific, both operands need be zero-padded to the length of the resulting convolution.
+To be specific, both operands need be zero-padded to the length of the resulting linear convolution.
 
 As such, the frequency domain transform requires this zero padding to be built in.
 The convolutions described in the previous chapter are between the window coefficients of size $N_w$ 
 and the room impulse responses of size $N_h$.
 Thus, the both must be zero padded to convolution length $N_w + N_h - 1$ before going to the frequency domain.
 
-A suitable transform is thus given by a $N_w + N_h - 1$ point DFT.
+Let $x[n]$ and $X[k]$ denote the time- and frequency-domain representations of an arbitrary sequence.  
+A suitable transform is given by the following $N_w + N_h - 1$ point DFT:
 \begin{equation}
     X[k] = \sum_{n=0}^{N_w + N_h - 2} x[n]\exp\left(\frac{-j2\pi k n}{N_w + N_h - 1}\right)
 \end{equation}
-Here, $x[n]$ and $X[k]$ are the time- and frequency-domain representations of an arbitrary sequence.  
 
-\subsection{Quantities the Frequency Domain}
-In this section, the quantities used in the Block-Based Multi-Zone Pressure-Matching approach will be converted to their frequency domain counterparts.
+Converting the previously introduced block-based pressure matching to a frequency domain equivalent version
+essentially involves converting the sound pressures $\tilde{p}_{\zz}^{(m)}[n,\mu]$ and $\tilde{t}^{(m)}[n,\mu]$ 
+to their frequency domain counterparts, which are denoted by $\tilde{P}_{\zz,\mu}^{(m)}[k]$ and $\tilde{T}_\mu^{(m)}[k]$ respectively.
 
-Essentially, this involves converting the sound pressures $\tilde{p}_{\zz}^{(m)}[n,\mu]$ and $\tilde{t}^{(m)}[n,\mu]$ 
-to their frequency domain versions given by $\tilde{P}_{\zz,\mu}^{(m)}[k]$ and $\tilde{T}_\mu^{(m)}[k]$ respectively.
-
-This can be done by applying the previously derived transform directly to these quantities.
 This results in the following expressions.
 \begin{align}
     \tilde{T}^{(m)}[k, \mu] &= \tilde{T}^{(m)}[k, \mu - 1] + \sum_{l=0}^{N_L}H^{(l,m)}[k]\tilde{S}_{\zz,\mu}[k] \\
@@ -226,6 +176,7 @@ This results in the following expressions.
         + \sum_{l=0}^{N_L}H^{(l,m)}[k]\tilde{X}^{(l)}_{\zz,\mu}[k]  
 \end{align}
 Here, $H^{(l,m)}[k]\in\Complex{N_w + N_h - 1}$ is the transformed version of the room impulse responses.
+
 Furthermore, $\tilde{S}_{\zz,\mu}[k]\in\Complex{N_w + N_h - 1}$ and 
 $\tilde{X}^{(l)}_{\zz,\mu}[k]\in\Complex{N_w + N_h - 1}$ are the frequency domain versions of
 the desired playback signal and the loudspeaker input signal, which are defined as follows:
@@ -235,13 +186,11 @@ the desired playback signal and the loudspeaker input signal, which are defined 
     \tilde{X}^{(l)}_{\zz,\mu}[k] &= \sum_{n=0}^{N_w + N_h - 2} \tilde{x}^{(l)}_{\zz,\mu}[n]w[n - \mu H]
         \exp\left(\frac{-j2\pi k n}{N_w + N_h - 1}\right)
 \end{align}
-
 Note that the window is implicitly included in the transformed quantities.
 This is done for ease of notation.
 
-\subsection{Proposed Frequency Domain Approach}
-Using the previously derived quantities, it is possible express the frequency domain version of the 
-Block-Based Multi-Zone Pressure-Matching (BB-MZ-PM) approach as follows:
+Using the previously derived quantities, it is possible express the frequency domain version of the block-based pressure matching approach
+as follows:
 \begin{align}
     \argmin{\tilde{x}_{\za,\mu}^{(l)}[n],\,\tilde{x}_{\zb,\mu}^{(l)}[n]\,\forall\,l}{
        &\sum_{m\in A} \norm[2][2]{\tilde{P}_{\za}^{(m)}[k,\mu] - \tilde{T}^{(m)}[k,\mu]} +
