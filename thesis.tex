@@ -16,7 +16,9 @@
 \usepackage[]{multirow}
 
 \pgfplotsset{compat=1.16}
+\pgfplotsset{scaled x ticks=false}
 \usetikzlibrary{pgfplots.groupplots}
+\usetikzlibrary{pgfplots.fillbetween}
 
 % =Definitions===========================================================================
 \usepackage[]{nielstex}
@@ -44,7 +46,7 @@
 \mscauthor{Niels Evert Marinus de Koeijer B.Sc.}
 \msccity{Delft}
 \msccountry{The Netherlands}
-\mscnumber{??}
+\mscnumber{4480767}
 \mscdate{September 15, 2021}
 \major{Electrical Engineering}
 \mscinstitute{Delft University of Technology}
@@ -78,7 +80,6 @@
 % =Content===============================================================================
 \chapter{Introduction}
 \label{ch:introduction}
-\input{tikz/tikz_masking_effect.tex}
 \input{introduction/preface.tex}
 \newpage
 \input{introduction/objectives.tex}
@@ -137,8 +138,8 @@
 
 \chapter{Implementation of Perceptual Sound Zone Algorithms}
 \label{ch:perceptual_sound_zone}
-\section{Introduction}
-\label{ch:perceptual_sound_zone:introduction}
+% \section{Introduction}
+% \label{ch:perceptual_sound_zone:introduction}
 \input{perceptual_sound_zone_algorithm/introduction.tex}
 \newpage
 \section{Short-Time Frequency-Domain Reformulation of the Pressure Matching Approach}
@@ -149,7 +150,7 @@
 % \label{ch:perceptual_sound_zone:frequency_domain}
 % \input{perceptual_sound_zone_algorithm/frequency_domain.tex}
 % \newpage
-\section{Perceptual Pressure Matching}
+\section{Proposal of Perceptual Pressure Matching Algorithms}
 \label{ch:perceptual_sound_zone:perceptual_minimization}
 \input{perceptual_sound_zone_algorithm/perceptual_minimization.tex}
 \newpage
@@ -165,7 +166,6 @@
 \newpage
 \section{Evaluation Methodology}
 \input{results/methodology.tex}
-\newpage
 \section{Evaluation of Proposed Algorithms}
 \input{results/results.tex}
 \newpage

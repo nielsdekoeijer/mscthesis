@@ -62,14 +62,14 @@ when reproducing the target in the bright zone.
 
 Both can be thus be considered as ``errors'' that we wish to minimize.
 Viewing it this way, one choice for model these errors as the disturbance signals $\varepsilon[n]$.
-To this end, consider the perceptual reproduction error $\text{PRE}^{(m)}_\zz$ and the perceptual leakage error $\text{PLE}^{(m)}_\zz$.
+To this end, consider the reproduction error detectability $\text{RED}^{(m)}_\zz$ and the leakage error detectability $\text{LED}^{(m)}_\zz$.
 Fom now, ignore to the fact that the quantities for target and achieved sound pressure defined so far do not satisfy the short-time requirements. 
 The perceptual errors are defined as: 
 \begin{alignat}{2}
-    \text{PRE}^{(m)}_\zz &= D(t^{(m)}[n],\,p_\zz^{(m)}[n] - t^{(m)}[n]) \qquad&& \forall\,\, m\in Z \label{eq:sound_zone:approach_selection:PRE}\\
-    \text{PLE}^{(m)}_\zz &= D(t^{(m)}[n],\,p_\zz^{(m)}[n]) \qquad&& \forall\,\, m\notin Z \label{eq:sound_zone:approach_selection:PLE} 
+    \text{RED}^{(m)}_\zz &= D(t^{(m)}[n],\,p_\zz^{(m)}[n] - t^{(m)}[n]) \qquad&& \forall\,\, m\in Z \label{eq:sound_zone:approach_selection:RED}\\
+    \text{LED}^{(m)}_\zz &= D(t^{(m)}[n],\,p_\zz^{(m)}[n]) \qquad&& \forall\,\, m\notin Z \label{eq:sound_zone:approach_selection:LED} 
 \end{alignat}
-The perceptual reproduction error $\text{PRE}^{(m)}_\zz$ is determined by the detectability of the sound pressure difference between the achieved sound
+The reproduction error detectability $\text{RED}^{(m)}_\zz$ is determined by the detectability of the sound pressure difference between the achieved sound
 pressure $p_\zz^{(m)}[n]$ and the target sound pressure $t^{(m)}[n]$ for the control point $m$.
 This sound pressure difference can be understood as the ``error'' in sound pressure.
 
@@ -82,17 +82,17 @@ One approach would be to include the masking signal in the optimization, but thi
 \autoref{ch:perceptual:implementation:least_squares}.
 As such, by the masking effects of the achieved pressure are modeled by those of the target sound pressure.
 
-The $\text{PRE}^{(m)}_\zz$ models how detectable the deviation from target sound pressure is
-One interpretation of minimizing $\text{PRE}^{(m)}_\zz$ is finding the sound pressure difference which is least detectable. 
+The $\text{RED}^{(m)}_\zz$ models how detectable the deviation from target sound pressure is
+One interpretation of minimizing $\text{RED}^{(m)}_\zz$ is finding the sound pressure difference which is least detectable. 
 
-Similarly, the perceptual leakage error $\text{PLE}^{(m)}_\zz$ is determined by how detectable the sound pressure of zone $\zz$ is in other zones.
+Similarly, the leakage error detectability $\text{LED}^{(m)}_\zz$ is determined by how detectable the sound pressure of zone $\zz$ is in other zones.
 Note as $m\notin\zz$, this definition considers all points outside of the bright zone for $\zz$.  
 Here, the masking signal is again chosen as the target sound pressure of the control point in question.
-$\text{PLE}^{(m)}_\zz$ models how detectable the leakage of zone $\zz$ is in presence of the intended target sound pressure. 
-Minimizing $\text{PLE}^{(m)}_\zz$ could thus be understood as finding the leakage that is minimally-detectable in presence of the target sound pressure.
+$\text{LED}^{(m)}_\zz$ models how detectable the leakage of zone $\zz$ is in presence of the intended target sound pressure. 
+Minimizing $\text{LED}^{(m)}_\zz$ could thus be understood as finding the leakage that is minimally-detectable in presence of the target sound pressure.
 
 These perceptually modified errors are found to be a promising way of combining pressure matching and the Par detectability,
 and are used to state perceptual sound zone algorithms in \autoref{ch:perceptual_sound_zone}.
-The short-time frequency-domain quantities required for the definitions of $\text{PRE}^{(m)}_\zz$ and $\text{PLE}^{(m)}_\zz$ are introduced in this chapter.
+The short-time frequency-domain quantities required for the definitions of $\text{RED}^{(m)}_\zz$ and $\text{LED}^{(m)}_\zz$ are introduced in this chapter.
 
 Using the ACC approach to formulate perceptual sound zone algorithms is not explored further in this work, but is found to be promising future work.

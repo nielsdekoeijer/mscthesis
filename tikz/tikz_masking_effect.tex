@@ -2,50 +2,38 @@
     \centering
     \begin{tikzpicture}
         \begin{groupplot}[group style={group size=1 by 3, vertical sep=2cm}]
-            \nextgroupplot[xlabel={$n$}, ylabel={$t^{(m)}[n]$}, ylabel near ticks, 
-            title={Target}, scale only axis, 
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$t^{(m)}[n]$}, ylabel near ticks, 
+            title={Target Sound Pressure in Control Point $m\in A$}, scale only axis, 
             height=3cm, width=9cm, xmin=5000, xmax=6400, xtick={5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400},
-            ymin=-0.4, ymax=0.4]
+            ymin=-0.5, ymax=0.5]
             \addplot [color=red, error bars/.cd, y dir=both, y explicit]
             table [x expr=\thisrow{samples}, y expr=(\thisrow{audio} / 32787), col sep=comma] 
                 {data/target.csv};
+           \addplot [samples=50, smooth, name path=H11] coordinates {(5500,-0.5) (5500,0.5)};
+           \addplot [samples=50, smooth, name path=H12] coordinates {(6200,-0.5) (6200,0.5)};
+           \addplot [fill opacity=0.05] fill between [of=H11 and H12];
 
-            \nextgroupplot[xlabel={$n$}, ylabel={$p_\zz^{(m)}[n]$}, ylabel near ticks, 
-            title={Perceptual Leakage}, scale only axis, 
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(m)}[n]$}, ylabel near ticks, 
+            title={Perceptual Algorithm Sound Pressure Leakage in Control Point $m\in A$}, scale only axis, 
             height=3cm, width=9cm, xmin=5000, xmax=6400, xtick={5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400},
-            ymin=-0.4, ymax=0.4]
+            ymin=-0.5, ymax=0.5]
             \addplot [color=red, error bars/.cd, y dir=both, y explicit]
             table [x expr=\thisrow{samples}, y expr=(\thisrow{audio} / 32787), col sep=comma] 
                 {data/per_leakage.csv};
+           \addplot [samples=50, smooth, name path=H11] coordinates {(5500,-0.5) (5500,0.5)};
+           \addplot [samples=50, smooth, name path=H12] coordinates {(6200,-0.5) (6200,0.5)};
+           \addplot [fill opacity=0.05] fill between [of=H11 and H12];
 
-            \nextgroupplot[xlabel={$n$}, ylabel={$p_\zz^{(m)}[n]$}, ylabel near ticks, 
-            title={Reference Leakage}, scale only axis, 
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(m)}[n]$}, ylabel near ticks, 
+            title={Reference Algorithm Sound Pressure Leakage in Control Point $m\in A$}, scale only axis, 
             height=3cm, width=9cm, xmin=5000, xmax=6400, xtick={5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400},
-            ymin=-0.4, ymax=0.4]
+            ymin=-0.5, ymax=0.5]
             \addplot [color=red, error bars/.cd, y dir=both, y explicit]
             table [x expr=\thisrow{samples}, y expr=(\thisrow{audio} / 32787), col sep=comma] 
                 {data/ref_leakage.csv};
+           \addplot [samples=50, smooth, name path=H11] coordinates {(5500,-0.5) (5500,0.5)};
+           \addplot [samples=50, smooth, name path=H12] coordinates {(6200,-0.5) (6200,0.5)};
+           \addplot [fill opacity=0.05] fill between [of=H11 and H12];
         \end{groupplot}
-        % \begin{axis}[xlabel=$n$, ylabel=$t$, ylabel near ticks, title={Target}, scale only axis, 
-        %     height=5cm, width=14cm, xmin=5000, xmax=6400, xtick={5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400},
-        %     ymin=-0.4, ymax=0.4]
-        %     \addplot [color=red, error bars/.cd, y dir=both, y explicit]
-        %     table [x expr=\thisrow{samples}, y expr=(\thisrow{audio} / 32787), col sep=comma] 
-        %         {data/target.csv};
-        % \end{axis}
-        % \begin{axis}[xlabel=$n$, ylabel=$t$, ylabel near ticks, title={Reference Leakage}, scale only axis, 
-        %     height=5cm, width=14cm, xmin=5000, xmax=6400, xtick={5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400},
-        %     ymin=-0.4, ymax=0.4]
-        %     \addplot [color=red, error bars/.cd, y dir=both, y explicit]
-        %     table [x expr=\thisrow{samples}, y expr=(\thisrow{audio} / 32787), col sep=comma] 
-        %         {data/ref_leakage.csv};
-        % \end{axis}
-        % \begin{axis}[xlabel=$n$, ylabel=$t$, ylabel near ticks, title={Perceptual Leakage}, scale only axis, 
-        %     height=5cm, width=14cm, xmin=5000, xmax=6400, xtick={5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400},
-        %     ymin=-0.4, ymax=0.4]
-        %     \addplot [color=red, error bars/.cd, y dir=both, y explicit]
-        %     table [x expr=\thisrow{samples}, y expr=(\thisrow{audio} / 32787), col sep=comma] 
-        %         {data/per_leakage.csv};
-        % \end{axis}
     \end{tikzpicture}
 \end{figure}

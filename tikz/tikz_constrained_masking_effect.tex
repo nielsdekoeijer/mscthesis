@@ -1,0 +1,97 @@
+\begin{figure}[p]
+    \noindent
+    \makebox[\linewidth]{
+    \begin{tikzpicture}
+        \begin{groupplot}[group style={group size=2 by 4, vertical sep=2.25cm, horizontal sep=2.5cm}]
+
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$t^{(m)}[n]$}, ylabel near ticks, 
+            title={Target Sound Pressure $m\in A$ }, scale only axis, 
+            height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
+            ymin=-0.5, ymax=0.5]
+            \addplot [color=red, error bars/.cd, y dir=both, y explicit]
+            table [x expr=\thisrow{samples}, y expr=(\thisrow{audio} / 32787), col sep=comma] 
+                {data/target_Q.csv};
+            \addplot [samples=50, smooth, name path=H11] coordinates {(29300,-0.5) (29300,0.5)};
+            \addplot [samples=50, smooth, name path=H12] coordinates {(30250,-0.5) (30250,0.5)};
+            \addplot [fill opacity=0.05] fill between [of=H11 and H12];
+
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$t^{(m)}[n]$}, ylabel near ticks, 
+            title={Target Sound Pressure $m\in B$}, scale only axis, 
+            height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
+            ymin=-0.5, ymax=0.5]
+            \addplot [color=red, error bars/.cd, y dir=both, y explicit]
+            table [x expr=\thisrow{samples}, y expr=(\thisrow{audio} / 32787), col sep=comma] 
+                {data/target_Q_offzone.csv};
+            \addplot [samples=50, smooth, name path=H11] coordinates {(29750,-0.5) (29750,0.5)};
+            \addplot [samples=50, smooth, name path=H12] coordinates {(30850,-0.5) (30850,0.5)};
+            \addplot [fill opacity=0.05] fill between [of=H11 and H12];
+
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\za^{(m)}[n]$}, ylabel near ticks, 
+            title={Reconstruction for $Q=1$}, scale only axis, 
+            height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
+            ymin=-0.5, ymax=0.5]
+            \addplot [color=red, error bars/.cd, y dir=both, y explicit]
+            table [x expr=\thisrow{samples}, y expr=(\thisrow{audio} / 32787), col sep=comma] 
+                {data/reconstruction_Q_1.csv};
+            \addplot [samples=50, smooth, name path=H11] coordinates {(29300,-0.5) (29300,0.5)};
+            \addplot [samples=50, smooth, name path=H12] coordinates {(30250,-0.5) (30250,0.5)};
+            \addplot [fill opacity=0.05] fill between [of=H11 and H12];
+
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(m)}[n]$}, ylabel near ticks, 
+            title={Leakage for $Q=1$}, scale only axis, 
+            height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
+            ymin=-0.5, ymax=0.5]
+            \addplot [color=red, error bars/.cd, y dir=both, y explicit]
+            table [x expr=\thisrow{samples}, y expr=(\thisrow{audio} / 32787), col sep=comma] 
+                {data/leakage_Q_1.csv};
+            \addplot [samples=50, smooth, name path=H11] coordinates {(29750,-0.5) (29750,0.5)};
+            \addplot [samples=50, smooth, name path=H12] coordinates {(30850,-0.5) (30850,0.5)};
+            \addplot [fill opacity=0.05] fill between [of=H11 and H12];
+
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\za^{(m)}[n]$}, ylabel near ticks, 
+            title={Reconstruction for $Q=7$}, scale only axis, 
+            height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
+            ymin=-0.5, ymax=0.5]
+            \addplot [color=red, error bars/.cd, y dir=both, y explicit]
+            table [x expr=\thisrow{samples}, y expr=(\thisrow{audio} / 32787), col sep=comma] 
+                {data/reconstruction_Q_7.csv};
+            \addplot [samples=50, smooth, name path=H11] coordinates {(29300,-0.5) (29300,0.5)};
+            \addplot [samples=50, smooth, name path=H12] coordinates {(30250,-0.5) (30250,0.5)};
+            \addplot [fill opacity=0.05] fill between [of=H11 and H12];
+
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(m)}[n]$}, ylabel near ticks, 
+            title={Leakage for $Q=7$}, scale only axis, 
+            height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
+            ymin=-0.5, ymax=0.5]
+            \addplot [color=red, error bars/.cd, y dir=both, y explicit]
+            table [x expr=\thisrow{samples}, y expr=(\thisrow{audio} / 32787), col sep=comma] 
+                {data/leakage_Q_7.csv};
+            \addplot [samples=50, smooth, name path=H11] coordinates {(29750,-0.5) (29750,0.5)};
+            \addplot [samples=50, smooth, name path=H12] coordinates {(30850,-0.5) (30850,0.5)};
+            \addplot [fill opacity=0.05] fill between [of=H11 and H12];
+
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\za^{(m)}[n]$}, ylabel near ticks, 
+            title={Reconstruction for $Q=21$}, scale only axis, 
+            height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
+            ymin=-0.5, ymax=0.5]
+            \addplot [color=red, error bars/.cd, y dir=both, y explicit]
+            table [x expr=\thisrow{samples}, y expr=(\thisrow{audio} / 32787), col sep=comma] 
+                {data/reconstruction_Q_21.csv};
+            \addplot [samples=50, smooth, name path=H11] coordinates {(29300,-0.5) (29300,0.5)};
+            \addplot [samples=50, smooth, name path=H12] coordinates {(30250,-0.5) (30250,0.5)};
+            \addplot [fill opacity=0.05] fill between [of=H11 and H12];
+
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(m)}[n]$}, ylabel near ticks, 
+            title={Leakage for $Q=21$}, scale only axis, 
+            height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
+            ymin=-0.5, ymax=0.5]
+            \addplot [color=red, error bars/.cd, y dir=both, y explicit]
+            table [x expr=\thisrow{samples}, y expr=(\thisrow{audio} / 32787), col sep=comma] 
+                {data/leakage_Q_21.csv};
+            \addplot [samples=50, smooth, name path=H11] coordinates {(29750,-0.5) (29750,0.5)};
+            \addplot [samples=50, smooth, name path=H12] coordinates {(30850,-0.5) (30850,0.5)};
+            \addplot [fill opacity=0.05] fill between [of=H11 and H12];
+        \end{groupplot}
+\end{tikzpicture}}
+\caption{Plots depicting stuff.}
+\end{figure}
