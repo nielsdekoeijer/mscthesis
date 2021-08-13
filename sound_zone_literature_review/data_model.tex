@@ -86,14 +86,14 @@ It can be defined as follows:
     p^{(l,m)}[n] = \left(h^{(l,m)} \ast x^{(l)}\right)[n]
 \end{equation}
 Here, the $\ast$ operator is used to denote linear convolution. 
-The realized sound pressure $p^{(l,m)}[n]$ only considers the contribution of loudspeaker $l$ at reproduction point $m$.
+The achieved sound pressure $p^{(l,m)}[n]$ only considers the contribution of loudspeaker $l$ at reproduction point $m$.
 Let $p^{(m)}[n]\in\Real{N_x + N_h - 1}$ denote the total sound pressure due to all $N_L$ loudspeakers,
 which can be expressed as the sum over all contributions $p^{(l,m)}[n]$ as follows: 
 \begin{align}
-    p^{(m)}[n] &= \sum_{l=0}^{N_L - 1} \left(h^{(l,m)} \ast x^{(l)}\right)[n]
+    p^{(m)}[n] &= \sum_{l=0}^{N_L - 1} \left(h^{(l,m)} \ast x^{(l)}\right)[n]\label{eq:sound_zone:data_model:achieved_pressure}
 \end{align}
 With the data model completed, the goal of the sound zone algorithm can be restated formally.
-Namely, the goal is to find $x^{(l)}[n]$ such that the realized sound pressure $p^{(m)}[n]$ attains the
+Namely, the goal is to find $x^{(l)}[n]$ such that the achieved sound pressure $p^{(m)}[n]$ attains the
 target sound pressure $t^{(m)}[n]$ for all control points $m\in A \cup B$.
 
 \subsection{Choice of Target Pressure}
@@ -106,8 +106,11 @@ Assume that the users of the sound zone system have selected desired playback au
 $s_\zb[n]\in\Real{N_x}$ that they wish to hear in zone $\za$ and $\zb$ respectively.
 In order to accommodate the wishes of the user, the target sound pressure is chosen as follows: 
 \begin{align}
-    t^{(m)}[n] = \sum_{l=0}^{N_L} \left(h^{(l,m)} \ast s_\za\right)[n]\qquad &\forall\,m\in A\\
-    t^{(m)}[n] = \sum_{l=0}^{N_L} \left(h^{(l,m)} \ast s_\zb\right)[n]\qquad &\forall\,m\in B
+    \begin{aligned}
+        t^{(m)}[n] = \sum_{l=0}^{N_L} \left(h^{(l,m)} \ast s_\za\right)[n]\qquad &\forall\,m\in A\\
+        t^{(m)}[n] = \sum_{l=0}^{N_L} \left(h^{(l,m)} \ast s_\zb\right)[n]\qquad &\forall\,m\in B
+    \end{aligned}
+    \label{eq:sound_zone:data_model:target_pressure}
 \end{align}
 This choice for the target pressure can be understood as the sound pressure that arises in a certain zone
 when playing only the desired playback audio for that zone from the loudspeaker array. 

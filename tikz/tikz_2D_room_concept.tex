@@ -1,4 +1,17 @@
 \begin{tikzpicture}
+    \tikzset{
+      Speaker/.pic={
+        \filldraw[fill=gray!40,pic actions] 
+        (-15pt,0) -- 
+          coordinate[midway] (-front) 
+        (15pt,0) -- 
+        ++([shift={(-6pt,8pt)}]0pt,0pt) coordinate (aux1) -- 
+        ++(-18pt,0) coordinate (aux2) 
+        -- cycle 
+        (aux1) -- ++(0,6pt) -- coordinate[midway] (-back) ++(-18pt,0) -- (aux2);
+      }
+    }
+
     \draw [draw=black] (0,0) rectangle (8,6);
 
     % Speakers on the top wall

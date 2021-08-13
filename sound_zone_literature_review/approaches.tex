@@ -30,7 +30,7 @@ Through this decomposition, it is possible to consider the sound pressure that a
 Where $\zz \in \left(\za,\,\zb\right)$ represents either zones.
 Here, $p_\za^{(m)}[n]$ and $p_\zb^{(m)}[n]$ can be understood to be the pressure that arises due to 
 playing loudspeaker input signals $x_\za^{(l)}[n]$ and $x_\zb^{(l)}[n]$ respectively at a specified control point. 
-The total sound pressure at control point $m$ is then given by the addition of the two sound pressures:
+The total achieved sound pressure at control point $m$ is then given by the addition of the two achieved sound pressures:
 \begin{equation}
     p^{(m)}[n] = p_\za^{(m)}[n] + p_\zb^{(m)}[n]
 \end{equation}
@@ -49,9 +49,9 @@ matches the specified target sound pressure for that zone,
 while simultaneously minimizing the sound pressure that results in other zones as to minimize the interference or crosstalk between zones
 ~\cite{betlehem2015personal, olik2013comparative}.
 
-The idea in this approach is to chose $x_\za^{(l)}[n]$ and such that the resulting pressure 
+The idea in this approach is to chose $x_\za^{(l)}[n]$ and such that the resulting achieved pressure 
 $p_\za^{(m)}[n]$ attains the target sound pressure $t^{(m)}[n]$ in all control points $m \in A$.   
-At the same time however, $p_\za^{(m)}[n]$ should result in minimal sound pressure in all control points $m \in B$.
+At the same time however, $p_\za^{(m)}[n]$ should result in minimal achieved sound pressure in all control points $m \in B$.
 Any sound pressure resulting from $x_\za^{(l)}[n]$ in zone $\zb$ is can be understood as leakage, or cross-talk between the zones. 
 
 Similar arguments can be given for $x_\zb^{(l)}[n]$.
