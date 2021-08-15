@@ -25,18 +25,17 @@ Improvements Mentioned by Martin
 
 4. PSZA
 * 4.2: Citation for the overlapping windows => Julius Smith what Martin sent me earlier
-* 4.2: Cut down the introduction to the block based processing
-* 4.2: Careful on the use of H: Use for block size as well as hop size :(
-* Merge 4.2 and 4.3 
-* Define 5.2.3 in terms of the mathematical quantities first, then describe intiuiton
 
 5. Results
 * Add waveform discussion
+* Define 5.2.3 in terms of the mathematical quantities first, then describe intiuiton
 
 6.
 * Discussion
 
 Improvements Mentioned by Jorge
+=> JORGE:
+* Perceptual formulation is eigenlijk niet mijn contributie: Taal had em al gegeven in een paper.
 
 0. General
 * CAS nummer vragen aan Richard, daarna Alle-Jan

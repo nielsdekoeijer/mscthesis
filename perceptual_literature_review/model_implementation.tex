@@ -120,9 +120,9 @@ This concludes the analysis of the Par model.
 The determination of the calibration constants $C_a$ and $C_s$ is discussed in \autoref{ch:perceptual:implementation:calibration}.
 
 
-\subsection{Proposed Least-Squares Formulation of the Par Detectability}
+\subsection{Least-Squares Formulation of the Par Detectability}
 \label{ch:perceptual:implementation:least_squares}
-This section will rewrite the previously introduced detectability into a least-squares representation. 
+This section will rewrite the previously introduced detectability into a least-squares representation~\cite{taal2012low}. 
 This representation is more mathematically tractable than \autoref{eq:perceptual:implementation:computation:detectability} and thus 
 will allow for easier integration into existing sound zone algorithms.
 
@@ -143,7 +143,8 @@ Consider the following rewrite of the detectability given in \autoref{eq:percept
                            &= \sum_{k=0}^{N_x-1}\left|W_x[k]\right|^2\left|\mathcal{E}[k]\right|^2 \\
                            &= \norm[2][2]{W_x[k]\mathcal{E}[k]} 
 \end{align*}
-The rewrite above introduced perceptual weighting $W_x[k]\in\Real{N_x}$ describing the masking effects of the masking signal $x[n]$. 
+The rewrite above introduced perceptual weighting $W_x[k]\in\Real{N_x}$ informed by the auditory masking effects of the masking signal $x[n]$. 
+The entries of the perceptual weighting can be understood as the importance of those frequencies for the total detectability.
 The perceptual weighting $W_x[k]$ is defined as follows: 
 \begin{equation}
     W_x[k] = \left(\sqrt{\sum_{i=0}^{N_g}\frac{C_s L_\text{eff}\left|\Gamma_i[k]\right|^2}{\norm[2][2]{H_\text{om}[k]\Gamma_i[k]X[k]} + C_a}}\right)
@@ -156,9 +157,22 @@ The frequency-domain representation $\mathcal{E}[k]$ is related to the time-doma
 The perceptual weighting of $\mathcal{E}[k]$ performed by $W[k]$ is also a linear operation.
 As such, $W[k]\mathcal{E}[k]$ is an affine function of $\varepsilon[n]$.
 
-% \subsection{Analysis of Behavior of Par Detectability}
-\todo{It might be nice to have a plot showing the masking threshold and the corresponding perceptual weighting matrix.
-This could show the reader that the threshold of quite results in low weighting for the low and high frequencies, and effects
-that the masking signal has on the weights...}
+In order to gain a deeper understanding of the behavior of the perceptual weighting $W_x[k]$, consider 
+\autoref{fig:perceptual:implementation:least_squares:masking_expl}.
+The figure relates the auditory masking threshold and the corresponding perceptual weighting when a 1000 Hz tone at 70 dB SPL is used as masking signal $x[n]$.
+Recall that the masking threshold is minimal sound pressure level that is required for an additional stimuli to be audible in 
+presence of the masking signal~\cite{painter2000perceptual}.
+In addition to this, the threshold of hearing is also depicted to highlight the additional masking that occurs due to the masking signal.
 
-\input{tikz/tikz_masking_expl.tex}
+As can be seen, the masking threshold peaks at 52 dB SPL at 1000 Hz.
+This implies that an additional tone must be at least 52 dB SPL in order to be audible.
+As depicted, this results in a low perceptual weighting implying that a disturbance at this frequency is less detectable.
+Note also that the low and higher frequencies are also weighted lower due to the threshold of hearing.
+
+\begin{figure}[]
+    \centering
+    \scalebox{1.0}{\input{tikz/tikz_masking_expl.tex}}
+    \caption{Depiction of the masking threshold and corresponding perceptual weighting function for a 1000 Hz tone with an amplitude of 70 dB SPL.
+    The threshold of hearing is also depicted.}
+    \label{fig:perceptual:implementation:least_squares:masking_expl}
+\end{figure}

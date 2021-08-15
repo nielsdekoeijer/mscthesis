@@ -6,7 +6,8 @@
 \usepackage[]{graphicx}
 \usepackage[]{color}
 \usepackage[]{listings}
-\usepackage[]{hyperref}
+% \usepackage[]{hyperref}
+\usepackage[nameinlink]{cleveref}
 \usepackage[]{nielsformat}
 \usepackage[]{subcaption}
 \usepackage[]{tikz}
@@ -28,6 +29,8 @@
 
 % Define plot command
 \input{tikz/tikz_reproduction_error_constraining_plot.tex}
+
+\renewcommand{\autoref}{\Cref}
 
 % Thesis specific definitions
 \newcommand{\za}{\mathcal{A}}
@@ -59,7 +62,7 @@
 \memberone{dr. M. Mastrangeli}
 \membertwo{M. Bo M\o ller, PhD}
 \memberthree{dr. P. Mart\'{\i}nez-Nuevo}
-\advisorone{dr. J. Mart\'{\i}nez-Casta{\~n}eda }
+\advisorone{dr. J. Mart\'{\i}nez-Casta{\~n}eda}
 
 % =Abstract==============================================================================
 \def\ABSTRACT{}
@@ -146,6 +149,7 @@
 \newpage
 
 \chapter{Conclusion}
+\label{ch:conclusion}
 
 \bibliography{bibliography}
 \bibliographystyle{ieeetran.bst}

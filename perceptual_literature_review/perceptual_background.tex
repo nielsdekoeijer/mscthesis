@@ -1,7 +1,30 @@
-\todo{Add required perceptual information.}
+In the field of psycho-acoustics significant research has been done in characterizing the auditory perception and time-frequency
+analysis capabilities of the human ear~\cite{painter2000perceptual}.
+From this understanding, a number of perceptual models have been proposed which aim to model perception of auditory stimuli~\cite{van2005perceptual}.
+
+Perceptual models are proposed for various purposes.
+Objective audio quality measures, for example, are perceptual models which aim to predict the perceived quality of audio~\cite{torcoli2021objective}.
+In another example, perceptual audio coding uses models of auditory perception to minimize the perceived artifacts when 
+performing compression of audio~\cite{herre2019psychoacoustic}.
+
+In general, many perceptual models apply an analysis filter bank to obtain a time-frequency representation of the stimuli.
+Often, the of the human human ear is also taken into account at this stage~\cite{van2005perceptual, taal2012low}.
+This representation is used to determine its perceptually relevant aspects~\cite{herre2019psychoacoustic}.
+
+One aspect often used in perceptual models are are the auditory masking properties of the input stimuli~\cite{herre2019psychoacoustic}.
+In general, auditory masking refers the effects one sound has on the perception of other sounds~\cite{painter2000perceptual}.
+In simultaneous masking for example, one loud tone may overpower a tone of a similar frequency, rendering it inaudible~\cite{painter2000perceptual}.
+
+Another aspect that is often used is the ``threshold of hearing'', which determines the minimum sound pressure level 
+that can be perceived by a human~\cite{herre2019psychoacoustic}.
+
+Using these principals, one can define the ``masking threshold'' of an input stimuli.
+This determines the sound pressure level required for other stimuli to be audible to a human observer in presence 
+of the input stimuli~\cite{painter2000perceptual}. 
+These principals are used in perceptual audio coding to make the encoding noise inaudible~\cite{herre2019psychoacoustic}.
 
 \subsection*{Chapter Structure}
-The goal of this chapter is to find a suitable perceptual algorithm for the creation of a perceptual sound zone algorithm.
+The goal of this chapter is to find a suitable perceptual model for the creation of a perceptual sound zone algorithm.
 This chapter is structured as follows.
 
 \begin{itemize}

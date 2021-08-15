@@ -1,19 +1,19 @@
-In \autoref{ch:sound_zone} and \autoref{ch:perceptual_sound_zone} various sound zone algorithms were defined.
-First, in \autoref{ch:sound_zone} a non-perceptual pressure matching approach was introduced.
-In the following chapter two perceptual sound zone algorithms were introduced, namely 
-unconstrained perceptual pressure matching and perceptually constrained pressure matching.
-
-This section will discuss the general approach for evaluation of the previously derived algorithms.
+This section discusses the general approach for evaluation of the previously derived algorithms.
 All algorithms will be evaluated by means of simulation. 
-As all derived algorithms were found to be computationally intensive, many of the design consideration for the simulations
-were chosen such to keep the computational complexity low.
+As all derived algorithms were found to be computationally intensive, many of the design considerations for the simulations
+are such to keep the computational complexity low.
+
+The constrained and unconstrained perceptual pressure matching approaches proposed in \autoref{ch:perceptual_sound_zone:perceptual_minimization:unconstrained}
+and \autoref{ch:perceptual_sound_zone:perceptual_minimization:constrained} respectively are compared to the short-time frequency pressure matching approach
+given in \autoref{ch:perceptual_sound_zone:stft} by \autoref{eq:perceptual_sound_zone:stft:stft_pm}.
 
 \subsection{Room Setup}
-All sound zone algorithms were evaluated in a simulated square room of 5 by 5 meters, with a ceiling height of 3.4 meters.
-The room contained 4 loudspeakers placed in the corners of the room at a height of 1.2 meters.
-
+All sound zone algorithms are evaluated in a simulated square room of 5 by 5 meters, with a ceiling height of 3.4 meters.
+The room contains 4 loudspeakers placed in the corners of the room at a height of 1.2 meters.
 Two zones each consisting of two control points are in the middle of the room.
-In order to obtain a challenging problem, the zones are placed in close proximity, which the two closest points 0.5 meters apart.
+
+In order to obtain a sufficiently challenging problem, the zones are placed in close proximity, which the two closest points 0.5 meters apart.
+This is important, as a trivial problem results makes it difficult to highlight the differences in performance.
 
 \begin{figure}[]
     \centering
