@@ -26,7 +26,10 @@ Improvements Mentioned by Martin
 4. PSZA
 * 4.2: Citation for the overlapping windows => Julius Smith what Martin sent me earlier
 
-5. Results
+5. Evaluation => Results en Analysis of Proposed Perceptual Sound Zone Algorithms
+5.1 Homogeen maken plaatjes. 3D plaatjes H3 niet nodig.
+5.1 Parameteres for the simulation are such to keep the computational intensity.
+
 * Add waveform discussion
 * Define 5.2.3 in terms of the mathematical quantities first, then describe intiuiton
 

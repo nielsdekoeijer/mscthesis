@@ -1,0 +1,3 @@
+5.1 :: title Evaluation => Results en Analysis of Proposed Perceptual Sound Zone Algorithms
+5.1 :: Homogeen maken plaatjes. 3D plaatjes H3 niet nodig.
+5.2 :: Zet plaatje van situatie erbij met labels bij de punten zodat ik kan referen naar een specifiek punt.

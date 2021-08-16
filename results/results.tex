@@ -12,6 +12,7 @@ As mentioned in \autoref{ch:results:methodology}, the perceptual pressure matchi
 reference pressure matching algorithm introduced in \autoref{ch:sound_zone:approaches}.
 The unconstrained reference algorithm instead minimizes the total reproduction and leakage error.
 
+\subsubsection*{Quantifying Algorithm Performance}
 The experiment consists of 12 simulations which use speech signals for both zones.
 For evaluation, 3 metrics are used as introduced by \autoref{ch:results:methodology}.
 First, Overall PESQ, which quantifies the quality of the total experience: achieved intended audio and interference.
@@ -61,11 +62,27 @@ The reference sound zone algorithm achieves a greater Target PESQ, however after
 This implies that the the perceptual sound zone algorithm makes a better overall perceptual trade-off between producing the target content 
 and minimizing the leakage.
 
+\subsubsection*{Analyzing Algorithm Behavior}
+In the preceding section the reference and perceptual algorithms are compared quantitatively.
+In doing so, it is shown that the perceptual algorithm outperforms the reference in terms of total PESQ and Distraction.
+This section considers the behavior of the algorithms in an attempt to explain these results.
+
+To this end, consider \autoref{fig:results:evaluation:unconstrained_results:behavior}.
+This figure contains a plot of the wave forms of the target sound pressure and achieved dark-zone sound pressure for both the perceptual and non-perceptual
+variants of pressure matching.
+As explained in \autoref{ch:results:methodology}, the achieved dark-zone sound pressure can be understood as the leakage that arises due to the presence of a 
+bright zone.
+\begin{figure}[]
 \input{tikz/tikz_masking_effect.tex}
-\input{tikz/tikz_constrained_masking_effect.tex}
+\caption{Depiction of the wave forms of the target sound pressure and achieved dark zone sound pressure for the 
+    unconstrained perceptual pressure matching approach and the reference pressure matching approach.}
+    \label{fig:results:evaluation:unconstrained_results:behavior}
+\end{figure}
+
 
 \subsection{Evaluating Constrained Perceptual Pressure Matching}
 
+\subsubsection*{Quantifying Algorithm Performance}
 \constrainingplot
 {A__0.wav__target_reconstruction_pesq_mean}
 {A__0.wav__target_reconstruction_pesq_std}
@@ -73,3 +90,6 @@ and minimizing the leakage.
 {A__0.wav__target_result_pesq_std}
 {A__0.wav__reconstruction_leakage_distraction_mean}
 {A__0.wav__reconstruction_leakage_distraction_std}
+
+\subsubsection*{Analyzing Algorithm Behavior}
+\input{tikz/tikz_constrained_masking_effect.tex}

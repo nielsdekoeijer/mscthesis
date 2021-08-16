@@ -1,18 +1,22 @@
 The following work is found to be promising:
 \begin{itemize}
-    \item Reformulating the short-time frequency-domain pressure-matching defined in \autoref{ch:perceptual_sound_zones:short_time}
+    \item Reformulating the short-time frequency-domain pressure-matching defined in \autoref{ch:perceptual_sound_zone:stft}
         such that it allows for optimization over the frequency-domain representation of the loudspeaker input signals while 
         limiting or entirely preventing the resulting artifacts in the resulting time-domain sequence.
+
         This is found to be promising as the resulting computational complexity of the algorithm could potentially be much
         lower due to the removal of the transformation between the time-domain and frequency-domain representation of the
         loudspeaker input signals.
-    \item Reformulating the constrained perceptual pressure matching algorithm given in \autoref{} to instead constrain the 
-        leakage error detectability.
+    \item Reformulating the constrained perceptual pressure matching algorithm given in \autoref{ch:perceptual_sound_zone:perceptual_minimization:constrained}
+        to instead constrain the leakage error detectability.
+
         This approach is promising as it allows for constraints to be placed on the detectability sound zone leakage which have 
         a consistent interpretation.
+        This approach can then be compared to traditional pressure matching approaches which often also constrain sound zone leakage~\cite{betlehem2015personal}.
     \item Evaluation of the performance difference between perceptual and non-perceptual sound zone approaches.
-        In \autoref{}, the perceptual sound zone algorithms are shown to outperform the traditional non-perceptual reference in terms of 
-        various objective measures which are introduced in \autoref{}.
-        However, as discussed in \autoref{}, these objective measures can only be used to give an indication of performance.
-        To objectively determine if the perceptual approach outperforms, a listening test must be conducted.
+        In \autoref{ch:results:evaluation}, the perceptual sound zone algorithms are shown to outperform the traditional non-perceptual reference in terms of 
+        various objective measures which are introduced in \autoref{ch:perceptual:review}.
+
+        However, as discussed in \autoref{ch:perceptual:review}, these objective measures can only be used to give an indication of performance.
+        To objectively determine if the perceptual approach does indeed outperform traditional approaches, a listening test must be conducted.
 \end{itemize}
