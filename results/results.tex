@@ -3,9 +3,22 @@ First, an unconstrained perceptual pressure matching approach where the detectab
 Secondly, a constrained perceptual pressure matching approach which leverages the fact that the detectability has a consistent 
 perceptual interpretation to constrain the detectability of the reproduction error.
 
-This section will explore the results of both approaches.
+In order to effectively describe various points in the room, a version of the room given by \autoref{fig:results:methodology:room}
+with the various control points numbered is given in \autoref{fig:results:methodology:room_numbered}.
+
+\begin{figure}[]
+    \centering
+    \scalebox{1.0}{\input{tikz/tikz_2D_room_simulation_setup_numbered.tex}}
+    \caption{The square room used in \autoref{fig:results:methodology:room} labeled with numbers corresponding to the various control points.}
+    \label{fig:results:methodology:room_numbered}
+\end{figure}
+
+This section will evaluate the results of the performed experiments for both proposed approaches.
+In \autoref{ch:results:results:unconstrained_results} the unconstrained perceptual pressure matching approach is evaluated, and 
+in \autoref{ch:results:results:constrained_results} is evaluated.
 
 \subsection{Evaluating Unconstrained Perceptual Pressure Matching}
+\label{ch:results:results:unconstrained_results}
 In this section, the unconstrained perceptual pressure matching algorithm will be evaluated.
 This algorithm minimized the total detectability of the reproduction and the leakage error.
 As mentioned in \autoref{ch:results:methodology}, the perceptual pressure matching approaches will be evaluated with respect to the 
@@ -81,6 +94,7 @@ bright zone.
 
 
 \subsection{Evaluating Constrained Perceptual Pressure Matching}
+\label{ch:results:results:constrained_results}
 
 \subsubsection*{Quantifying Algorithm Performance}
 \constrainingplot

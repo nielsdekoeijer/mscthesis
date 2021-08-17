@@ -24,9 +24,9 @@ An example of a possible room, loudspeakers and pair of zones are visualized in 
 
 \begin{figure}
     \centering
-    \input{tikz/tikz_3D_room_data_model.tex}
-    \caption{The room $\mathcal{R}\subset \Real{3}$ containing the zones $\za\subset\mathcal{R}$ 
-    and $\zb\subset\mathcal{R}$ depicted in green and blue respectively. 
+    \input{tikz/tikz_2D_room_data_model.tex}
+    \caption{A birds-eye view of a room $\mathcal{R}\subset \Real{3}$ containing the zones $\za\subset\mathcal{R}$ 
+    and $\zb\subset\mathcal{R}$ depicted in red and blue respectively. 
     The room contains $N_L = 8$ loudspeakers, which are denoted by the red dots in the corners of the room.}
     \label{fig:data_model:room_model:3D_room}
 \end{figure}
@@ -61,14 +61,14 @@ Our goal is thus to realize $t^{m}[n]$ in all control points $m\in A \cup B$ usi
 
 \begin{figure}
     \centering
-    \input{tikz/tikz_3D_room_data_model_sampled.tex}
+    \input{tikz/tikz_2D_room_data_model_sampled.tex}
     \caption{The previously introduced room $\mathcal{R}$ with zones $\za$ and $\zb$ discretized.}
 \end{figure}
 
-\subsection{Realizing Sound Pressure through the Loudspeaker}
+\subsection{Realizing Sound Pressure through the Loudspeakers}
 \label{ch:sound_zone:data_model:realizing_pressure}
 The sound pressure produced by the loudspeakers can be controlled by specifying their input signals.
-Mathematically speaking, let $x^{(l)}[n]\in\Real{N_x}$ denote the loudspeaker input signal of length $N_x$ for the $l^\text{th}$ loudspeaker.
+Let $x^{(l)}[n]\in\Real{N_x}$ denote the loudspeaker input signal of length $N_x$ for the $l^\text{th}$ loudspeaker.
 For now, it is assumed that the loudspeaker input signals are of finite length. 
 In a later part of the thesis, a short-time formulation will be given which supports infinite length sequences. 
 

@@ -1,16 +1,15 @@
-An initial description of the sound zone problem was given in the introduction of the thesis.
-This section seeks to build on this description in order to provide the understanding necessary 
-for the rest of this work.
-
 As mentioned in the introduction, the problem that sound zones seeks to solve is the reproduction
 of multiple types of audio content in the same room with minimal interference.
 This way, multiple people can enjoy different audio content without disturbing one another.
 
-Controlling the spatial distribution of sound is done by controlling the 
-audio that is produced by an array of loudspeakers.
+This section seeks to build on this description in order to provide the understanding necessary 
+for the rest of this work.
+
+Controlling the spatial distribution of sound is done by calculating the audio the loudspeakers must produce to approximate 
+the desired sound field in the given space.
 The space inside the enclosure is divided up into multiple zones.
 Each zone is assigned target sound pressure that we would like to have reproduced inside of it.
-This target sound pressure could be various audio content, for example music or the sound of a movie.
+This target sound pressure could be any kind of audio content, for example music, the sound of a movie, or speech.
 
 To understand this principal, consider the example given by \autoref{fig:sound_zones:background:content}.
 The loudspeakers array that is present in the room is to be controlled by the sound zone algorithm 
@@ -23,14 +22,15 @@ to be able to hear content B when inside the red zone.
     \scalebox{1.0}{\input{tikz/tikz_2D_room_concept_content.tex}}
     \caption{A birds-eye view of a room is depicted.
         It is divided into two zones: a red zone and a blue zone.
-        Each zone is assigned different content: content A and content B.
+        Each zone is assigned different content: content A and content B respectively.
         In the northern and southern parts of the room, a loudspeaker array is mounted on the walls.
         }
     \label{fig:sound_zones:background:content}
 \end{figure}
 
 There are various approaches to solving the sound zone problem.
-An important concept that is used frequently is that bright zones and dark zones.
+An important concept that is used frequently is that ``bright zones'' and ``dark zones''.
+These are explained next.
 
 Sound zone problems are typically decomposed into a separate subproblem for every zone.
 Each one of these subproblems considers only two zones: one bright zone and one dark zone.
@@ -60,16 +60,13 @@ minimal interference between zones.
         \centering
         \scalebox{0.9}{\input{tikz/tikz_2D_room_concept_bright_dark_zone_B.tex}}
     \end{subfigure}
-    \caption{A birds-eye view of a room is depicted twice containing two different sound zone problems.}
+    \caption{A birds-eye view of a room is given twice, each depicting two different sound zone problems.}
     \label{fig:sound_zones:background:bright_dark_example}
 \end{figure}
-
-This concludes the introduction to the sound zone problem.
 
 \subsection*{Chapter Structure}
 The goal of the rest of this chapter is to motivate the proposal of a perceptual sound zone approach which uses
 the Par distortion detectability introduced in \autoref{ch:perceptual}.
-It is structured as follows:
 \begin{itemize}
     \item This chapter begins in \autoref{ch:sound_zone:data_model} with the presentation of  
 a mathematical framework which can be used to describe the sound zone problem.

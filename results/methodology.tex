@@ -80,29 +80,41 @@ As such, before discussing the evaluation criteria, what follows is a brief summ
         This represents the sound pressure that a user of the sound zone system would experience.
 \end{itemize}
 
-\subsubsection*{Quantifying Speech Quality: PESQ}
+\subsubsection*{Quantifying Speech Quality: PESQ and Mean Square Error}
 One of the metrics that is used is the Perceptual Evaluation of Speech Quality (PESQ).
 As described in \autoref{ch:perceptual:review:objective}, PESQ is a metric which grades the quality of a 
 degraded speech signal with respect to a reference speech signal.
 The resulting quality grade will be between 0 and 5, where 5 is the highest obtainable grade.
 
-PESQ is used to evaluate two aspects of the result.
-\begin{itemize}
-    \item \textbf{PESQ of the Achieved Bright Zone Sound Pressure with respect to the Target Sound Pressure:}\\
-        This quantity describes the speech quality of the sound pressure for control points the bright zone $m\in Z$.
-        The contributions of other zones is not considered, as such there is no interference.
-        This will henceforth referred to as the \textbf{``bright zone PESQ''} per control point $m$ for zone $\zz$.
-    \item \textbf{PESQ of the Total Achieved Sound Pressure with respect to the Target Sound Pressure:}\\
-        This quantity describes the speech quality of the total sound pressure per point $m$.
-        In contrast to the bright zone PESQ, this also includes the interference due to other zones.
+Another non-perceptual metric that can be used to evaluate the quality of the result is the mean square error (MSE).
+For the purposes of this evaluation, the error is defined as the difference between two time-domain sequences $x[n]\in\Real{N}$
+and $y[n]\in\Real{N}$. 
+\begin{equation}
+    \text{MSE}(x,y) = \frac{1}{N}\norm[2][2]{y[n] - x[n]} 
+\end{equation}
 
-        This quantity will be referred to as the \textbf{``total PESQ''} per control point $m$. 
+PESQ and the MSE are used to evaluate two aspects of the result.
+\begin{itemize}
+    \item \textbf{PESQ and MSE of the Achieved Bright Zone Sound Pressure with respect to the Target Sound Pressure:}\\
+        These quantities describes the speech quality of the sound pressure for control points the bright zone $m\in Z$.
+        The contributions of other zones is not considered, as such there is no interference.
+
+        These quantities will henceforth referred to as the \textbf{``bright zone PESQ''} and \textbf{``bright zone MSE''} per control point $m$ for zone $\zz$.
+    \item \textbf{PESQ and MSE of the Total Achieved Sound Pressure with respect to the Target Sound Pressure:}\\
+        These quantities describes the speech quality of the total sound pressure per point $m$.
+        In contrast to the bright zone PESQ and MSE, interference due to other zones is included.
+
+        These quantities will be referred to as the \textbf{``total PESQ''} and \textbf{``total MSE''} per control point $m$. 
 \end{itemize}
 
-\subsubsection*{Quantifying Interference: Distraction}
+\subsubsection*{Quantifying Interference: Distraction and Acoustic Contrast}
 Another metric that will be used for evaluation is the Distraction model also introduced in \autoref{ch:perceptual:review:objective}.
 This model grades how distracting an interferer is in presence of target audio.
 The grade uses a scale from 0 to 100, where 100 is considered maximally distracting.
+
+In addition to this, the acoustic contrast between the 
+achieved bright zone sound pressure and the achieved dark zone sound pressure can be used as a non-perceptual measure of interference.
+The acoustic contrast is defined in \autoref{ch:sound_zone:approaches}.
 
 The distraction will be used as follows:
 \begin{itemize}
@@ -110,6 +122,10 @@ The distraction will be used as follows:
         This quantifies how distracting the dark zone sound pressures are when listening to the bright zone sound pressure per control point $m$. 
 
         This will simply be referred to as the \textbf{``Distraction''} per control point $m$.
+    \item \textbf{Acoustic contrast between the Achieved Bright Zone Sound Pressure and the Achieved Dark Zone Sound Pressure:}\\
+        Quantifies the ratio of the acoustic potential energy of the bright zone and of the dark zone.
+
+        Henceforth this quantity is referred to as the \textbf{``Acoustic Contrast''} per control point $m$.
 \end{itemize}
 
 \subsubsection*{Quantifying Speech Intelligibility: STOI and SIIB}
