@@ -1,7 +1,7 @@
 General :: Don't write cliffhangers in the introductions => add conclusion as a summarizing remark so that when people read it they only need to read 
 		the beginning bits.
 
-5.1 :: Homogeen maken plaatjes. 3D plaatjes H3 niet nodig.
+5.* :: Integrate all Jorge's feedback
 5.2 :: Repeat explination of values of D_0 in the captions of the image. Explination of figure in the captions! Grabs attention
 
 6.0 :: No subdivision of the conclusions, i.e. no 6.1, 6.2, etc...

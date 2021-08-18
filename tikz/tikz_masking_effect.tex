@@ -1,7 +1,7 @@
 \begin{tikzpicture}
     \begin{groupplot}[group style={group size=1 by 3, vertical sep=2cm}]
-        \nextgroupplot[xlabel={Time [samples]}, ylabel={$t^{(m)}[n]$ [SPL]}, ylabel near ticks, 
-        title={Target Sound Pressure for Control Point $m\in A$}, scale only axis, 
+        \nextgroupplot[xlabel={Time [samples]}, ylabel={$t^{(2)}[n]$ [SPL]}, ylabel near ticks, 
+        title={Target Sound Pressure for Control Point $m=2$ in Zone $\za$}, scale only axis, 
         height=3cm, width=9cm, xmin=5000, xmax=6400, xtick={5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400},
         ymin=-0.5, ymax=0.5]
         \addplot [color=red, error bars/.cd, y dir=both, y explicit]
@@ -11,8 +11,8 @@
        \addplot [samples=50, smooth, name path=H12] coordinates {(6200,-0.5) (6200,0.5)};
        \addplot [fill opacity=0.05] fill between [of=H11 and H12];
 
-        \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(m)}[n]$}, ylabel near ticks, 
-        title={Perceptual Achieved Dark Zone Sound Pressure for Control Point $m\in A$}, scale only axis, 
+        \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(2)}[n]$}, ylabel near ticks, 
+        title={Perceptual Achieved Dark Zone Sound Pressure for Control Point $m=2$ in Zone $\za$}, scale only axis, 
         height=3cm, width=9cm, xmin=5000, xmax=6400, xtick={5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400},
         ymin=-0.5, ymax=0.5]
         \addplot [color=red, error bars/.cd, y dir=both, y explicit]
@@ -22,8 +22,8 @@
        \addplot [samples=50, smooth, name path=H12] coordinates {(6200,-0.5) (6200,0.5)};
        \addplot [fill opacity=0.05] fill between [of=H11 and H12];
 
-        \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(m)}[n]$}, ylabel near ticks, 
-        title={Reference Achieved Bright Zone Sound Pressure in Control Point $m\in A$}, scale only axis, 
+        \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(2)}[n]$}, ylabel near ticks, 
+        title={Reference Achieved Bright Zone Sound Pressure in Control Point $m=2$ in Zone $\za$}, scale only axis, 
         height=3cm, width=9cm, xmin=5000, xmax=6400, xtick={5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400},
         ymin=-0.5, ymax=0.5]
         \addplot [color=red, error bars/.cd, y dir=both, y explicit]
