@@ -1,29 +1,38 @@
-In \autoref{ch:perceptual_sound_zone:perceptual_minimization} two perceptual sound zone algorithms were introduced. 
-First, an unconstrained perceptual pressure matching approach where the detectability of the sound pressure errors is minimized.
-Secondly, a constrained perceptual pressure matching approach which leverages the fact that the detectability has a consistent 
+In \autoref{ch:perceptual_sound_zone:perceptual_minimization} two perceptual sound zone algorithms are proposed. 
+First, an unconstrained perceptual pressure matching approach where the detectability of the sound pressure 
+errors is minimized.
+Secondly, a constrained perceptual pressure matching approach which leverages the fact that the 
+detectability has a consistent 
 perceptual interpretation to constrain the detectability of the reproduction error.
-In order to effectively describe various points in the room, a version of the room given by \autoref{fig:results:methodology:room}
+
+This section will evaluate the results of the performed experiments for both proposed approaches.
+To this end, \autoref{ch:results:results:unconstrained_results} the unconstrained perceptual pressure 
+matching approach is evaluated, and in  \autoref{ch:results:results:constrained_results} the constrained perceptual pressure 
+matching approach is evaluated.
+
+In order to effectively describe various points in the room, a version of the room 
+given by \autoref{fig:results:methodology:room}
 with the various control points numbered is given in \autoref{fig:results:methodology:room_numbered}.
 
 \begin{figure}[]
     \centering
     \scalebox{1.0}{\input{tikz/tikz_2D_room_simulation_setup_numbered.tex}}
-    \caption{The square room used in \autoref{fig:results:methodology:room} labeled with numbers corresponding to the various control points.}
+    \caption{The square room used in \autoref{fig:results:methodology:room} labeled with numbers corresponding to 
+    the various control points.}
     \label{fig:results:methodology:room_numbered}
 \end{figure}
 
-This section will evaluate the results of the performed experiments for both proposed approaches.
-To this end, \autoref{ch:results:results:unconstrained_results} the unconstrained perceptual pressure matching approach is evaluated, and 
-in \autoref{ch:results:results:constrained_results} is evaluated.
 
 \subsection{Evaluating Unconstrained Perceptual Pressure Matching}
 \label{ch:results:results:unconstrained_results}
 In this section, the unconstrained perceptual pressure matching algorithm will be evaluated in accordance to the 
 approach discussed in \autoref{ch:results:methodology}.
-As discussed in \autoref{ch:perceptual_sound_zone:perceptual_minimization}, 
-this algorithm minimizes the total detectability of the reproduction and the leakage error.
+This is done by first evaluating the results of the simulations of the various setups 
+quantitatively through the proposed measures.
+From this, a conclusions are drawn which are then motivated qualitatively by reasoning about algorithm behavior through
+waveforms.
 
-\subsubsection*{Quantifying Algorithm Performance}
+\subsubsection*{Quantitative Analysis of Simulation Results}
 
 \begin{table}[]
 \begin{tabular}{|l|l|l|l|}
@@ -57,26 +66,70 @@ this algorithm minimizes the total detectability of the reproduction and the lea
 \label{ch:results:results:unconstrained_results}
 \end{table}
 
-The results of the experiment are summarized in \autoref{ch:results:results:unconstrained_results}.
+In order to quantify the performance of the unconstrained perceptual pressure matching approach, the various 
+measures introduced in \autoref{ch:results:methodology} are determined for all 12 simulations.
+The measures are averaged over all simulations and over all control points.
+For comparison purposes, the reference algorithm given in \autoref{ch:perceptual_sound_zone:stft} is 
+simulated in an identical fashion, and the measures are also evaluated and averaged for all simulations.
+
+The results of this experiment is summarized in \autoref{ch:results:results:unconstrained_results}.
 This table depicts the mean and standard deviation of the measures taken over all 4 control points and all 12 experiments.
-This is done for both the reference short-time pressure matching algorithm given by \autoref{ch:perceptual_sound_zone:stft} and the unconstrained perceptual 
-pressure matching algorithm given by \autoref{ch:perceptual_sound_zone:perceptual_minimization}.
+As discussed in \autoref{ch:perceptual:review}, it is important to note that the perceptual measures can only
+be used as an indication, and further listening tests must be performed to draw any real conclusions.
 
-Note the following from the results:
-\begin{itemize}
-    \item \textbf{Bright Zone Quality Measure:}\\
-        The reference sound zone algorithm outperforms the perceptual sound zone algorithm in terms of the Bright Zone PESQ and MSE.
-        This implies that the reference algorithm, when disregarding interference, delivers greater quality for the intended speech signal.
-    \item \textbf{Total Quality Measures:}\\
-        The perceptual sound zone algorithm outperforms the reference sound zone algorithm in terms of all perceptual measure Total PESQ, SIIB, and STOI.
-        The reference algorithm outperforms the reference algorithm in terms of the physical metric MSE.
-    \item \textbf{Interference Measures:}\\
-        The perceptual sound zone algorithm outperforms the reference in terms of the perceptual measure Distraction.
-        The reference sound zone algorithm however outperforms in terms of acoustic contrast.
-\end{itemize}
+From the results in the table, the following observations are made and conclusions are drawn:
+\begin{enumerate}
+    \item The perceptual approach outperforms the reference in all perceptual measures evaluating the total experience:
+        total PESQ, STOI, and SIIB all attain higher values for the perceptual approach.
+        Note that these measures evaluate the total experience, taking in consideration all sound pressure per control 
+        point including interference.
 
-This implies that the the perceptual sound zone algorithm makes a better overall perceptual trade-off between producing the target content 
-and minimizing the leakage.
+        This implies that the perceptual approach may result in an overall better perceptual experience.
+        \label{obs:total_perceptual}
+
+    \item The perceptual approach outperforms the reference in terms of the perceptual distraction measure,
+        Implying that the interference in the perceptual approach may be less distracting 
+        \label{obs:distraction}
+
+    \item The reference approach outperforms the perceptual approach in perceptual measures evaluating the 
+        bright-zone quantities: bright zone PESQ, STOI and SIIB are all higher for the reference approach.
+        Note that these measures are sans interference: they only evaluate how well the achieved sound pressure
+        attains the target, ignoring interference.
+
+        This implies that, disregarding interference, the reference approximates the target more effectively 
+        perceptually speaking.
+        However, in \autoref{obs:total_perceptual} it is concluded that adding the interferer results in a 
+        lower overall experience.
+
+        This implies that, although the reference algorithm approximates the target better perceptually, 
+        the interference that it introduces a sufficient disturbance to be outperformed by the reference.
+        \label{obs:bright_zone_perceptual}
+
+    \item The reference approach outperforms the perceptual approach for all physical measures: 
+        total and bright zone MSE and acoustic contrast.
+        This is to be expected, as the reference approach optimizes the MSE directly.
+
+        Interestingly, although the total MSE is lower, the reference is outperformed in terms of all total perceptual 
+        measures, as discussed in \autoref{obs:total_perceptual}.
+
+        In addition to this, the acoustic contrast between intended and interfering sound pressure for 
+        the reference approach is over twice as large than the perceptual approach.
+        Nevertheless, the perceptual approach less distracting according to the distraction model as 
+        discussed in \autoref{obs:distraction}.
+
+        These results imply that MSE or AC may not be optimal measures to use in the evaluation of the  
+        perceptual experience of sound zones.
+        \label{obs:physical}
+\end{enumerate}
+
+In summary, from the observations above it is concluded that the perceptual sound zone algorithm may
+outperform the reference sound zone algorithm in terms of perceptual experience.
+This seems to be due to the perceptually disturbing interference introduced by the reference algorithm,
+as, when disregarding noise, the reference algorithm has a better reproduction of the target perceptually speaking.
+The distraction ratings also indicate that the noise introduced by the reference algorithm is more distracting.
+
+In addition to this, these results also imply that the physical metrics MSE and AC do not correlate well 
+with the perceptual measures, as the physical metrics predict the reference to outperform the perceptual approach.
 
 \subsubsection*{Analyzing Algorithm Behavior}
 \begin{figure}[]
@@ -88,25 +141,33 @@ and minimizing the leakage.
 \end{figure}
 
 In the preceding section the reference and perceptual algorithms are compared quantitatively.
-In doing so, it is shown that the perceptual algorithm outperforms the reference in terms of total PESQ and Distraction.
-This section considers the behavior of the algorithms in an attempt to explain these results.
+Results indicate that the perceptual algorithm outperforms the reference in terms of the total experience.
+This section considers the behavior of the algorithm in an attempt to explain these results.
 
 To this end, consider \autoref{fig:results:evaluation:unconstrained_results:behavior}.
-This figure contains a plot of the wave forms of the target sound pressure and achieved dark-zone sound pressure for both the perceptual and non-perceptual
-variants of pressure matching for control point $m=2$ (see: \autoref{fig:results:methodology:room_numbered} from the experiments.
+This figure contains a plot of the wave forms of the target sound pressure and achieved dark-zone sound pressure 
+for both the perceptual and non-perceptual variants of pressure matching for control point $m=2$ 
+(see: \autoref{fig:results:methodology:room_numbered}) from the experiments.
 
 The selected control point is in zone $\za$. 
-As explained in \autoref{ch:results:methodology}, the achieved dark-zone sound pressure can be understood as the interference due to the other zone, zone $\zb$.
+As explained in \autoref{ch:results:methodology}, the achieved dark-zone sound pressure can be understood 
+as the interference due to the other zone, zone $\zb$.
 
-Consider the highlighted region for the reference algorithm.
-As can be seen, the interference is a at a relatively constant level.
-When compared to the highlighted region for the perceptual algorithm, it can be seen that the magnitude of the interference is correlated to the
-magnitude of the target sound pressure for zone $\za$.
+Consider the highlighted region for the highlighted region for the perceptual algorithm.
+From this it can be seen that the 
+magnitude of the interference is correlated to the magnitude of the target sound pressure for zone $\za$.
+Contrast this to the highlighted region for the reference algorithm, where the interference is a 
+at a relatively constant level.
 
-When determining the interference for control point $m=2$, the perceptual algorithm takes the target sound pressure for $\za$ into account. 
-Effectively, when the target sound pressure is relatively loud, more interference is allowed as it is masked to a degree by the target sound pressure.
+This may explain why, while having lower overall contrast, the perceptual approach outperforms the 
+reference approach in terms of distraction and overall perceptual experience.
+When determining the interference for control point $m=2$, the perceptual algorithm takes the 
+target sound pressure for $\za$ into account. 
+Effectively, when the target sound pressure is relatively loud, more interference is allowed 
+as it is masked to a degree by the target sound pressure.
 
-\todo{Refer back to the quantities}
+In doing so, the interference is less perceptually disturbing, which serves as a possible explanation to 
+the results given in \autoref{ch:results:results:unconstrained_results}
 
 \subsection{Evaluating Constrained Perceptual Pressure Matching}
 \label{ch:results:results:constrained_results}

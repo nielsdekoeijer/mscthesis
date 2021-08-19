@@ -1,24 +1,28 @@
-This section discusses the general approach for evaluation of the previously derived perceptual sound zone algorithms.
+This section discusses the general approach for evaluation of the perceptual sound zone algorithms proposed in 
+\autoref{ch:perceptual_sound_zone:perceptual_minimization:unconstrained} and \autoref{ch:perceptual_sound_zone:perceptual_minimization:constrained}.
 All algorithms will be evaluated by means of simulation. 
-As all derived algorithms were found to be computationally intensive, many of the design considerations for the simulations
-are such to keep the computations low.
+As all derived algorithms were found to be computationally intensive, many of the parameter considerations 
+for the simulations are chosen such that the computational load is kept feasible.
 
-For the evaluation, the constrained and unconstrained perceptual pressure matching 
-approaches proposed in \autoref{ch:perceptual_sound_zone:perceptual_minimization:unconstrained}
-and \autoref{ch:perceptual_sound_zone:perceptual_minimization:constrained} respectively, are compared to the short-time frequency pressure matching approach
+For the evaluation, the constrained and unconstrained perceptual pressure matching are compared to the 
+short-time frequency pressure matching approach
 given in \autoref{ch:perceptual_sound_zone:stft} by \autoref{eq:perceptual_sound_zone:stft:stft_pm}.
-Doing so allows for a comparison between a perceptual and a non-perceptual sound zone algorithm.
+As all approaches are pressure matching approaches, doing so allows for a comparison between a 
+perceptual and a non-perceptual sound zone algorithm.
+
+\autoref{ch:results:methodology} is structured as follows.
+First, \autoref{ch:results:methodology:configuration} discusses and motivate the configuration used in the simulations.
 
 \subsection{Simulation Configuration}
-This section discusses the configuration used in the simulations.
-
+\label{ch:results:methodology:configuration}
 All sound zone algorithms are evaluated in a simulated square room of 5 by 5 meters, with a ceiling height of 3.4 meters.
-The room contains 4 loudspeakers placed in the corners of the room at a height of 1.2 meters.
 Two zones each consisting of two control points are in the middle of the room.
-An image depicting the entire setup is given in \autoref{fig:results:methodology:room}.
-
 In order to obtain a sufficiently challenging problem, the zones are placed in close proximity, which the two closest points 0.5 meters apart.
 This is important, as a trivial problem results makes it difficult to highlight the differences in performance.
+
+The room contains 4 loudspeakers placed in the corners of the room at a height of 1.2 meters.
+Omnidirectional loudspeakers which radiate energy equally in all directions are used~\cite{habets2006room}.
+An image depicting the entire setup is given in \autoref{fig:results:methodology:room}.
 
 \begin{figure}[]
     \centering
@@ -42,107 +46,123 @@ that similarly sized furnished rooms have an average maximal reverberation time 
 
 To define the target sound pressure, content must be selected for the two zones.
 For this evaluation, speech content is used.
-
 The motivation for this is that the objective speech quality measures described in \autoref{ch:perceptual} are found to be more robust than
 the discussed general audio quality measures.
-In addition to this, many general audio quality measures have little to no free and openly available implementations.
+In addition to this, it was found that many general audio quality measures have 
+little to no free and openly available implementations.
 
 The speech signals are down sampled to 8000 Hz.
-The motivation for this is that it is computationally intensive to run the algorithms at higher sampling.
+The motivation for this is that it is computationally intensive to run the algorithms at higher sampling rate.
 
 In total, a dataset of 4 loudness-matched speech signals is used for evaluation.
 For each experiment, one speech signal is assigned to each zone.
-All possible combinations of the speech signals are formed, resulting in a total of 12 experiments.
+All possible combinations of the speech signals are formed, resulting in a total of 12 possible configurations.
 
 \subsection{Objective Measures for Result Evaluation}
 This section will motivate the evaluation criteria used to evaluate the results of the experiment.
-As mentioned, speech audio is used as the content for the sound zones.
-Hence, discussed in the the a literature review from \autoref{ch:perceptual:review} that specialize in speech are used for evaluation.
+The perceptual measures PESQ, STOI, SIIB, and Distraction which are discussed in 
+the the a literature review from \autoref{ch:perceptual:review} are used in the evaluation.
 
-The sound pressure quantities introduced in the data model defined in \autoref{ch:sound_zone:data_model} are used as inputs to the evaluation quantities.
-As such, before discussing the evaluation criteria, what follows is a brief summary of the available quantities.
+In addition to these perceptual measures, two traditional physical measures, namely the ``mean square error'' (MSE) and
+the ``acoustic contrast'' (AC) in terms of sound pressure are used in the evaluation of 
+sound zone algorithms~\cite{lee2020unified} are also used.
+
+The motivation for including physical measures is to show in \autoref{ch:results:evaluation} that, 
+while typically outperforming in terms of perceptual measures, the perceptual sound zone algorithms do not 
+outperform the traditional reference sound zone algorithm. 
+
+Before discussing the evaluation measures, a brief summary is given of the outputs and inputs of the sound zone algorithm.
 \begin{itemize}
     \item \textbf{Target Sound Pressure $t^{(m)}$:}\\
-        The desired sound pressure per control point $m$, defined by the speech signals corresponding to the zone $\zz$ the control point is in.
+        The desired sound pressure per control point $m$, defined by the speech signals 
+        corresponding to the zone $\zz$ the control point is in.
     \item \textbf{Achieved Sound Pressure $p_\zz^{(m)}$:}\\
         The sound pressure achieved by the algorithm at control point control point $m$ for a zone $\zz$.
         This sound pressure has two different interpretations, depending on the control point under consideration.
         \begin{itemize}
             \item \textbf{Achieved Bright Zone Sound Pressure for Zone $\zz$:}\\
-                The achieved sound pressure represents how well the target sound pressure $t^{(m)}$ is attained in control points in the 
-                bright zone $m\in Z$ for zone $\zz$ .
+                When $m \in Z$, the achieved sound pressure represents how well the target sound pressure 
+                intended for zone $\zz$, namely $t^{(m)}$,  is attained in control point.
             \item \textbf{Achieved Dark Zone Sound Pressure for Zone $\zz$:}\\
-                The achieved sound pressure represents the sound pressure in the control points in the dark zone $m\in Z$ for zone $\zz$  
-                due to attempting to reproduce the target sound pressure in the bright zone.
+                When $m \notin Z$, the achieved sound pressure represents the sound pressure 
+                into other zones due to reproducing the bright zone in points $m \in Z$.
+                It can be understood as the leakage.
         \end{itemize}
     \item \textbf{Total Achieved Sound Pressure $\sum_\zz p_\zz^{(m)}$:}\\
         The sound pressure that results in a control point $m$ due to contributions of all zones $\zz$.
         This represents the sound pressure that a user of the sound zone system would experience.
 \end{itemize}
+For more information on these quantities, the reader is referred to \autoref{ch:sound_zone:data_model}, where they 
+are introduced.
+What follows is a description of various categories of evaluation measures.
 
-\subsubsection*{Quantifying Speech Quality: PESQ and Mean Square Error}
+\subsubsection{Perceptual Quality Measures}
 One of the metrics that is used is the Perceptual Evaluation of Speech Quality (PESQ).
 As described in \autoref{ch:perceptual:review:objective}, PESQ is a metric which grades the quality of a 
 degraded speech signal with respect to a reference speech signal.
 The resulting quality grade will be between 0 and 5, where 5 is the highest obtainable grade.
 
-Another non-perceptual metric that can be used to evaluate the quality of the result is the mean square error (MSE).
-For the purposes of this evaluation, the error is defined as the difference between two time-domain sequences $x[n]\in\Real{N}$
-and $y[n]\in\Real{N}$. 
-\begin{equation}
-    \text{MSE}(x,y) = \frac{1}{N}\norm[2][2]{y[n] - x[n]} 
-\end{equation}
-
-PESQ and the MSE are used to evaluate two aspects of the result.
-\begin{itemize}
-    \item \textbf{PESQ and MSE of the Achieved Bright Zone Sound Pressure with respect to the Target Sound Pressure:}\\
-        These quantities describes the speech quality of the sound pressure for control points the bright zone $m\in Z$.
-        The contributions of other zones is not considered, as such there is no interference.
-
-        These quantities will henceforth referred to as the \textbf{``bright zone PESQ''} and \textbf{``bright zone MSE''} per control point $m$ for zone $\zz$.
-    \item \textbf{PESQ and MSE of the Total Achieved Sound Pressure with respect to the Target Sound Pressure:}\\
-        These quantities describes the speech quality of the total sound pressure per point $m$.
-        In contrast to the bright zone PESQ and MSE, interference due to other zones is included.
-
-        These quantities will be referred to as the \textbf{``total PESQ''} and \textbf{``total MSE''} per control point $m$. 
-\end{itemize}
-
-\subsubsection*{Quantifying Interference: Distraction and Acoustic Contrast}
-Another metric that will be used for evaluation is the Distraction model also introduced in \autoref{ch:perceptual:review:objective}.
-This model grades how distracting an interferer is in presence of target audio.
-The grade uses a scale from 0 to 100, where 100 is considered maximally distracting.
-
-In addition to this, the acoustic contrast between the 
-achieved bright zone sound pressure and the achieved dark zone sound pressure can be used as a non-perceptual measure of interference.
-The acoustic contrast is defined in \autoref{ch:sound_zone:approaches}.
-
-The distraction will be used as follows:
-\begin{itemize}
-    \item \textbf{Distraction of the Achieved Dark Zone Sound Pressure with respect to the Achieved Bright Zone Sound Pressure:}\\
-        This quantifies how distracting the dark zone sound pressures are when listening to the bright zone sound pressure per control point $m$. 
-
-        This will simply be referred to as the \textbf{``Distraction''} per control point $m$.
-    \item \textbf{Acoustic contrast between the Achieved Bright Zone Sound Pressure and the Achieved Dark Zone Sound Pressure:}\\
-        Quantifies the ratio of the acoustic potential energy of the bright zone and of the dark zone.
-
-        Henceforth this quantity is referred to as the \textbf{``Acoustic Contrast''} per control point $m$.
-\end{itemize}
-
-\subsubsection*{Quantifying Speech Intelligibility: STOI and SIIB}
-Another set of metrics that will be used are two speech intelligibility metrics: the Short-Time Objective Intelligibility (STOI) and 
+Another set of metrics that will be used are two speech intelligibility metrics: 
+the Short-Time Objective Intelligibility (STOI) and 
 the Speech Intelligibility in Bits (SIIB).
-As discussed in \autoref{ch:perceptual:review:objective}, both SIIB and STOI estimate how intelligibility a degraded speech signal is 
-compared to a reference speech signal.
 STOI provides an intelligibility score between 0 and 1, 1 being the highest.
 SIIB instead scores the intelligibility with an information rate given in bits/s, lower-bounded by 0 bits/s.
 A maximum intelligibility corresponds to a rate of about 150 bits/s~\cite{van2017instrumental}.
 
-Similarly to PESQ, STOI and SIIB are also used to evaluate two aspects of the result.
+All perceptual measures evaluate the quality of a ``degraded'' input stimuli with respect to a ''reference'' stimuli.
+Using the previously introduced quantities, the measures are to evaluate sound zone performance as follows:
 \begin{itemize}
-    \item \textbf{STOI and SIIB of the Achieved Bright Zone Sound Pressure with respect to the Target Sound Pressure:}\\
-        Corresponds to the intelligibility of the achieved sound pressure sans interference.
-        This quantity is referred to as the \textbf{``bright zone STOI''} and \textbf{``bright zone SIIB''} per control point $m$ for zone $\zz$.
-    \item \textbf{PESQ of the Total Achieved Sound Pressure with respect to the Target Sound Pressure:}\\
-        Corresponds to the intelligibility of the achieved sound pressure with interference, and will be referred 
-        to as the \textbf{``total STOI''} and the \textbf{``total SIIB''} per control point $m$. 
+    \item \textbf{PESQ, STOI and SIIB of the Total Achieved Sound Pressure with 
+        respect to the Target Sound Pressure:}\\
+        Corresponds to the quality / intelligibility of the achieved sound pressure,
+        including interference, and will be referred 
+        to as the \textbf{``total PESQ''}, \textbf{``total STOI''} and the \textbf{``total SIIB''} per control point $m$. 
+    \item \textbf{PESQ, STOI and SIIB of the Achieved Bright Zone Sound Pressure with 
+        respect to the Target Sound Pressure:}\\
+        Corresponds to the quality / intelligibility of the achieved sound pressure sans interference.
+        This quantity is referred to as the \textbf{``bright zone PESQ''}, \textbf{``bright zone STOI''} and \textbf{``bright zone SIIB''}
+        per control point $m$ for zone~$\zz$.
+\end{itemize}
+
+\subsubsection{Perceptual Interference Measure}
+Another metric that will be used for evaluation is the Distraction model also introduced in \autoref{ch:perceptual:review:objective}.
+This model grades how distracting an interferer is in presence of target audio.
+The grade uses a scale from 0 to 100, where 100 is considered maximally distracting.
+
+The distraction will be used as follows:
+\begin{itemize}
+    \item \textbf{Distraction of the achieved dark Zone Sound Pressure with respect to the Achieved Bright 
+        Zone Sound Pressure:}\\
+        This quantifies how distracting the dark zone sound pressures are when listening to the bright zone 
+        sound pressure per control point $m$. 
+        This will simply be referred to as the \textbf{``Distraction''} per control point $m$.
+\end{itemize}
+
+\subsubsection{Physical Measures}
+One physical measure is the acoustic contrast (AC) between the 
+achieved bright zone sound pressure and the achieved dark zone sound pressure can be used as a non-perceptual measure of interference.
+Initially introduced in \autoref{ch:sound_zone:approaches}, 
+the acoustic contrast between two time-domain sequences $x[n]\in\Real{N}$
+and $y[n]\in\Real{N}$ is given as follows: 
+\begin{equation}
+    \mathrm{AC}(x,y) = \frac{\norm[2][2]{x[n]}}{\norm[2][2]{y[n]}} 
+\end{equation}
+Another non-perceptual metric that can be used to evaluate the quality of the result is the mean square error (MSE).
+The MSE between two time-domain sequences $x[n]$ and $y[n]$ is given as:
+\begin{equation}
+    \text{MSE}(x,y) = \frac{1}{N}\norm[2][2]{y[n] - x[n]} 
+\end{equation}
+
+These physical measures are used to evaluate sound zone performance as follows:
+\begin{itemize}
+    \item \textbf{MSE of the Total Achieved Sound Pressure with respect to the Target Sound Pressure:}\\
+        Describes the MSE between the target and achieved sound pressure, and will be referred to as the 
+        \textbf{``total MSE}.
+    \item \textbf{MSE of the Achieved Bright Zone Sound Pressure with respect to the Target Sound Pressure:}\\
+        This is the MSE between the target and the achieved sound pressure sans interference, 
+        and will henceforth referred to as the \textbf{``bright zone MSE''} per control point $m$.
+    \item \textbf{Acoustic contrast between the Achieved Bright Zone Sound Pressure and the 
+        Achieved Dark Zone Sound Pressure:}\\
+        Quantifies the ratio of the acoustic potential energy of the bright zone and of the dark zone.
+        From here on referred to as the \textbf{``Acoustic Contrast''} per control point $m$.
 \end{itemize}
