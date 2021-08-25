@@ -1,51 +1,48 @@
-In \autoref{ch:perceptual:review} a literature review discussing various perceptual models is given.
-This section determines which of these perceptual models from the review are suitable for use in a perceptual sound zone algorithm.
+From the perceptual models discussed in the literature review given in \autoref{ch:perceptual:review},
+the Par detectability distortion is selected for use in the proposed perceptual sound zone algorithm, as it 
+is found to be the most tractable for optimization.
+This section seeks to motivate this.
 
-First, \autoref{ch:perceptual:selection:criteria} discusses desirable properties of the perceptual model for use in a perceptual sound zone algorithms. 
-In \autoref{ch:perceptual:selection:selection} these requirements are used to evaluate the models reviewed in \autoref{ch:perceptual:review}
+In \autoref{ch:sound_zone} it is shown that sound zone algorithms are typically posed as optimization problems. 
+The goal optimization problems is typically to minimize or maximize a cost function, 
+which is done by leveraging the (sub)differential of the function.
 
-\subsection{Desirable Properties of Perceptual Model for use in Perceptual Sound Zone Algorithms}
-\label{ch:perceptual:selection:criteria}
-As is shown in \autoref{ch:sound_zone}, many sound zone algorithms are posed as optimization problems.
-As such, it desirable for the perceptual model to be intergratable in optimization problems.
-
-The goal optimization problems is typically to minimize or maximize a cost function, which is done by leveraging the (sub)differential of the function.
-Algorithms which contain conditional branching or complex operations cannot readily be integrated into cost functions, and are therefore less 
-promising.
-
-In addition to this, sound zone algorithms can often posed as convex optimization problems.
-This is a sub-class of optimization problems that guarantees that the optimizer is globally unique, 
-rather than there being many local optima~\cite{boyd2004convex}. 
+Furthermore, many approaches are posed as convex optimization problems.
+Convex optimization a sub-class of optimization problems that guarantees that the optimizer is 
+globally unique~\cite{boyd2004convex}. 
+As such, one does not have to deal with many sub-optimal local optima. 
 In addition to this, there are many efficient solvers available for convex optimization problems.
-Therefore, it is also preferable that the perceptual models can preserve convexity when integrated into cost functions.
 
+As such, perceptual models which contain conditional branching or complex, non-convex operations which cannot readily 
+be integrated into cost functions are less promising.
 
-\subsection{Evaluating Reviewed Perceptual Models for use in Perceptual Sound Zone Algorithm}
-\label{ch:perceptual:selection:selection}
-All objective audio measures discussed in \autoref{ch:perceptual:review:objective} were found to be difficult to optimize. 
+To this end, all the objective audio measures discussed in \autoref{ch:perceptual:review:objective} 
+are ruled out for use in the perceptual sound algorithm. 
 As discussed, all models showed a degree of non-differentiability and non-convexity in their computation.
-As such, they are difficult to integrate into convex optimization problems and will not be used in the perceptual sound zone algorithm.
-However, as the objective audio measures predict the outcomes of listening tests, they will prove useful in the evaluation of
-the results.
+As such, they are difficult to integrate into convex optimization problems and are therefore not used in the proposed 
+perceptual sound zone algorithm.
+They are however used in the evaluation of the proposed perceptual sound zone algorithm.
 
-From all three discussed perceptual models from audio coding, the perceptual models proposed by the ISO MPEG standard were found to be the least promising.
+From the three remaining perceptual models from audio coding, 
+the perceptual models proposed by the ISO MPEG standard is found to be the least promising.
 As stated in \autoref{ch:perceptual:review:audio_coding}, this is due to the fact that these models do not define a cost function which can be optimized over:
 instead, only the noise that can be added per auditory band is determined.
 
-As such, the decision is between the Par and Taal detectability.
-As stated in \autoref{ch:perceptual:review:audio_coding}, both models can be expressed through a squared L2-norm, which is a convex function~\cite{boyd2004convex}.
-For this reason, it both the Par and Taal detectability are promising for the creation of a perceptual sound zone algorithm.
+As such, the decision is between the Par and Taal distortion detectability, which are both expressed using a  
+squared L2-norm, which is a convex function~\cite{boyd2004convex}.
 
 In contrast to the Par model, the Taal detectability takes into account temporal properties of the input signal.
 This is beneficial, as it will lead to a more accurate description of the masking properties of the input signals.
-
 However, it has been shown to be at the cost of computational complexity.
-The Taal detectability has been shown to be take at least 2 times as much time to compute as the Par detectability, with this 
-disparity seemingly growing as a function of input signal length~\cite{taal2012low}.
+The Taal detectability has been shown to be take at least 2 times as much time to compute as the 
+Par detectability, with this disparity seemingly growing as a function of input signal length~\cite{taal2012low}.
 
-In addition to this, the Taal model operates in the time-domain, whereas the Par model operates in the frequency-domain~\cite{van2005perceptual, taal2012low}.
-Frequency-domain sound zone approaches have been shown to be less demanding computationally than time-domain approaches~\cite{vindrola2019personal}.
+In addition to this, the Taal model operates on time-domain versions of the input stimuli, 
+whereas the Par model operates in the frequency-domain representations~\cite{van2005perceptual, taal2012low}.
+Frequency-domain sound zone approaches are typically less demanding computationally than 
+time-domain approaches~\cite{vindrola2019personal}.
 
-For the reasons given above, lower computational complexity, the Par detectability is used in the perceptual sound zone algorithm.
-Exploring the possibilities of the Taal detectability is left to future work and not further explored in this work.
-
+As a lower computational complexity is desirable, the Par distortion detectability 
+is used in the proposed perceptual sound zone algorithm.
+Exploring the possibilities of using the Taal detectability in a perceptual sound zone algorithm
+is found to be promising but is however left to future work and not further explored.

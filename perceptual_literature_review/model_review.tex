@@ -1,25 +1,30 @@
-This section documents a literature review into perceptual models of the human auditory system.
-This review is used in \autoref{ch:perceptual:selection} to determine which perceptual model is most 
-suitable for use in a perceptual sound zone algorithm.
+This section documents a review of perceptual models that are promising for use in perceptual sound zone
+algorithms.
 
 Especially promising are models that attach some ``score'' or ``rating'' to the perceptual quality of input signals.
 These ratings can be used in algorithms to obtain an optimal rating through optimization.
 In addition to this, they can also be used to quantify the quality of results from later algorithms.
-
 As such, the focus of the literature review is not on the latest findings in the field of psycho-acoustics, or models 
 that most accurately emulate the behavior of the human ear, but rather on algorithms that quantify quality.
+In addition to this, the review also focusses on the optimization tractability of the algorithms.
 
 To this end, in this section, two categories of perceptual models are considered.
 First in \autoref{ch:perceptual:review:objective}, ``objective measures'' are discussed.
 These are models which attempt to predict the perceptual quality ratings from listening tests. 
 Next, perceptual models from ``audio coding'' are discussed in \autoref{ch:perceptual:review:audio_coding}.
-These models are used to quantify how audible the artifacts of audio compression are.
+These models are typically used to quantify how audible audio compression artifacts are.
+
+The information discussed in this section is used in \autoref{ch:perceptual:selection} to motivate the use of the 
+``Par distortion detectability'' in the proposed perceptual sound zone algorithm.
+A number of the other perceptual models discussed in this section are used in the evaluation of the 
+performance of the proposed perceptual sound zone algorithm in \autoref{ch:results}.
 
 \subsection{Review of Objective Measures}
 \label{ch:perceptual:review:objective}
 In order to objectively determine the perceived quality of audio one approach is to use listening tests.
 These are tests in which subjects are asked to rate a property (or properties) of a set of audio stimuli.
-One example where listening tests are used is for the evaluation of speech intelligibility of hearing aids~\cite{taal2011algorithm}.
+One example where listening tests are used is for the evaluation of speech 
+intelligibility of hearing aids~\cite{taal2011algorithm}.
 Another example is determining which loudspeaker has higher perceived sound quality.
 
 Performing listening tests is however often cumbersome due to the large amount of human labour involved.
@@ -50,14 +55,15 @@ and intelligibility of speech audio and measures for the general quality of audi
 \subsubsection{Review of Objective Speech Quality Measures}
 There have been a number of attempts to create objective measures to quantify the perceived quality of speech.
 In this section three objective speech quality measures are discussed.
-Namely the Perceptual Evaluation of Speech Quality (PESQ)~\cite{rix2001perceptual} measure,
-Perceptual Objective Listening Quality Assessment (POLQA)~\cite{beerends2013perceptual}. measure, and 
-Virtual Speech Quality Objective Listener (ViSQOL)~\cite{hines2012visqol,chinen2020visqol} measure.
+Of these three measures, the Perceptual Evaluation of Speech Quality (PESQ) is used in the evaluation of 
+the proposed perceptual sound zone algorithm in \autoref{ch:results}
 
 \begin{itemize}
     \item 
-    PESQ is a metric which attempts to determine the perceived quality of speech.
+    Perceptual Evaluation of Speech Quality (PESQ)~\cite{rix2001perceptual}
+    is a measure which attempts to determine the perceived quality of speech.
     It was standardized by the International Telecommunication Union (ITU-T) in 2001.
+
     PESQ is computed by first applying an auditory transform that maps the reference and degraded speech into a 
     time-frequency representation that models the perceived loudness of the signals.
     From this internal representation, so-called symmetric and asymmetric disturbances are determined 
@@ -67,44 +73,58 @@ Virtual Speech Quality Objective Listener (ViSQOL)~\cite{hines2012visqol,chinen2
     combination~\cite{rix2001perceptual}.
 
     \item
-    POLQA is speech quality metric which was standardized by the International Telecommunication Union (ITU-T) in 2011. 
+    The Perceptual Objective Listening Quality Assessment (POLQA)~\cite{beerends2013perceptual} 
+    is speech quality measure which was standardized by the International Telecommunication Union (ITU-T) in 2011. 
     It was intended to be the successor of PESQ, with the improvement of having more accurate predictions on a 
     wider range of distortions.
+
     POLQA works with a similar internal representation to PESQ, but computes distortion in a different way 
     as to be capable of handing global temporal compression and expansions~\cite{beerends2013perceptual}.
 
     \item
-    ViSQOL is a metric developed in 2012 in a collaboration between Trinity College and Google.
-    ViSQOL uses a different internal representation than PESQ and POLQA as it uses neurograms rather than loudness representations. 
-    Neurograms contain the neural firing activity of the auditory nerve in time-frequency bins, and NSIM determines how similar
+    Virtual Speech Quality Objective Listener (ViSQOL)~\cite{hines2012visqol,chinen2020visqol} 
+    is a measure developed in 2012 in a collaboration between Trinity College and Google.
+
+    ViSQOL uses a different internal representation than PESQ and POLQA as it uses neurograms 
+    rather than loudness representations. 
+    Neurograms contain the neural firing activity of the auditory nerve in time-frequency bins, 
+    and NSIM determines how similar
     the firing patterns of two neurograms are.
     The neurograms are then compared by means of the Neurogram Similarly Index Measure (NSIM).
-    This similarity is then related to the outcomes of listening tests through a laplacian fit~\cite{hines2012visqol}, which is then used to make predictions.
+    This similarity is then related to the outcomes of listening tests through a laplacian fit~\cite{hines2012visqol}, 
+    which is then used to make predictions.
+
 \end{itemize}
-In general, PESQ, POLQA and ViSQOL require many steps to compute and were found difficult to optimize for due to 
+In general, PESQ, POLQA and ViSQOL require many steps to compute and are difficult to optimize for due to 
 conditional branches within the algorithms and many non-differentiable steps such as clipping~\cite{rix2001perceptual,beerends2013perceptual,hines2012visqol}. 
 Some attempts have been made however to reformulate PESQ in order to make it more tractable for optimization 
 by approximating the disturbances by other functions~\cite{kim2019end}.
 
 \subsubsection{Review of Objective Speech Intelligibility Measures}
 Intelligibility of speech is defined as the percentage of words identified correctly given a degraded speech signal.
-Objective speech intelligibility metrics seek to predict this percentage.
-In this section, two of these metrics are discussed.
-Namely, the Short Time Objective Intelligibility (STOI)~\cite{taal2011algorithm} measure and the 
-Speech Intelligibility In Bits (SIIB)~\cite{van2017instrumental} measure.
+Objective speech intelligibility measures seek to predict this percentage.
+In this section, the Short Time Objective Intelligibility (STOI)~\cite{taal2011algorithm} measure and the 
+Speech Intelligibility In Bits (SIIB)~\cite{van2017instrumental} measure are discussed.
+Both measures are used in the evaluation of the proposed perceptual sound zone algorithm in \autoref{ch:results}.
 
 \begin{itemize}
     \item 
-    STOI was proposed by Taal et al. in 2011 as a speech intelligibility metric that could make accurate predictions 
+    The Short Time Objective Intelligibility (STOI)~\cite{taal2011algorithm} was proposed by Taal et al. 
+    in 2011 as a speech intelligibility measure that could make accurate predictions 
     for a speech signals that were degraded time-frequency weighted distortions.
 
-    For its internal representation, it finds a time-frequency internal representation through filtering the input stimuli with a filter bank consisting of 
+    For its internal representation, it finds a time-frequency internal representation through filtering 
+    the input stimuli with a filter bank consisting of 
     $1/3$ octave bands, and then segmented the filter taps into short time frames.
-    Silent bins that do not contain speech are removed, and clipping is applied to limit the effect of one severely degraded time-frequency bin.
-    The average correlation coefficient between the time-frequency bins of the internal representation of the reference and degraded 
+    Silent bins that do not contain speech are removed, and clipping is applied to limit the 
+    effect of one severely degraded time-frequency bin.
+    The average correlation coefficient between the time-frequency bins of the internal 
+    representation of the reference and degraded 
     segments is then computed, and averaged over all bins to determine the intelligibility~\cite{taal2011algorithm}.
+
     \item 
-    SIIB was introduced by Van Kuyk et al. in 2017 as a speech intelligibility metric that could be motivated through
+    The Speech Intelligibility In Bits (SIIB)~\cite{van2017instrumental} was introduced by Van Kuyk et al.
+    in 2017 as a speech intelligibility measure that could be motivated through
     information theory through the mutual information rate.
     As such, SIIB is given in bits
 
@@ -116,62 +136,64 @@ Speech Intelligibility In Bits (SIIB)~\cite{van2017instrumental} measure.
 \end{itemize}
 
 Both STOI and SIIB are difficult to optimize for directly. 
-
 In STOI, the removal of silent regions and the clipping operator are non-differentiable operations.
 Furthermore, the computation of the correlation coefficient is a non-convex function of the degraded speech~\cite{taal2011algorithm}.
-
 SIIB is in general non-convex and non-differentiable as it uses the Karhunen-Lo\`eve transform and a 
-K-nearest neighbor estimator to compute the mutual information rate.
+K-nearest neighbor estimator to compute the mutual information rate~\cite{van2017instrumental}.
 However, if the communication channel is approximated as gaussian, the mutual information can be computed in closed form,
 and SIIB becomes a differentiable measure~\cite{van2017instrumental}.
 
 \subsubsection{Review of Objective Audio Quality Measures}
-The previous objective quality metrics are both intended for evaluating speech.
-In this section, a number of objective quality metrics are discussed that are designed instead 
-for evaluating the perceived quality of general audio .
-Namely, the Perceptual Evaluation of Audio Quality (PEAQ)~\cite{thiede2000peaq} 
-and ViSQOLAudio~\cite{hines2015visqolaudio}.
-The latter is an adapted version of the ViSQOL speech quality measures.
-
+The previous objective quality measures are both intended for evaluating speech.
+In this section, two objective quality measures are discussed that are designed instead 
+for evaluating the perceived quality of any audio stimuli.
 \begin{itemize}
     \item 
-PEAQ is a audio quality metric standardized by the International Telecommunication Union (ITU-T).
-PEAQ estimates a quality grade by first computing an internal representation  of
-the reference and degraded audio signals.
-This results in a time-frequency representation of the input stimuli from which a number of perceptually relevant feature,
-referred to by PEAQ as Model Output Variables (MOVs), are extracted.
-An example of these MOVs are the loudness of the noise or the bandwidth of the input stimuli.
-These MOVs are then mapped to the final audio quality grade through a neural network~\cite{thiede2000peaq}.
+    The Perceptual Evaluation of Audio Quality (PEAQ)~\cite{thiede2000peaq}
+    is a audio quality measure standardized by the International Telecommunication Union (ITU-T).
+
+    PEAQ estimates a quality grade by first computing an internal representation  of
+    the reference and degraded audio signals.
+    This results in a time-frequency representation of the input stimuli from which a number of 
+    perceptually relevant feature,
+    referred to by PEAQ as Model Output Variables (MOVs), are extracted.
+    An example of these MOVs are the loudness of the noise or the bandwidth of the input stimuli.
+    These MOVs are then mapped to the final audio quality grade through a neural network~\cite{thiede2000peaq}.
     \item 
-In 2015, it was found that with some adjustments ViSQOL could be used to determine audio quality, which resulted in a 
-new metric ViSQOLAudio.
-Among the adjustments were the removal of the voice activity detector included in ViSQOL and the use of a larger bandwidth
-to cover the entire spectrum of hearing from 50 Hz to 20000 Hz, rather than just the bandwidth of speech~\cite{hines2015visqolaudio}.
+    In 2015, it was found that, with some adjustments, the previously discussed ViSQOL measure
+    could be used to determine audio quality. 
+    This resulted in a new measure, ViSQOLAudio~\cite{hines2015visqolaudio}.
+
+    Among the adjustments were the removal of the voice activity detector included in ViSQOL 
+    and the use of a larger bandwidth
+    to cover the entire spectrum of hearing from 50 Hz to 20000 Hz, rather 
+    than just the bandwidth of speech~\cite{hines2015visqolaudio}.
 \end{itemize}
 
 PEAQ, and ViSQOLAudio are both difficult to optimize for.
 A number of the MOVs computed in PEAQ, such as the partial noise loudness, are non-differentiable~\cite{thiede2000peaq}.
-As ViSQOLAudio is similar to ViSQOL with some small adjustments, it is similarly difficult to optimize for~\cite{hines2015visqolaudio}.
+As ViSQOLAudio is similar to ViSQOL with some small adjustments, it is similarly difficult to optimize for.
 
-\subsubsection{Review of Distraction Model}
-One especially promising objective measure is the distraction proposed by Francombe et al. in 2015~\cite{francombe2015model}.
-This measure was designed with the application of sound zones in mind.
-
-The distraction was determined to be the keyword that best describes the perceptual experience of 
-interfering audio programs.
-This was determined through an elicitation study performed also performed by Francombe et al. 
-in 2014~\cite{francombe2014elicitation}.
-This prompted the creation of the model.
+\subsubsection{Review of the Distraction Model}
+In an elicitation study performed also performed by Francombe et al. 
+in 2014~\cite{francombe2014elicitation}, ``distraction'' was determined to be the keyword that 
+best describes the perceptual experience of interfering audio programs.
+Further research led to the proposal of a ``distraction model'', which is capable of estimating how distracting an 
+interferer stimuli is given a certain target stimuli~\cite{francombe2015model}.
+This model was designed with the application of sound zones in mind, and is as such an especially promising
+for use in the evaluation of the proposed algorithm in \autoref{ch:results}.
 
 To create the model, a listening test was performed where the participants were subjected to audio-on-audio interference.
 The subjects were played a target audio stimuli they were instructed to focus listening to.
 At the same time, an interferer audio stimuli was played to distract the participant from the target.
 The participants were given a scale between 0 and 100 on which they were asked to rate how distracting the interference
-was when listening to the target program, where a 100 indicates that the interferer ``overpowered'' the target audio~\cite{francombe2015model}.
+was when listening to the target program, where a 100 indicates that the interferer ``overpowered'' 
+the target audio~\cite{francombe2015model}.
 
 The target-interferer stimuli pairs and corresponding ratings resulted in a dataset.
 This dataset was then used to fit a model which predicted the distraction given novel a target-interferer stimuli pair.
-The model consisted of taking a linear combination of 5 features that were computed from the stimuli~\cite{francombe2015model}.
+The model consisted of taking a linear combination of 5 features that were 
+computed from the stimuli~\cite{francombe2015model}.
 
 Computing said features could however not be performed in real time.
 The reason for this was that as the original distraction model is too computationally complex~\cite{ramo2017real}.
@@ -189,12 +211,13 @@ the number of short-time blocks that exceed a certain threshold~\cite{ramo2017re
 \subsection{Review of Perceptual Models used in Audio Coding}
 \label{ch:perceptual:review:audio_coding}
 The second class of perceptual models that are considered are the perceptual models used in audio coding.
-Audio coding algorithms attempt to find an low-bitrate representation of an audio input signal, which is a 
+Audio coding algorithms attempt to find a low-bitrate representation of an audio input signal, which is a 
 form of lossy compression.
-As such, audio coding algorithms typically introduces errors in doing so, which can be a detriment to the listening experience.
+As such, audio coding algorithms typically introduces errors in doing so, 
+which can be a detriment to the listening experience.
 
-To minimize the impact of these errors, 
-many audio coding algorithms use a perceptual model to quantify how disturbing the introduced distortions are.
+To minimize the impact of these errors, many audio coding algorithms use a perceptual model to quantify 
+how disturbing the introduced distortions are~\cite{herre2019psychoacoustic}.
 The perceptual model is used to introduce encoding errors in such a way that the audio output
 signal is perceptually indistinguishable from the audio input signal~\cite{taal2012low}.
 This model typically takes form of a distortion function which determines how
@@ -203,10 +226,10 @@ This function can used to for example encode an input audio signal such that it 
 specified bitrate.
 
 The perceptual models used in audio coding are promising for integration into a sound zone algorithm, as they are 
-often mathematically tractable.
+often tractable for optimization.
 As stated, these perceptual models typically take the form of some sort of distortion function that quantifies
 how perceptually disturbing the introduced artifacts are. 
-One approach for example could be to define sound zone algorithms that minimize a distortion function.
+One approach for example could be to define sound zone algorithms that minimize said distortion function.
 
 As such this section explores three perceptual models from audio coding.
 
@@ -214,7 +237,8 @@ As such this section explores three perceptual models from audio coding.
 The ISO/IEC 11172-3 standard specifies a coded representation for audio files~\cite{ISO11172-3}, 
 and a corresponding decoder.
 An encoder said representation is not part of the standard.
-This is done deliberately, to allow for future improvements to the encoder, without having to change the standard~\cite{pan1995tutorial}.
+This is done deliberately, to allow for future improvements to the encoder, 
+without having to change the standard~\cite{pan1995tutorial}.
 
 The standard does however provide a number of examples of possible encoders, with increasing complexity.
 Alongside these example encoders, two psycho-acoustical models are included for use during the encoding process. 
@@ -232,14 +256,16 @@ This technique has however been used for various signal processing purposes,
 such as audio watermarking~\cite{taal2012low}.
 As such, examples exist from which optimization schemes could be inspired.
 
-\subsubsection{Review of Par Detectability Measure}
+\subsubsection{Review of Par Distortion Detectability Measure}
 In 2005, van der Par et al. proposed a novel perceptual model designed for use in audio coding~\cite{van2005perceptual}.
-The model defines a distortion measure which determines the ``detectability'' of a distortion signal 
-in presence of  masking signal.
-That is to say, the function quantifies the degree to which a human is to detect a distortion signal.
+The model defines a distortion measure which determines the ``distortion detectability'' of a distortion signal 
+in presence of a masking signal.
+That is to say, the function quantifies the degree to which a human is to detect a distortion signal, while also
+listening to the masking signal.
 For audio coding purposes, this distortion signal is error introduced due to the audio compression.
 
-Similarly to the ISO MPEG perceptual models, the Par detectability typically operates on short-time segments, typically in the order of 20 to 200 milliseconds.
+Similarly to the ISO MPEG perceptual models, the Par detectability typically operates on short-time segments, 
+typically in the order of 20 to 200 milliseconds~\cite{van2005perceptual}.
 The proposed method however differentiates itself from the previously discussed ISO MPEG models in three ways.
 
 Firstly, the paper uses newer findings from psycho-acoustic literature, namely spectral integration.
@@ -253,25 +279,27 @@ As such, it is more effective in hiding sinusoidal distortion.
 
 Thirdly and finally, the perceptual model is described as a distortion function which quantifies how 
 detectable a disturbance stimuli is.
-The proposed distortion measure can be expressed as a squared L2-norm.
 
-This mathematical tractability makes for easy integration into existing least-square problems.
-As such, the Par model has been used in many signal processing applications, 
+The proposed distortion measure can be expressed as a squared L2-norm, which makes it tractable for integration 
+into existing least-square problems.
+As such, the Par distortion detectability has been used in many signal processing applications, 
 examples ranging from speech enhancement to removing perceptually irrelevant sinusoidal 
 components~\cite{balazs2009time, taal2013optimal}.
 
-\subsubsection{Review of Taal Detectability Measure}
+\subsubsection{Review of Taal Distortion Detectability Measure}
 A paper from 2012 by Taal et al. proposed a novel perceptual model \cite{taal2012low} which introduces a
-alternative definition to the detectability defined in the Par model.
+alternative definition to the distortion detectability defined in the Par distortion detectability.
 
-In contrast to the Par detectability, the Taal detectability measure takes temporal characteristics of a signal into account.
+In contrast to the approach proposed by van der Par et al.~\cite{van2005perceptual},
+the Taal distortion detectability measure takes temporal characteristics of the distortion and masking signals into account.
 The inclusion of temporal information allows for the suppression of ``pre-echoes'', which is an artifact that 
-the Par model suffers from. 
-The ``pre-echoes'' artifacts arises from the assumption that the masking effects of the masking signal are stationary across 
-time. 
-As a result, audio coding algorithms may assume that audio content is masked while it is not, which could results in quantization
-noise not being masked.
+the Par distortion detectability suffers from~\cite{taal2012low}. 
+The ``pre-echoes'' artifacts arises from the assumption that the masking effects of the 
+masking signal are stationary across time. 
+As a result, audio coding algorithms may assume that audio content is masked while it is not, 
+which could results in quantization noise not being masked.
 
 In contrast to other temporal perceptual models, the Taal Detectability has a relatively low computational complexity.
-In addition to this, it can also be expressed as a squared L2-norm.
-The computational demand was however shown to be higher than the Par Detectability~\cite{taal2012low}, especially for longer time segments.
+
+The computational demand was however shown to be higher than the Par distortion detectability~\cite{taal2012low}, 
+especially for longer time segments.

@@ -234,39 +234,41 @@ If truncated, a significant portion of the signal energy would be disregarded, w
 However, due to the computational benefits, formulating a frequency domain approach that minimizes the impact of or prevents these artifacts is 
 found to be promising future work.
 
-\subsection{Proposed Short-Time Frequency-Domain Pressure-Matching in Vector Notation}
-\label{ch:perceptual_sound_zones:stft:vector}
-To conclude \autoref{ch:perceptual_sound_zones:stft} a vector notation alternative representation of the short-time 
-frequency-domain pressure-matching approach is given, as vector notation is typically preferred for the understand and
-implementation of signal processing algorithms.
+% \subsection{Proposed Short-Time Frequency-Domain Pressure-Matching in Vector Notation}
+% \label{ch:perceptual_sound_zones:stft:vector}
+% To conclude \autoref{ch:perceptual_sound_zone:stft} a vector notation alternative representation of the short-time 
+% frequency-domain pressure-matching approach is given, as vector notation is typically preferred for the understand and
+% implementation of signal processing algorithms.
 
-To this end, let $\tilde{\vec{t}}^{(m)}_\mu\in\Complex^{N_w + N_h - 1}$ and $\tilde{\vec{p}}^{(m)}_\mu\in\Complex{N_w + N_h - 1}$ denote vectors that contain the target and achieved sound pressures $\tilde{T}^{(m)}[k, \mu]$ and 
-$\tilde{P}^{(m)}[k, \mu]$ respectively.
-Their definitions are given as follows:
-\begin{align}
-    \tilde{\vec{t}}^{(m)}_\mu &= \tilde{\vec{t}}^{(m)}_{\mu - 1} +
-    \sum_{l=0}^{N_L}\mat{H}^{(l,m)}\tilde{\vec{s}}_{\zz,\mu},\label{eq:perceptual_sound_zones:stft:t_freq_vec} \\
-    \tilde{\vec{p}}^{(m)}_\mu &= \tilde{\vec{p}}^{(m)}_{\mu - 1} +
-    \sum_{l=0}^{N_L}\mat{H}^{(l,m)}\tilde{\vec{x}}^{(l)}_{\zz,\mu}.\label{eq:perceptual_sound_zones:stft:p_freq_vec} 
-\end{align}
-Here, $\tilde{\vec{s}}_{\zz,\mu}\in\Complex{N_w + N_h - 1}$ and 
-$\tilde{\vec{x}}^{(l)}_{\zz,\mu}\in\Complex{N_w + N_h - 1}$ are vectors containing the frequency 
-versions of the playback and loudspeaker input signals $\tilde{S}_{\zz,\mu}[k]$ and $\tilde{X}^{(l)}_{\zz,\mu}[k]$ 
-respectively.
-The matrix $\mat{H}^{(l,m)}\in\Complex{N_w + N_h - 1 \times N_w + N_h - 1}$ contains the the elements of $H^{(l,m)}[k]$
-on its diagonal.
+% To this end, let $\tilde{\vec{t}}^{(m)}_\mu\in\Complex^{N_w + N_h - 1}$ and 
+% $\tilde{\vec{p}}^{(m)}_\mu\in\Complex{N_w + N_h - 1}$ 
+% denote vectors that contain the target and achieved sound pressures $\tilde{T}^{(m)}[k, \mu]$ and 
+% $\tilde{P}^{(m)}[k, \mu]$ respectively.
+% Their definitions are given as follows:
+% \begin{align}
+%     \tilde{\vec{t}}^{(m)}_\mu &= \tilde{\vec{t}}^{(m)}_{\mu - 1} +
+%     \sum_{l=0}^{N_L}\mat{H}^{(l,m)}\tilde{\vec{s}}_{\zz,\mu},\label{eq:perceptual_sound_zones:stft:t_freq_vec} \\
+%     \tilde{\vec{p}}^{(m)}_\mu &= \tilde{\vec{p}}^{(m)}_{\mu - 1} +
+%     \sum_{l=0}^{N_L}\mat{H}^{(l,m)}\tilde{\vec{x}}^{(l)}_{\zz,\mu}.\label{eq:perceptual_sound_zones:stft:p_freq_vec} 
+% \end{align}
+% Here, $\tilde{\vec{s}}_{\zz,\mu}\in\Complex{N_w + N_h - 1}$ and 
+% $\tilde{\vec{x}}^{(l)}_{\zz,\mu}\in\Complex{N_w + N_h - 1}$ are vectors containing the frequency 
+% versions of the playback and loudspeaker input signals $\tilde{S}_{\zz,\mu}[k]$ and $\tilde{X}^{(l)}_{\zz,\mu}[k]$ 
+% respectively.
+% The matrix $\mat{H}^{(l,m)}\in\Complex{N_w + N_h - 1 \times N_w + N_h - 1}$ contains the the elements of $H^{(l,m)}[k]$
+% on its diagonal.
 
-From this, a vector based variant of the the short-time frequency-domain pressure matching optimization problem 
-originally given in \autoref{eq:perceptual_sound_zone:stft:stft_pm} can be given as follows:
+% From this, a vector based variant of the the short-time frequency-domain pressure matching optimization problem 
+% originally given in \autoref{eq:perceptual_sound_zone:stft:stft_pm} can be given as follows:
 
-\begin{align}
-    \begin{aligned}
-    \argmin{\tilde{x}_{\za,\mu}^{(l)}[n],\,\tilde{x}_{\zb,\mu}^{(l)}[n]\,\forall\,l}{
-       &\sum_{m\in A} \norm[2][2]{\tilde{\vec{p}}_{\za}^{(m)}[\mu] - \tilde{\vec{t}}^{(m)}[\mu]} +
-        \sum_{m\in A} \norm[2][2]{\tilde{\vec{p}}_{\zb}^{(m)}[\mu]} + \\
-       &\sum_{m\in B} \norm[2][2]{\tilde{\vec{p}}_{\zb}^{(m)}[\mu] - \tilde{\vec{t}}^{(m)}[\mu]} + 
-        \sum_{m\in B} \norm[2][2]{\tilde{\vec{p}}_{\za}^{(m)}[\mu]}
-    }
-    \end{aligned}
-    \label{eq:perceptual_sound_zone:stft:stft_pm_vec}
-\end{align}
+% \begin{align}
+%     \begin{aligned}
+%     \argmin{\tilde{x}_{\za,\mu}^{(l)}[n],\,\tilde{x}_{\zb,\mu}^{(l)}[n]\,\forall\,l}{
+%        &\sum_{m\in A} \norm[2][2]{\tilde{\vec{p}}_{\za}^{(m)}[\mu] - \tilde{\vec{t}}^{(m)}[\mu]} +
+%         \sum_{m\in A} \norm[2][2]{\tilde{\vec{p}}_{\zb}^{(m)}[\mu]} + \\
+%        &\sum_{m\in B} \norm[2][2]{\tilde{\vec{p}}_{\zb}^{(m)}[\mu] - \tilde{\vec{t}}^{(m)}[\mu]} + 
+%         \sum_{m\in B} \norm[2][2]{\tilde{\vec{p}}_{\za}^{(m)}[\mu]}
+%     }
+%     \end{aligned}
+%     \label{eq:perceptual_sound_zone:stft:stft_pm_vec}
+% \end{align}

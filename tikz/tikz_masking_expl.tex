@@ -2,29 +2,30 @@
     \begin{groupplot}[group style={group size=1 by 2, vertical sep=2cm}, xmajorgrids=true, ymajorgrids=true]
         \nextgroupplot[xmode=log, xlabel={Frequency [Hz]}, ylabel={Pressure [dB SPL]}, ylabel near ticks, 
             title={Masking Threshold for a 1 KHz sine at 70 dB SPL}, scale only axis, 
-            height=3cm, width=9cm, xmin=10, xmax=20000, ymin=-20, ymax=120]
+            height=3cm, width=9cm, xmin=10, xmax=20000, ymin=-20, ymax=120, 
+            legend style={font=\small, at={(axis cs:10.0,75.0)}, anchor=west}]
         %xmin=5000, xmax=6400, xtick={5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400},
         %ymin=-0.5, ymax=0.5]
-        \addplot [color=red, dashed]
-        table [x expr=\thisrow{fr}, y expr=(\thisrow{tq}), col sep=comma] 
-            {data/masking.csv};
         \addplot [color=red]
         table [x expr=\thisrow{fr}, y expr=(\thisrow{tx}), col sep=comma] 
+            {data/masking.csv};
+        \addplot [color=blue, dashed]
+        table [x expr=\thisrow{fr}, y expr=(\thisrow{tq}), col sep=comma] 
             {data/masking.csv};
         \addplot [color=black]
         table [x expr=\thisrow{fr}, y expr=(\thisrow{x}), col sep=comma] 
             {data/masking.csv};
+        \legend{Masking Threshold, Threshold of Hearing, Spectrum of Masking Signal}
 
         \nextgroupplot[xmode=log, xlabel={Frequency [Hz]}, ylabel={Weight}, ylabel near ticks, 
             title={Par Detectability Perceptual Weighting for a 1 KHz sine at 70 dB SPL}, scale only axis, 
-            height=3cm, width=9cm, xmin=10, xmax=20000, ymin=0, ymax=50]
+            height=3cm, width=9cm, xmin=10, xmax=20000, ymin=0, ymax=50, legend style={font=\small, 
+            at={(axis cs:10.0,40.0)}, anchor=west}]
         %xmin=5000, xmax=6400, xtick={5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400},
         %ymin=-0.5, ymax=0.5]
-        \addplot [color=red, dashed]
-        table [x expr=\thisrow{fr}, y expr=(\thisrow{dq}), col sep=comma] 
-            {data/masking.csv};
         \addplot [color=red]
         table [x expr=\thisrow{fr}, y expr=(\thisrow{dx}), col sep=comma] 
             {data/masking.csv};
+        \legend{Perceptual Weighing of $x[n]$}
     \end{groupplot}
 \end{tikzpicture}

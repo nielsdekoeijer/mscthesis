@@ -1,11 +1,12 @@
 \begin{figure}[p]
     \centering
+    \vspace{-10pt}
     \makebox[\linewidth]{
     \begin{tikzpicture}
         \begin{groupplot}[group style={group size=2 by 4, vertical sep=2.25cm, horizontal sep=2.5cm}]
 
-            \nextgroupplot[xlabel={time [samples]}, ylabel={$t^{(m)}[n]$}, ylabel near ticks, 
-            title={Target Sound Pressure $m\in A$ }, scale only axis, 
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$t^{(2)}[n]$}, ylabel near ticks, 
+            title={Target Sound Pressure $\za$ }, scale only axis, 
             height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
             ymin=-0.5, ymax=0.5]
             \addplot [color=red, error bars/.cd, y dir=both, y explicit]
@@ -15,8 +16,8 @@
             \addplot [samples=50, smooth, name path=H12] coordinates {(30250,-0.5) (30250,0.5)};
             \addplot [fill opacity=0.05] fill between [of=H11 and H12];
 
-            \nextgroupplot[xlabel={time [samples]}, ylabel={$t^{(m)}[n]$}, ylabel near ticks, 
-            title={Target Sound Pressure $m\in B$}, scale only axis, 
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$t^{(2)}[n]$}, ylabel near ticks, 
+            title={Target Sound Pressure $\zb$}, scale only axis, 
             height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
             ymin=-0.5, ymax=0.5]
             \addplot [color=red, error bars/.cd, y dir=both, y explicit]
@@ -26,8 +27,8 @@
             \addplot [samples=50, smooth, name path=H12] coordinates {(30850,-0.5) (30850,0.5)};
             \addplot [fill opacity=0.05] fill between [of=H11 and H12];
 
-            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\za^{(m)}[n]$}, ylabel near ticks, 
-            title={Reconstruction for $Q=1$}, scale only axis, 
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\za^{(2)}[n]$}, ylabel near ticks, 
+            title={Achieved Bright Zone Sound Pressure for $D_0=1$}, scale only axis, 
             height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
             ymin=-0.5, ymax=0.5]
             \addplot [color=red, error bars/.cd, y dir=both, y explicit]
@@ -37,8 +38,8 @@
             \addplot [samples=50, smooth, name path=H12] coordinates {(30250,-0.5) (30250,0.5)};
             \addplot [fill opacity=0.05] fill between [of=H11 and H12];
 
-            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(m)}[n]$}, ylabel near ticks, 
-            title={Leakage for $Q=1$}, scale only axis, 
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(2)}[n]$}, ylabel near ticks, 
+            title={Achieved Dark Zone Sound Pressure for $D_0=1$}, scale only axis, 
             height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
             ymin=-0.5, ymax=0.5]
             \addplot [color=red, error bars/.cd, y dir=both, y explicit]
@@ -48,8 +49,8 @@
             \addplot [samples=50, smooth, name path=H12] coordinates {(30850,-0.5) (30850,0.5)};
             \addplot [fill opacity=0.05] fill between [of=H11 and H12];
 
-            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\za^{(m)}[n]$}, ylabel near ticks, 
-            title={Reconstruction for $Q=7$}, scale only axis, 
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\za^{(2)}[n]$}, ylabel near ticks, 
+            title={Achieved Bright Zone Sound Pressure for $D_0=7$}, scale only axis, 
             height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
             ymin=-0.5, ymax=0.5]
             \addplot [color=red, error bars/.cd, y dir=both, y explicit]
@@ -59,8 +60,8 @@
             \addplot [samples=50, smooth, name path=H12] coordinates {(30250,-0.5) (30250,0.5)};
             \addplot [fill opacity=0.05] fill between [of=H11 and H12];
 
-            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(m)}[n]$}, ylabel near ticks, 
-            title={Leakage for $Q=7$}, scale only axis, 
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(2)}[n]$}, ylabel near ticks, 
+            title={Achieved Dark Zone Sound Pressure for $D_0=7$}, scale only axis, 
             height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
             ymin=-0.5, ymax=0.5]
             \addplot [color=red, error bars/.cd, y dir=both, y explicit]
@@ -70,8 +71,8 @@
             \addplot [samples=50, smooth, name path=H12] coordinates {(30850,-0.5) (30850,0.5)};
             \addplot [fill opacity=0.05] fill between [of=H11 and H12];
 
-            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\za^{(m)}[n]$}, ylabel near ticks, 
-            title={Reconstruction for $Q=21$}, scale only axis, 
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\za^{(2)}[n]$}, ylabel near ticks, 
+            title={Achieved Bright Zone Sound Pressure for $D_0=21$}, scale only axis, 
             height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
             ymin=-0.5, ymax=0.5]
             \addplot [color=red, error bars/.cd, y dir=both, y explicit]
@@ -81,8 +82,8 @@
             \addplot [samples=50, smooth, name path=H12] coordinates {(30250,-0.5) (30250,0.5)};
             \addplot [fill opacity=0.05] fill between [of=H11 and H12];
 
-            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(m)}[n]$}, ylabel near ticks, 
-            title={Leakage for $Q=21$}, scale only axis, 
+            \nextgroupplot[xlabel={time [samples]}, ylabel={$p_\zb^{(2)}[n]$}, ylabel near ticks, 
+            title={Achieved Dark Zone Sound Pressure for $D_0=21$}, scale only axis, 
             height=3cm, width=6cm, xmin=29000, xmax=31000, xtick={29000, 30000, 31000},
             ymin=-0.5, ymax=0.5]
             \addplot [color=red, error bars/.cd, y dir=both, y explicit]
@@ -93,5 +94,13 @@
             \addplot [fill opacity=0.05] fill between [of=H11 and H12];
         \end{groupplot}
 \end{tikzpicture}}
-\caption{Plots depicting stuff.}
+\caption{Plots depicting waveforms of the perceptually constrained pressure matching approach 
+introduced in \autoref{ch:perceptual_sound_zone:perceptual_minimization:constrained} for varying constraint values
+of $D_0$.
+The wave forms are taken from the experiment detailed in \autoref{ch:results:methodology}, and depict control
+point $m=2$ in zone $\za$ from \autoref{fig:results:methodology:room_numbered}.
+The left plots depict the achieved bright zone sound pressure for $m=2$ and the right plots the achieved
+dark zone sound pressure, or interference, for that same control point.
+On the top of the plot, the target sound pressure for both zones is given for comparison purposes.}
+\label{fig:results:constrained_results:behavior}
 \end{figure}

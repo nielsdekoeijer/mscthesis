@@ -1,22 +1,34 @@
-The following work is found to be promising:
+While this work successfully answers its research questions, 
+there are still many promising directions of perceptual sound zones research.
+The following future work is found to be of interest:
 \begin{itemize}
-    \item Reformulating the short-time frequency-domain pressure-matching defined in \autoref{ch:perceptual_sound_zone:stft}
-        such that it allows for optimization over the frequency-domain representation of the loudspeaker input signals while 
-        limiting or entirely preventing the resulting artifacts in the resulting time-domain sequence.
+    \item As discussed, it is shown that the unconstrained perceptual pressure matching algorithm outperforms 
+        the reference non-perceptual pressure matching algorithm in terms of various objective perceptual measures.
+        However, as discussed in \autoref{ch:perceptual:review}, 
+        these objective measures can only be used to give an indication of performance.
 
-        This is found to be promising as the resulting computational complexity of the algorithm could potentially be much
-        lower due to the removal of the transformation between the time-domain and frequency-domain representation of the
-        loudspeaker input signals.
-    \item Reformulating the constrained perceptual pressure matching algorithm given in \autoref{ch:perceptual_sound_zone:perceptual_minimization:constrained}
-        to instead constrain the leakage error detectability.
+        To objectively determine if the perceptual approach does indeed outperform traditional approaches, 
+        listening tests must be conducted.
 
-        This approach is promising as it allows for constraints to be placed on the detectability sound zone leakage which have 
-        a consistent interpretation.
-        This approach can then be compared to traditional pressure matching approaches which often also constrain sound zone leakage~\cite{betlehem2015personal}.
-    \item Evaluation of the performance difference between perceptual and non-perceptual sound zone approaches.
-        In \autoref{ch:results:evaluation}, the perceptual sound zone algorithms are shown to outperform the traditional non-perceptual reference in terms of 
-        various objective measures which are introduced in \autoref{ch:perceptual:review}.
+    \item As shown, the constrained perceptual pressure matching approach can be used to control the 
+        reproduced audio quality through the detectability of the reproduction error.
+        However, the degree to which this is possible with a non-perceptual pressure matching approach
+        is not explored in this work.
 
-        However, as discussed in \autoref{ch:perceptual:review}, these objective measures can only be used to give an indication of performance.
-        To objectively determine if the perceptual approach does indeed outperform traditional approaches, a listening test must be conducted.
+        It is of interest to compare the performance of perceptual and non-perceptual constraints to 
+        obtain a more complete understanding of the differences.
+
+    \item The proposed perceptual sound zone framework can be used to formulate more perceptual sound zone 
+        algorithms.
+        One algorithm that is of particular interest is an algorithm which constrains the detectability of 
+        the interference rather than the reproduction error. 
+        This can then be readily compared to non-perceptual pressure matching approaches which often 
+        contain a similar, non-perceptual constraint.
+
+    \item Currently, the proposed perceptual sound zone algorithms are through optimization which uses 
+        time and frequency domain representations of the optimizers.
+        The translation between domains is suspected to greatly increase the computational complexity of the algorithm.
+
+        As such, it is of interest to obtain a version of the algorithm that operates in a single domain to reduce 
+        the computational complexity. 
 \end{itemize}

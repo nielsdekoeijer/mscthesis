@@ -12,7 +12,7 @@ In recent years, attempts have been made to solve this problem by controlling th
 a way that different areas in a room have distinct content, without interfering with each other.
 This is typically done by controlling the sound pressure created by an array of loudspeakers.
 
-One class of algorithms that attempt to do so are sound zone algorithms~\cite{betlehem2015personal}.
+One attempt at solving this problem is through use of sound zone algorithms~\cite{betlehem2015personal}.
 Sound zone algorithms partition the space of the room into multiple so-called sound zones.
 Each sound zone is assigned different audio content.
 The sound zone algorithms decide how to use the loudspeakers of the sound system to reproduce said audio content in every zone.
@@ -20,7 +20,8 @@ Using the principals of constructive and destructive interference, this is done 
 minimal interference between zones~\cite{betlehem2015personal}.
 That is to say: the audio content of each zone is not audible in the others.
 
-In the previously listed example, there would be one zone that would contain the audio of a movie and another zone that would contain music.
+In the previously listed example where one person watches television and the other listens to music,
+there would be one zone that would contain the audio of a movie and another zone that would contain music.
 An image depicting the situation is given in \autoref{fig:introduction:motivation:concept}.
 The sound zone algorithm determines how to best use the sound system to reproduce these two zones.
 In the ideal case, both people can now enjoy the full potential of their audio content, without bothering one another.
@@ -43,7 +44,7 @@ Improving sound zone algorithms is thus an active topic of research.
 One recent approach is to include a model of the human auditory system, which models how sound is perceived by humans.
 Typically, sound zone algorithms use sound pressure~\cite{betlehem2015personal}, which is a physical quantity characterizing the sound.
 Sound pressure does not always accurately describe what is important for the perception of sound.
-As such, including a perceptual model may allow the algorithm to focus on reproducing and canceling the parts of the audio content
+Including a perceptual model may allow the algorithm to focus on reproducing and canceling the parts of the audio content
 that matter perceptually.
 
 Early results show that a perceptual sound zone approach is promising.
@@ -53,6 +54,7 @@ This pursuit found an increased quality of the reproduced audio in the zones~\ci
 Other work by Lee et al. showed that including a perceptually-motivated weighting in the sound zone algorithm outperforms 
 traditional algorithms~\cite{lee2019towards,lee2020signal}.
 
-This work seeks to further explore this perceptual approach by proposing novel perceptual sound zone algorithms and exploring
-the benefits of including perceptual information.
-
+This work seeks to further explore this perceptual approach.
+This is done by proposing novel a perceptual sound zone algorithms based on the pressure matching approach.
+The proposed approach is then used exploring to further explore the benefits of including perceptual information into
+sound zone algorithms.

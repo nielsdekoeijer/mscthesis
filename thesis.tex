@@ -15,6 +15,7 @@
 \usepackage[]{pgfplotstable}
 \usepackage[]{multirow}
 \usepackage[]{csvsimple}
+\usepackage[raggedright]{titlesec}
 
 \pgfplotsset{compat=1.16}
 \pgfplotsset{scaled x ticks=false}
@@ -41,6 +42,7 @@
 \newcommand{\za}{\mathcal{A}}
 \newcommand{\zb}{\mathcal{B}}
 \newcommand{\zz}{\mathcal{Z}}
+\newcommand{\dd}{D(x[n],\,\varepsilon[n])}
 
 % For presenting the research questions, some stuff I stole of SO
 % NOTE: not used as of now
@@ -94,7 +96,7 @@
 \newpage
 \input{introduction/objectives.tex}
 
-\chapter{Perceptual Model Review and Implementation}
+\chapter{Review and Implementation of Perceptual Models}
 \label{ch:perceptual}
 \input{perceptual_literature_review/perceptual_background.tex}
 \newpage
@@ -102,16 +104,16 @@
 \label{ch:perceptual:review}
 \input{perceptual_literature_review/model_review.tex}
 \newpage
-\section{Selection of Perceptual Model for Perceptual Sound Zone Algorithms}
+\section{Motivating Selection of Par Distortion Detectability}
 \label{ch:perceptual:selection}
 \input{perceptual_literature_review/model_selection.tex}
 \newpage
-\section{Discussion and Implementation of the Par Detectability Measure}
+\section{Implementation and Analysis of the Par Distortion Detectability}
 \label{ch:perceptual:implementation}
 \input{perceptual_literature_review/model_implementation.tex}
 \newpage
 
-\chapter{Sound Zone Approach Review and Implementation}
+\chapter{Perceptual Sound Zone Approach Motivation}
 \label{ch:sound_zone}
 \input{sound_zone_literature_review/problem.tex}
 \newpage
@@ -123,12 +125,12 @@
 \label{ch:sound_zone:approaches}
 \input{sound_zone_literature_review/approaches.tex}
 \newpage
-\section{Proposed Perceptual Sound Zone Approach}
+\section{Proposal of Perceptual Sound Zone Framework}
 \label{ch:sound_zone:approach_selection}
 \input{sound_zone_literature_review/approach_selection.tex}
 \newpage
 
-\chapter{Implementation of Proposed Perceptual Sound Zone Algorithms}
+\chapter{Perceptual Sound Zone Algorithm Proposal and Implementation}
 \label{ch:perceptual_sound_zone}
 \input{perceptual_sound_zone_algorithm/introduction.tex}
 \newpage
@@ -141,7 +143,7 @@
 \input{perceptual_sound_zone_algorithm/perceptual_minimization.tex}
 \newpage
 
-\chapter{Results and Analysis of Proposed Perceptual Sound Zone Algorithms}
+\chapter{Simulations and Analysis of Proposed Perceptual Sound Zone Algorithms}
 \label{ch:results}
 \input{results/introduction.tex}
 \newpage

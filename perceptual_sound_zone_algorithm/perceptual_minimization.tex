@@ -52,6 +52,7 @@ Consider the following optimization problem:
        & \sum_{m\in B}\text{RED}_\zb^{(m)}[\mu] + \sum_{m\in A}\text{LED}_\zb^{(m)}[\mu]
     }
     \end{aligned}
+    \label{eq:perceptual_unconstrained}
 \end{equation}
 The total detectability of the reproduction errors and the leakage errors is minimized by optimizing over the 
 block-based representations of the loudspeaker input signals $\tilde{x}_\za^{(l)}[n,\mu]$ and $\tilde{x}_\zb^{(l)}[n,\mu]$.
@@ -78,6 +79,7 @@ To this end, the following optimization problem is defined:
         \subjectto {& \text{RED}_\za^{(m)}[\mu] \leq D_0 \quad\forall\, m\in A\\
                     & \text{RED}_\zb^{(m)}[\mu] \leq D_0 \quad\forall\, m\in B}
     \end{aligned}
+    \label{eq:perceptual_constrained}
 \end{equation}
 Here, $D_0$ is the maximum allowed detectability of the reproduction error per control point $m$.
 The intended effect of this constraint is limiting how detectable the deviation of the achieved sound pressure is from the specified target.

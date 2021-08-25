@@ -1,20 +1,42 @@
-This work seeks to explore the implementation and possible benefits of including perceptual information in 
-sound zone algorithms.
-To this end, the introduction posed two research questions.
+Sound zone algorithms attempt to control the spatial distribution of sound 
+in order to create zones with distinct audio content in a room.
+This work aims to explore how a perceptual model of the human auditory system can be integrated into 
+cost function of sound zone algorithms, and what benefits this may have.
 
+In the first research question RQ1, we sought to answer:
 \begin{center}
-    {\textit{``How can auditory perceptual models be included in sound zone algorithms?''}}\\
+    {\textit{``How can auditory perceptual models be included in sound zone algorithms?''}}.\\
 \end{center}
-In this work it is shown that a perceptual sound zone algorithm can be stated directly using perceptual models. 
-Specifically, the Par detectability distortion can be used to find a perceptual variant of the 
-popular pressure-matching approach from literature.
-This results in a sound zone algorithm that minimizes a cost function with a perceptual interpretation.
+In this work it is shown that a perceptual sound zone algorithm can be stated directly using a perceptual sound 
+zone framework based on the Par detectability distortion perceptual model and pressure matching sound zone approach.
+This sound zone framework uses the perceptual model models how detectable the errors in sound pressure are.
 
+This framework is used in this work to propose two sound zone algorithms.
+The first algorithm, ``unconstrained perceptual pressure matching'', 
+in which the total detectability of the the sound pressure errors is minimized.
+The other algorithm, ``constrained perceptual pressure matching'', in which the
+detectability of the interference between zones is minimized while constraining the quality of the reproduced audio.
+
+The second research question RQ2 is posed as follows:
 \begin{center}
-    {\textit{``What are the benefits of including auditory perceptual models in sound zone algorithms?''}}\\
+    {\textit{``What are the benefits of including auditory perceptual models in sound zone algorithms?''}}.\\
 \end{center}
-Current findings suggest that the benefits of including perceptual models are twofold:
+This work sought to answer this question by investigating the properties of the two proposed perceptual sound zone 
+algorithms, and comparing it with a reference non-perceptual pressure matching approach.
+Findings suggest that the benefits of including perceptual models in sound zone algorithms are twofold:
 \begin{itemize}
-    \item The perceptual sound zone algorithm outperforms the reference
-    \item The use of perceptual constraints.
+    \item The work indicates that the proposed unconstrained perceptual pressure matching outperforms 
+        the non-perceptual pressure matching in terms of perceptual speech measures PESQ, STOI, SIIB, and Distraction.
+        Investigation indicates that one possible reason for this is that the interference introduced by the
+        reference algorithm is more perceptually disturbing.
+    \item The work shows that proposed constrained perceptual pressure matching allows for control over the 
+        perceived quality of the sound in the zones.
+        By leveraging the perceptual interpretation of the Par distortion detectability, one can specify a desired minimum
+        level of quality.
+        This work shows that the perceptual constraint correlates directly with the quality that is reproduced.
+
+        This is a challenge for non-perceptual sound zone approaches as the cost functions are typically constructed
+        using physical measures.
+        These physical measures have no consistent perceptual interpretation, meaning that the same constraints can 
+        lead to widely varying perceptual results.
 \end{itemize}

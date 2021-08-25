@@ -29,8 +29,8 @@ In this section, the unconstrained perceptual pressure matching algorithm will b
 approach discussed in \autoref{ch:results:methodology}.
 This is done by first evaluating the results of the simulations of the various setups 
 quantitatively through the proposed measures.
-From this, a conclusions are drawn which are then motivated qualitatively by reasoning about algorithm behavior through
-waveforms.
+From this, a conclusions are drawn which are then motivated qualitatively by reasoning about algorithm behavior
+by considering waveforms.
 
 \subsubsection*{Quantitative Analysis of Simulation Results}
 
@@ -69,15 +69,15 @@ waveforms.
 In order to quantify the performance of the unconstrained perceptual pressure matching approach, the various 
 measures introduced in \autoref{ch:results:methodology} are determined for all 12 simulations.
 The measures are averaged over all simulations and over all control points.
-For comparison purposes, the reference algorithm given in \autoref{ch:perceptual_sound_zone:stft} is 
-simulated in an identical fashion, and the measures are also evaluated and averaged for all simulations.
+For comparison purposes, the reference pressure matching approach  is 
+simulated and evaluated in an identical fashion.
 
 The results of this experiment is summarized in \autoref{ch:results:results:unconstrained_results}.
 This table depicts the mean and standard deviation of the measures taken over all 4 control points and all 12 experiments.
 As discussed in \autoref{ch:perceptual:review}, it is important to note that the perceptual measures can only
 be used as an indication, and further listening tests must be performed to draw any real conclusions.
 
-From the results in the table, the following observations are made and conclusions are drawn:
+From the results in the table, the following observations are made:
 \begin{enumerate}
     \item The perceptual approach outperforms the reference in all perceptual measures evaluating the total experience:
         total PESQ, STOI, and SIIB all attain higher values for the perceptual approach.
@@ -88,7 +88,7 @@ From the results in the table, the following observations are made and conclusio
         \label{obs:total_perceptual}
 
     \item The perceptual approach outperforms the reference in terms of the perceptual distraction measure,
-        Implying that the interference in the perceptual approach may be less distracting 
+        implying that the interference in the perceptual approach may be less distracting 
         \label{obs:distraction}
 
     \item The reference approach outperforms the perceptual approach in perceptual measures evaluating the 
@@ -97,7 +97,7 @@ From the results in the table, the following observations are made and conclusio
         attains the target, ignoring interference.
 
         This implies that, disregarding interference, the reference approximates the target more effectively 
-        perceptually speaking.
+        perceptually.
         However, in \autoref{obs:total_perceptual} it is concluded that adding the interferer results in a 
         lower overall experience.
 
@@ -117,15 +117,17 @@ From the results in the table, the following observations are made and conclusio
         Nevertheless, the perceptual approach less distracting according to the distraction model as 
         discussed in \autoref{obs:distraction}.
 
-        These results imply that MSE or AC may not be optimal measures to use in the evaluation of the  
+        These results imply that MSE or AC may not be optimal measures for the evaluation of the  
         perceptual experience of sound zones.
         \label{obs:physical}
 \end{enumerate}
 
 In summary, from the observations above it is concluded that the perceptual sound zone algorithm may
 outperform the reference sound zone algorithm in terms of perceptual experience.
-This seems to be due to the perceptually disturbing interference introduced by the reference algorithm,
-as, when disregarding noise, the reference algorithm has a better reproduction of the target perceptually speaking.
+This seems to be due to the perceptually disturbing interference introduced by the reference algorithm.
+
+This is because, when disregarding noise, the reference algorithm has a better reproduction of the target perceptually.
+However, when the noise is added, the reference algorithm gets outperformed by the perceptual approach.
 The distraction ratings also indicate that the noise introduced by the reference algorithm is more distracting.
 
 In addition to this, these results also imply that the physical metrics MSE and AC do not correlate well 
@@ -151,7 +153,7 @@ for both the perceptual and non-perceptual variants of pressure matching for con
 
 The selected control point is in zone $\za$. 
 As explained in \autoref{ch:results:methodology}, the achieved dark-zone sound pressure can be understood 
-as the interference due to the other zone, zone $\zb$.
+as the interference due to another zone, in this case zone $\zb$.
 
 Consider the highlighted region for the highlighted region for the perceptual algorithm.
 From this it can be seen that the 
@@ -166,14 +168,125 @@ target sound pressure for $\za$ into account.
 Effectively, when the target sound pressure is relatively loud, more interference is allowed 
 as it is masked to a degree by the target sound pressure.
 
-In doing so, the interference is less perceptually disturbing, which serves as a possible explanation to 
-the results given in \autoref{ch:results:results:unconstrained_results}
+In doing so, the interference is less detectable and thus perceptually less disturbing, 
+which serves as a possible explanation to the results given in \autoref{ch:results:results:unconstrained_results}
 
 \subsection{Evaluating Constrained Perceptual Pressure Matching}
 \label{ch:results:results:constrained_results}
+This section details the evaluation of the constrained perceptual pressure matching algorithm discussed in 
+\autoref{ch:perceptual_sound_zone:perceptual_minimization:constrained}.
+As discussed, this algorithm minimizes the detectability of the leakage error whilst constraining the detectability of the 
+reproduction error.
+
+This leverages the fact that the Par detectability has a perceptual interpretation.
+That is to say, if two disturbances result in the same detectability, this should mean that they are equally detectable.
+As such, using the detectability of the reproduction errors in constraints allows for control over the 
+quality of the reproduced audio.
+
+Traditional pressure matching approaches such as the reference pressure matching algorithm can also attempt to constrain the 
+reproduction error.
+However, the reference pressure matching algorithm uses the mean square sound pressure error rather than detectability,
+which does not always correlate well with perception.
+That is to say, two mean square pressure errors can vary widely perceptually.
+
+This section seeks to explore the degree of control that the reproduction error detectability constraints provide.
+In this case, no comparison is made to the reference.
+Instead, the measures defined in \autoref{ch:results:methodology} are used to determine the performance of the 
+constrained perceptual pressure matching approach for varying constraint values.
+Afterwards, a qualitative analysis of the algorithm is given through waveforms in order to motivate the quantitative results.
 
 \subsubsection*{Quantifying Algorithm Performance}
 \input{tikz/tikz_constrained_results.tex}
+As mentioned, the goal is to analyse the behavior the constrained perceptual pressure matching algorithm
+introduced in \autoref{ch:perceptual_sound_zone:perceptual_minimization:constrained} for various values of the 
+constraint $D_0$ shown in \autoref{eq:perceptual_constrained}. 
+To quantify the performance of the algorithm, the measures introduced in \autoref{ch:results:methodology} are used.
+
+Consider \autoref{fig:results:results:constrained_results}, where the results of the 
+experiments for the constrained perceptual pressure matching algorithm are depicted for different values of $D_0$. 
+The measures as depicted are averaged over all 12 experiments and over all 4 points in the room. 
+The error bars indicate one standard deviation.
+
+The following observations are made:
+\begin{itemize}
+    \item It can be seen that the bright zone PESQ, MSE, STOI and SIIB are all strictly decreasing or increasing as a 
+        function of $D_0$.
+        Recall that the bright zone quantities refer to the reproduction of the intended target sound pressures sans 
+        interference.
+        Thus, increasing the constraints correlates with a lowering the quality of the reproduced target
+        perceptually.
+        \label{obs:constrained:1}
+
+    \item It can be seen that the total PESQ, STOI and SIIB are not strictly decreasing functions of $D_0$.
+        The total quantities refer to the perceptual quality all the sound pressure in the control points,
+        including interference.
+        Interestingly, the measures peak at a constraint value $D_0$ of about 3 or 5. 
+        This effect is likely due to the interference, as it is shown in \autoref{obs:constrained:1} that 
+        the achieved sound pressure sans interference is strictly decreasing.
+
+        Increasing the constraint value $D_0$ relaxes the optimization problem, 
+        which should allow for further minimization of the leakage error detectability.
+        For high values of $D_0$, the total and bright zone quantities converge to one another.
+        This corresponds to the interference being so small that it is perceptually irrelevant.
+        \label{obs:constrained:2}
+
+    \item From the distraction plot, it can be seen that for lower constraint values the distraction decreases as 
+        a function of $D_0$.
+        At a constraint value of about 15, the distraction starts increasing again.
+        % This implies that decreasing the amount of interference any further than this point does not result in 
+        % further decrease in distraction.
+
+        The rise in distraction can potentially be explained by a decrease in achieved bright zone sound pressure energy.
+        One way of reducing the amount of interference is decreasing the bright zone sound energy.
+        As such, the algorithm has an incentive to do so.
+        Increasing constraint values $D_0$ allows for larger reproduction errors, which allow for a lower-energy
+        representation of the achieved bright zone sound pressure.
+        Thus, the increase in distraction may be due to a decrease in achieved bright zone sound pressure energy without
+        a meaningful decrease of interference.
+
+        This effect can also be observed through the acoustic contrast. 
+        The contrast decreases for constraint values $D_0$ higher than $7$. 
+        \label{obs:constrained:3}
+\end{itemize}
+From the observations above, it is conclude that perceptually constrained pressure matching allows
+for a degree of control of the perceived quality of the bright zone sound pressure.
+This can be seen from \autoref{obs:constrained:1} where it is shown that the bright zone measures are 
+all a strictly decreasing functions of the constraint value $D_0$. 
+However, as given by \autoref{obs:constrained:2}, the total perceived quality (including interference) is 
+not a strictly decreasing function of $D_0$, so the constraint must be chosen carefully.
+
+Finally, it is shown in \autoref{obs:constrained:3} that the distraction can be controlled to a degree through 
+the constraint values $D_0$, as the distraction is a strictly decreasing function of $D_0$ for low constraint values. 
+Higher constraint values seem to increase the distraction.
+It is theorized that this is due to there being diminishing returns in increasing the constraint $D_0$, as the 
+interference is not decreased in a perceptually meaningful way.
+This can be seen from the convergence of the bright zone and the total perceptual measures as discussed in 
+\autoref{obs:constrained:2}
+Furthermore, the bright zone sound pressure energy is theorized to be decreased due to the further 
+relaxation of the constraints.
+This is also indicated by the acoustic contrast.
+
 
 \subsubsection*{Analyzing Algorithm Behavior}
 \input{tikz/tikz_constrained_masking_effect.tex}
+In the previous section, it is concluded that the perceptually constrained pressure matching approach does 
+allow for accurate control of the perceived sound pressure.
+This section explores the effects that increasing the value of $D_0$ have on the wave forms of the 
+bright zone sound pressure and the dark zone sound pressure.
+
+To this end, consider \autoref{fig:results:constrained_results:behavior}.
+This plot depicts wave forms for control point $m=2$ in zone $\za$ for one of the experiments for different values 
+of the constraint $D_0$.
+
+As can be seen from the plots on the right hand side,
+increasing the constraint value $D_0$ seems to reduce the interference.
+Interestingly, one can see the frequency-weighting that occurs in Par detectability.
+As discussed in \autoref{ch:perceptual:implementation:least_squares}, the Par detectability has a low perceptual weighting 
+for lower frequencies due to the threshold of hearing.
+As can be seen, for $D_0 = 1$ many high frequencies are still present in the achieved dark zone sound pressure.
+For $D_0=21$, only lower frequencies remain. 
+
+The achieved bright zone sound pressures on the left hand side provide evidence for the claim that the 
+achieved bright zone sound pressure decreases with increasing constraints.
+When compared to the target for that zone, the total energy present seems to decrease greatly between 
+constraint values $D_0=1$ and $D_0=21$.  
