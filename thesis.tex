@@ -1,6 +1,12 @@
 \documentclass[10pt,twoside,openright,titlepage]{ce}
 
 % =Imports===============================================================================
+\usepackage[round-mode=places, round-integer-to-decimal, round-precision=2,
+    table-format = 1.2, 
+    table-number-alignment=center,
+    round-integer-to-decimal,
+    output-decimal-marker={.}
+    ]{siunitx}
 \usepackage[]{tcolorbox}
 \usepackage[]{amsmath,amssymb,amsthm}
 \usepackage[]{graphicx}
@@ -14,8 +20,9 @@
 \usepackage[]{pgfplots}
 \usepackage[]{pgfplotstable}
 \usepackage[]{multirow}
-\usepackage[]{csvsimple}
 \usepackage[raggedright]{titlesec}
+\usepackage[]{enumitem}
+\usepackage{booktabs} % For \toprule, \midrule and \bottomrule
 
 \pgfplotsset{compat=1.16}
 \pgfplotsset{scaled x ticks=false}
@@ -154,6 +161,10 @@
 \section{Evaluation of Proposed Algorithms}
 \label{ch:results:evaluation}
 \input{results/results.tex}
+\newpage
+\section{Comparison of Results with Literature Approaches}
+\label{ch:results:comparision}
+\input{results/literature_comparision.tex}
 \newpage
 
 \chapter{Conclusion}

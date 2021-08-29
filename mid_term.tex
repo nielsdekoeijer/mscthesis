@@ -1,0 +1,329 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[english]{babel}
+\usepackage{calc}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{subfig}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{comment}
+\usepackage{MnSymbol,wasysym}
+\usepackage{textcomp}
+\usepackage{hyperref}
+\usepackage{multimedia}
+
+\usepackage{nielstikz}
+\usepackage{nielstex}
+\usetikzlibrary{patterns}
+\pgfdeclarepatternformonly{mydots}{\pgfqpoint{-1pt}{-1pt}}{\pgfqpoint{1pt}{1pt}}{\pgfqpoint{3pt}{3pt}}% original definition: \pgfqpoint{3pt}{3pt}
+{%
+    \pgfpathcircle{\pgfqpoint{0pt}{0pt}}{.5pt}%
+    \pgfusepath{fill}%
+}%
+
+\setbeamertemplate{navigation symbols}{} % remove navigation symbols
+\mode<presentation>{\usetheme{tud}}
+
+% BIB SETTINGS
+\usepackage[backend=bibtex,firstinits=true,maxnames=30,maxcitenames=20,url=false,style=authoryear]{biblatex}
+\bibliography{bib}
+\setlength\bibitemsep{0.3cm} % space between entries in the reference list
+\renewcommand{\bibfont}{\normalfont\scriptsize}
+\setbeamerfont{footnote}{size=\tiny}
+\renewcommand{\cite}[1]{\footnote<.->[frame]{\fullcite{#1}}}
+\AtBeginBibliography{\tiny}
+
+\title[]{\textbf{Sound Zones with a Cost Function Based on Models of Human Hearing}\\
+{\normalsize Midterm Presentation for CAS Group}}
+\institute[]{Delft University of Technology, The Netherlands\\Bang and Olufsen, Denmark}
+\author{Niels de Koeijer}
+
+\begin{document}
+
+% Title page
+{\setbeamertemplate{footline}{\usebeamertemplate*{minimal footline}} \frame{\titlepage}}
+
+% ==========================================================================================================
+\begin{frame}{\textbf{Presentation Outline}}
+    \begin{block}{\textbf{Table of Contents}}
+        \begin{enumerate}
+            \item \textbf{Introduction}
+            \item Introduction to Sound Zones
+            \item Perceptual Models 
+            \item Perceptual Sound Zones
+        \end{enumerate} 
+    \end{block}
+\end{frame}
+
+\begin{frame}{\textbf{Introduction I:} About Me} 
+    \begin{columns}[c]
+        \column{.55\textwidth}
+        \textbf{Niels de Koeijer}\\
+        Master Student Currently doing Thesis at the Research Department at Bang \& Olufsen (B\&O)\\
+        \vspace{0.60cm}
+        Supervised by: 
+        \begin{itemize}
+            \item Richard Hendriks (TUD)
+            \item Jorge Martinez (TUD)
+            \item Martin Bo M\o ller (B\&O)
+            \item Pablo Martinez-Nuevo (B\&O)
+        \end{itemize}
+        \column{.33\textwidth}
+        \begin{figure}
+            \vspace{-0.8cm}
+            \centering
+            \includegraphics[scale=0.17]{me.jpg}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
+% ==========================================================================================================
+\begin{frame}{\textbf{Presentation Outline}}
+    \begin{block}{\textbf{Table of Contents}}
+        \begin{enumerate}
+            \item Introduction
+            \item \textbf{Introduction to Sound Zones}
+            \item Perceptual Models 
+            \item Perceptual Sound Zones
+        \end{enumerate} 
+    \end{block}
+\end{frame}
+
+\begin{frame}{\textbf{Introduction to Sound Zones I:} What are Sound Zones?}
+    In sound zones, we attempt to use an \textbf{array of loudspeakers} to create \textbf{multiple areas with different audio} in the \textbf{same room}.
+    \begin{figure}
+        \centering
+        \scalebox{0.6}{\input{tikz-sound-zones-problem.tex}}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{\textbf{Introduction to Sound Zones II:} Introducing the Data Model}
+    \begin{figure}
+        \centering
+        \scalebox{0.6}{\input{tikz-sound-zones-problem-quantities.tex}}
+    \end{figure}
+    \begin{itemize}
+        \item Let $t_A^{(m)}[n]$ and $t_B^{(m)}[n]$ be the \textbf{desired target sound pressure} for point $m$.
+        \item Let $x^{(l)}[n]$ be the \textbf{loudspeaker input signals} for loudspeaker $l$.
+        \item Let $h_A^{(l,m)}[n]$ and $h_B^{(l,m)}[n]$  be the \textbf{RIRs} from loudspeaker $l$ to point $m$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{Introduction to Sound Zones III:} The Problem}
+    Find \textbf{loudspeaker input signals} $x^{(l)}[n]$ such that, when transfered into the room by the \textbf{RIRs} $h_A^{(l,m)}[n]$ and $h_B^{(l,m)}[n]$, 
+    achieve the \textbf{target sound pressures} $t_A^{(m)}[n]$ and $t_B^{(m)}[n]$.
+    \begin{figure}
+        \centering
+        \scalebox{0.6}{\input{tikz-sound-zones-problem-quantities.tex}}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{\textbf{Introduction to Sound Zones IV:} Typical Approaches}
+    Typically, this problem is solved by finding the \textbf{loudspeaker input signals} $x^{(l)}[n]$ that minimizes the difference in sound pressure.
+    One way we could write this is: 
+    \begin{align*}
+        \argmin{x^{(l)}[n]}{
+            & \sum_{m\in A} \norm[2][2]{\sum_l^{N_L} \left(h_A^{(l,m)} \ast x^{(l)}\right)[n] - t_A^{(m)}[n]} + \\
+            & \sum_{m\in B} \norm[2][2]{\sum_l^{N_L} \left(h_B^{(l,m)} \ast x^{(l)}\right)[n] - t_B^{(m)}[n] } 
+        }
+    \end{align*}
+\end{frame}
+
+% ==========================================================================================================
+\begin{frame}{\textbf{Presentation Outline}}
+    \begin{block}{\textbf{Table of Contents}}
+        \begin{enumerate}
+            \item Introduction
+            \item Introduction to Sound Zones
+            \item \textbf{Perceptual Models} 
+            \item Perceptual Sound Zones
+        \end{enumerate} 
+    \end{block}
+\end{frame}
+
+\begin{frame}{\textbf{Perceptual Models I:} Why Add Perceptual information?}
+    Reasons to include a model of human hearing to sound zones:
+    \begin{itemize}
+        \item As mentioned, typical algorithms take an approach like this:
+            \begin{align*}
+                \argmin{x^{(l)}[n]}{
+            & \sum_{m\in A} \norm[2][2]{\sum_l^{N_L} \left(h_A^{(l,m)} \ast x^{(l)}\right)[n] - t_A^{(m)}[n]} + \\
+            & \sum_{m\in B} \norm[2][2]{\sum_l^{N_L} \left(h_B^{(l,m)} \ast x^{(l)}\right)[n] - t_B^{(m)}[n] }}
+            \end{align*}
+
+        \item \textbf{Problem:} Typical algorithms attempt to recreate the target sound pressure perfectly. 
+            However, physical metrics do not directly relate to how sound is actually experienced.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{Perceptual Models I:} Why Add Perceptual information? Cont.}
+    \textbf{Solution:} Use perceptual model of the human hearing, allowing us to focus on what matters perceptually! 
+    More effective use of effort $\rightarrow$ better experience.
+    Indications from literature show that this is promising.
+\end{frame}
+
+
+\begin{frame}{\textbf{Perceptual Models II:} The Approach}
+    The following approach is taken:
+    \begin{itemize}
+        \item We include perceptual information in our algorithms by including it in the cost function.
+        \item In order to do so, we should first find perceptual models that have nice properties for optimization.
+            Examples of the properties that I considered were:
+            \begin{enumerate}
+                \item \textbf{Convexity:} to preserve a unique minimum and for potentially efficient solvers.
+                \item \textbf{Computational Complexity:} in practice, a sound zone system cannot optimize for days just to play 4 minutes of audio.
+                    Therefore, perceptual models with real-time potential are interesting.
+            \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{Perceptual Models III:} The Perceptual Detectibility}
+    I settled on the \textbf{Detectibility}, a perceptual metric introduced by van der Par\cite{van2005perceptual} en Taal\cite{taal2012low}.
+    \begin{itemize}
+        \item Detectibility is defined as a function $D(x[n], \epsilon[n])$ which quantifies how well humans can detect an 
+            \textbf{interferer} $\epsilon[n]$ is in presence of \textbf{signal} $x[n]$.
+            \begin{itemize}
+                \item If $\epsilon[n]$ is easily detectibile, $D(x[n], \epsilon[n]) \gg 1$ 
+                \item If $\epsilon[n]$ is undetectible, $D(x[n], \epsilon[n]) \ll 1$ 
+            \end{itemize}
+        \item Originally designed for use in \textbf{audio coding}, where they want make the quantization error undetectible. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{Perceptual Models III:} The Perceptual Detectibility Cont.}
+    In order to get some intuition on how Detectibility works:
+    \begin{itemize}
+        \item $D(\text{\textbf{Jet Engine}},\,\text{\textbf{Mouse Sounds}}) \ll 1$:\\The detectibility of ``\textbf{Mouse Sounds}'' in presence of ``\textbf{Jet Engine}'' will be very low.
+        \item $D(\text{\textbf{Mouse Sounds}},\,\text{\textbf{Jet Engine}}) \gg 1$:\\The detectibility of ``\textbf{Jet Engine}'' in presence of ``\textbf{Mouse Sounds}'' will be very high. 
+    \end{itemize}
+    Detectibility quantifies how well humans can hear an interferer given a background signal.
+\end{frame}
+
+\begin{frame}{\textbf{Perceptual Models IV:} Detectibility Facts}
+    I won't go into details on how detectibililty works exactly, but the following is important to remember:
+    \begin{itemize}
+        \item Detectibility $D(x[n],\epsilon[n])$  is \textbf{convex} in $\epsilon[n]$ and can be computed in \textbf{realtime}.
+        \item Detectibility uses time-local psycho-acoustical phenomena, thus $x[n]$ and $\epsilon[n]$ must be considered in \textbf{short time frames} (i.e. 20 ms for speech).
+    \end{itemize}
+    The next step is to design a sound zone algorithm using the detectibililty. 
+\end{frame}
+
+% ==========================================================================================================
+\begin{frame}{\textbf{Presentation Outline}}
+    \begin{block}{\textbf{Table of Contents}}
+        \begin{enumerate}
+            \item Introduction
+            \item Introduction to Sound Zones
+            \item Perceptual Models 
+            \item \textbf{Perceptual Sound Zones}
+        \end{enumerate} 
+    \end{block}
+\end{frame}
+
+\begin{frame}{\textbf{Detectibility Based Sound Zones I:} How to use Detectibility} 
+    Detectibility is interesting, but how can it be used? Consider again the typical algorithm. 
+    \begin{align*}
+        \argmin{x^{(l)}[n]}{
+            & \sum_{m\in A} \norm[2][2]{\sum_l^{N_L} \left(h_A^{(l,m)} \ast x^{(l)}\right)[n] - t_A^{(m)}[n]} + \\
+            & \sum_{m\in B} \norm[2][2]{\sum_l^{N_L} \left(h_B^{(l,m)} \ast x^{(l)}\right)[n] - t_B^{(m)}[n] } 
+        }
+    \end{align*}
+    Here, we attempt to minimize the reproduction error between the target sound pressure and the sound pressure reproduced by the loudspeakers. 
+\end{frame}
+
+\begin{frame}{\textbf{Detectibility Based Sound Zones I:} How to use Detectibility Cont.} 
+    Let the reproduction error $\epsilon_A^{(m)}[n]$ and $\epsilon_B^{(m)}[n]$ be defined as: 
+    \begin{align*}
+        \epsilon_A^{(m)}[n] &= \sum_l^{N_L} \left(h_A^{(l,m)} \ast x^{(l)}\right)[n] - t_A^{(m)}[n] \\
+        \epsilon_B^{(m)}[n] &= \sum_l^{N_L} \left(h_B^{(l,m)} \ast x^{(l)}\right)[n] - t_B^{(m)}[n]
+    \end{align*}
+    The previous problem can be written as: 
+    \begin{align*}
+        \argmin{x^{(l)}[n]}{
+            & \sum_m^{N_A} \norm[2][2]{\epsilon_A^{(m)}[n]} + 
+            \sum_m^{N_B} \norm[2][2]{\epsilon_B^{(m)}[n]} 
+        }
+    \end{align*}
+\end{frame}
+
+\begin{frame}{\textbf{Detectibility Based Sound Zones I:} How to use Detectibility Cont.} 
+    We can rewrite definition of the reproduction error to the following expression
+    \begin{align*}
+        \sum_l^{N_L} \left(h_A^{(l,m)} \ast x^{(l)}\right)[n] = t_A^{(m)}[n] + \epsilon_A^{(m)}[n] \\
+        \sum_l^{N_L} \left(h_B^{(l,m)} \ast x^{(l)}\right)[n] = t_B^{(m)}[n] + \epsilon_B^{(m)}[n] 
+    \end{align*}
+    Here, we have written the sound pressure reproduced by the loudspeakers as combination of the target pressure and the reproduction error.
+    So, we want to \textbf{minimize the reproduction error in presence of the target pressure}\\ 
+    \vspace{10pt}
+    This perspective motivates minimizing the \textbf{detectibility} of the reproduction error in presence of the target. 
+\end{frame}
+
+\begin{frame}{\textbf{Detectibility Based Sound Zones I:} How to use Detectibility Cont.} 
+    This line of thinking results in the following optimization problem.
+    \begin{align*}
+        &\argmin{x^{(l)}[n]}{
+              \sum_{m\in A} D\left(t_A^{(m)}[n],\,\epsilon_A^{(m)}[n]\right) + 
+              \sum_{m\in B} D\left(t_B^{(m)}[n],\,\epsilon_B^{(m)}[n]\right) 
+        } 
+    \end{align*}
+    As can be seen, the \textbf{detectibility} of the reproduction error is minimized in presence of the target pressure.
+    This problem is convex, as detectibility $D(x[n], \epsilon[n])$ is convex in $\epsilon[n]$. 
+\end{frame}
+
+\begin{frame}{\textbf{Detectibility Based Sound Zones II:} Problems with this Approach} 
+    \begin{align*}
+        &\argmin{x^{(l)}[n]}{
+              \sum_{m\in A} D\left(t_A^{(m)}[n],\,\epsilon_A^{(m)}[n]\right) + 
+              \sum_{m\in B} D\left(t_B^{(m)}[n],\,\epsilon_B^{(m)}[n]\right) 
+        } 
+    \end{align*}
+    \textbf{Problem with the Current Problem:} It penalizes audio leakage between zones as an reproduction error.
+        In practice, it is very difficult to supress all leakage. 
+        The problem will still attempt to do so, ruining audio quality. 
+    \begin{figure}
+        \centering
+        \scalebox{0.5}{\input{tikz-sound-zones-problem-quantities.tex}}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{\textbf{Detectibility Based Sound Zones II:} Problems with this Approach} 
+    \textbf{Solution:} Rewrite the optimization problem in such a way that audio quality is always preserved.
+        In essence, we attempt to minimize the audio leakage subject to a constraint that preserves audio quality.
+        This can be viewed as a relaxed version of the problem, relaxing in the sense that we allow for zone leakage.\\
+        \vspace{10pt}
+        {\color{red} 
+            This is what I'm currently working on! 
+            I would love to show you what I have done so far, but I'm afraid time doesn't allow for it...
+        }\\
+        \vspace{10pt}
+        Future work for my project:
+        \begin{itemize}
+            \item Implement Relaxed Algorithm.
+            \item Quantify Improvements Perceptual vs Non-Perceptual: how good is it?
+        \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{Questions / Suggestions / Anything Whatsover?}}
+    {\tiny \color{black} Ideas always welcome! Send me an e-mail: N.E.M.dekoeijer@student.tudelft.nl}\\
+    \printbibliography
+\end{frame}
+
+\begin{frame}{\textbf{Detectibility Based Sound Zones III:} Relaxed Problem} 
+    If I somehow managed to do it under 20 minutes, here you go:
+    \begin{align*}
+        \argmin{x_A^{(l)},\,x_B^{(l)}[n]}{
+        &\sum_{m\in A} D\left(t_A^{(m)}[n],\,\sum_l^{N_L} \left(h_A^{(l,m)} \ast x_B^{(l)}\right)[n]\right) +  
+         \sum_{m\in A} D\left(t_B^{(m)}[n],\,\sum_l^{N_L} \left(h_B^{(l,m)} \ast x_A^{(l)}\right)[n]\right) 
+        }\\ 
+    \subjectto{
+        &D\left(t_A^{(m)}[n],\,\sum_l^{N_L} \left(h_A^{(l,m)} \ast x_A^{(l)}\right)[n] - t_A^{(m)}[n]\right) \leq Q_0,\quad \forall\,m\in A \\
+        &D\left(t_B^{(m)}[n],\,\sum_l^{N_L} \left(h_B^{(l,m)} \ast x_B^{(l)}\right)[n] - t_B^{(m)}[n]\right) \leq Q_0,\quad \forall\,m\in B 
+    }
+    \end{align*}
+    Then we reconstruct $x^{(l)}[n] = x_A^{(l)}[n] + x_B^{(l)}[n]$.
+\end{frame}
+
+\end{document}

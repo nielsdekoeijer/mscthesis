@@ -1,21 +1,21 @@
-measure,per,ref
-Distraction Mean,7.83,12.69
-Distraction Standard Deviation,6.19,11.29
-Contrast Mean,22.03,50.41
-Contrast Standard Deviation,5.96,29.02
-Total PESQ Mean,3.15,2.61
-Total PESQ Standard Deviation,0.27,0.28
-Bright Zone PESQ Mean,3.35,4.11
-Bright Zone Standard Deviation,0.29,0.17
-Total STOI Mean,0.94,0.94
-Total STOI Standard Deviation,0.01,0.02
-Bright Zone STOI PESQ Mean,0.95,0.99
-Bright Zone STOI Standard Deviation,0.01,0.01
-Total SIIB Mean,978.21,784.96
-Total SIIB Standard Deviation,69.20,164.45
-Bright Zone SIIB Mean,1125.50,1201.76
-Bright Zone SIIB Deviation,66.18,90.99
-Total MSE Mean,0.001149,0.000164
-Total MSE Standard Deviation,0.000368,0.000066
-Bright Zone MSE Mean,0.001075,0.000082
-Bright Zone MSE Deviation,0.000362,0.000039
+,per,ref
+reconstruction_leakage_distraction_mean,7.828947726661238,12.693988753895724
+reconstruction_leakage_distraction_std,1.8686744578184173,3.4055254355444857
+reconstruction_leakage_contrast_mean,13.258088642132899,16.075454751177578
+reconstruction_leakage_contrast_std,0.3790741461884046,0.936836942046134
+target_result_pesq_mean,3.1546544382969537,2.6093137760957084
+target_result_pesq_std,0.08168966680666578,0.08443821264851126
+target_reconstruction_pesq_mean,3.3458636651436486,4.107732231418292
+target_reconstruction_pesq_std,0.08744752348405438,0.051509350070837456
+target_result_stoi_mean,0.9431282598322636,0.9403644850227723
+target_result_stoi_std,0.0034750175473993172,0.006574692795586756
+target_reconstruction_stoi_mean,0.9505590481496409,0.9891815470548609
+target_reconstruction_stoi_std,0.003280963330747899,0.0015587906487972703
+target_result_siib_mean,1114.306844738798,893.2253803158695
+target_result_siib_std,23.762054361694027,63.81575521261448
+target_reconstruction_siib_mean,1260.117563875903,1311.0408788288366
+target_reconstruction_siib_std,14.2905570582775,12.333373880070667
+target_result_mse_mean,-4.929200227181837,-13.529340687851992
+target_result_mse_std,0.2350839241855276,0.8564272346877804
+target_reconstruction_mse_mean,-5.2417680498043655,-16.600122007011375
+target_reconstruction_mse_std,0.24814891638149206,0.8755667032751875
