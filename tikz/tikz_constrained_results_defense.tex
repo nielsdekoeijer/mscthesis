@@ -1,0 +1,32 @@
+\begin{tikzpicture}
+    % PESQ SIIB STOI MSE CONTRAST DISTRACTION
+    \begin{groupplot}[group style={group size=2 by 1, vertical sep=2.25cm, horizontal sep=2.5cm}]
+        \nextgroupplot[xlabel={$D_0$}, ylabel={PESQ}, ylabel near ticks, 
+        title={Average PESQ per Constraint $D_0$}, scale only axis, 
+        height=3cm, width=6cm, xmin=1, xmax=25, legend style={nodes={scale=0.5, transform shape}}] 
+        \addplot [color=blue, error bars/.cd, y dir=both, y explicit]
+        table [x expr=\thisrow{Q}, 
+                y expr=(\thisrow{target_reconstruction_pesq_mean}), 
+                y error expr=(\thisrow{target_reconstruction_pesq_std}), 
+                col sep=comma] 
+            {data/constrained_evaluation_per_Q.csv};
+        \addplot [color=red, error bars/.cd, y dir=both, y explicit]
+        table [x expr=\thisrow{Q}, 
+                y expr=(\thisrow{target_result_pesq_mean}), 
+                y error expr=(\thisrow{target_result_pesq_std}), 
+                col sep=comma] 
+            {data/constrained_evaluation_per_Q.csv};
+            \legend{PESQ (No interference), PESQ};
+
+        \nextgroupplot[xlabel={$D_0$}, ylabel={Distraction}, ylabel near ticks, 
+        title={Average Distraction per Constraint $D_0$}, scale only axis, 
+        height=3cm, width=6cm, xmin=1, xmax=25, legend style={nodes={scale=0.5, transform shape}}] 
+        \addplot [color=red, error bars/.cd, y dir=both, y explicit]
+        table [x expr=\thisrow{Q}, 
+                y expr=(\thisrow{reconstruction_leakage_distraction_mean}), 
+                y error expr=(\thisrow{reconstruction_leakage_distraction_std}), 
+                col sep=comma] 
+            {data/constrained_evaluation_per_Q.csv};
+        \legend{Distraction};
+    \end{groupplot}
+\end{tikzpicture}
