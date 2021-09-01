@@ -94,6 +94,7 @@ Bang and Olufsen, Denmark}
 \begin{frame}{\textbf{Preface:}\\ The Sound Zone Problem}
     \begin{columns}[c]
         \column{.44\textwidth}
+        Letting multiple people in the same room enjoy distinct audio content.
         \begin{itemize}
             \item \textbf{Given:}\\ A room, an array of loudspeakers, and a number of zones.
             \item \textbf{Goal:}\\  Reproduction distinct audio in the specified zones, with minimal interference.
@@ -407,7 +408,7 @@ Bang and Olufsen, Denmark}
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{\textbf{Proposal of Perceptual Sound Zone Framework:}\\ Algorithm 1: Unconstrained Perceptual Pressure
+\begin{frame}{\textbf{Proposal of Perceptual Sound Zone Algorithms:}\\ Algorithm 1: Unconstrained Perceptual Pressure
     Matching}
     \begin{columns}[c]
         \column{.54\textwidth}
@@ -425,7 +426,7 @@ Bang and Olufsen, Denmark}
     \end{columns}
 \end{frame}
 
-\begin{frame}{\textbf{Proposal of Perceptual Sound Zone Framework:}\\ Algorithm 2: Unconstrained Perceptual Pressure
+\begin{frame}{\textbf{Proposal of Perceptual Sound Zone Algorithms:}\\ Algorithm 2: Constrained Perceptual Pressure
     Matching}
     \begin{columns}[c]
         \column{.54\textwidth}
@@ -502,10 +503,12 @@ Bang and Olufsen, Denmark}
 \end{frame}
 
 \begin{frame}{\textbf{Evaluation of Perceptual Sound Zone Algorithms:}\\ Evaluation Measures}
-    In order to effectively compare the reference and the perceptual approach, perceptual measures are used.\\
+    In order to effectively compare the reference and the perceptual approach, two perceptual measures are used:\\
     \vspace{10pt}
-    This presentation will use the Perceptual Evaluation of Speech Quality (PESQ)\cite{rix2001perceptual} 
-    and Distraction\cite{ramo2017real} perceptual measures.
+    \begin{itemize}
+        \item Perceptual Evaluation of Speech Quality (PESQ)\cite{rix2001perceptual}, quantifies speech quality.
+        \item Distraction\cite{ramo2017real}, quantifies how distracting interference is.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{\textbf{Evaluation of Perceptual Sound Zone Algorithms:}\\ Evaluation of Unconstrained
@@ -604,6 +607,7 @@ Bang and Olufsen, Denmark}
 
 \begin{frame}{\textbf{Future Work:}}
     \begin{itemize}
+        \item Validation of current results through listening tests. 
         \item Further proposal of new perceptual sound zone algorithms through the proposed framework.
         \item Current algorithms are very slow, as such it is of interest to speed them up!
     \end{itemize}

@@ -3,10 +3,13 @@ algorithms.
 
 Especially promising are models that attach some ``score'' or ``rating'' to the perceptual quality of input signals.
 These ratings can be used in algorithms to obtain an optimal rating through optimization.
-In addition to this, they can also be used to quantify the quality of results from later algorithms.
+In addition to this, they are also used to quantify the quality of the algorithms in \autoref{ch:results}.
 As such, the focus of the literature review is not on the latest findings in the field of psycho-acoustics, or models 
 that most accurately emulate the behavior of the human ear, but rather on algorithms that quantify quality.
+
 In addition to this, the review also focusses on the optimization tractability of the algorithms.
+This information is used in \autoref{ch:perceptual:selection} to motivate the use of the 
+``Par distortion detectability'' perceptual model in the proposed perceptual sound zone algorithm.
 
 To this end, in this section, two categories of perceptual models are considered.
 First in \autoref{ch:perceptual:review:objective}, ``objective measures'' are discussed.
@@ -14,10 +17,6 @@ These are models which attempt to predict the perceptual quality ratings from li
 Next, perceptual models from ``audio coding'' are discussed in \autoref{ch:perceptual:review:audio_coding}.
 These models are typically used to quantify how audible audio compression artifacts are.
 
-The information discussed in this section is used in \autoref{ch:perceptual:selection} to motivate the use of the 
-``Par distortion detectability'' in the proposed perceptual sound zone algorithm.
-A number of the other perceptual models discussed in this section are used in the evaluation of the 
-performance of the proposed perceptual sound zone algorithm in \autoref{ch:results}.
 
 \subsection{Review of Objective Measures}
 \label{ch:perceptual:review:objective}
@@ -87,10 +86,9 @@ the proposed perceptual sound zone algorithm in \autoref{ch:results}
 
     ViSQOL uses a different internal representation than PESQ and POLQA as it uses neurograms 
     rather than loudness representations. 
-    Neurograms contain the neural firing activity of the auditory nerve in time-frequency bins, 
-    and NSIM determines how similar
-    the firing patterns of two neurograms are.
     The neurograms are then compared by means of the Neurogram Similarly Index Measure (NSIM).
+    Neurograms contain the neural firing activity of the auditory nerve in time-frequency bins, 
+    and NSIM determines how similar the firing patterns of two neurograms are.
     This similarity is then related to the outcomes of listening tests through a laplacian fit~\cite{hines2012visqol}, 
     which is then used to make predictions.
 
@@ -125,8 +123,8 @@ Both measures are used in the evaluation of the proposed perceptual sound zone a
     \item 
     The Speech Intelligibility In Bits (SIIB)~\cite{van2017instrumental} was introduced by Van Kuyk et al.
     in 2017 as a speech intelligibility measure that could be motivated through
-    information theory through the mutual information rate.
-    As such, SIIB is given in bits
+    the mutual information rate from information theory.
+    As such, SIIB is given in bits.
 
     The idea behind SIIB is that the intelligibility of speech is related to the information shared between 
     intended and degraded speech.
@@ -231,12 +229,10 @@ As stated, these perceptual models typically take the form of some sort of disto
 how perceptually disturbing the introduced artifacts are. 
 One approach for example could be to define sound zone algorithms that minimize said distortion function.
 
-As such this section explores three perceptual models from audio coding.
-
 \subsubsection{Review of Perceptual Models from ISO MPEG Standard}
 The ISO/IEC 11172-3 standard specifies a coded representation for audio files~\cite{ISO11172-3}, 
 and a corresponding decoder.
-An encoder said representation is not part of the standard.
+An encoder for said representation is not part of the standard.
 This is done deliberately, to allow for future improvements to the encoder, 
 without having to change the standard~\cite{pan1995tutorial}.
 

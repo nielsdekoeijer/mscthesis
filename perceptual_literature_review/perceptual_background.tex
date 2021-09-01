@@ -7,11 +7,11 @@ perception of auditory stimuli by humans~\cite{van2005perceptual}.
 Perceptual models are employed for various purposes.
 Objective audio quality measures, for example, are perceptual models which aim to predict the 
 perceived quality of audio~\cite{torcoli2021objective}.
-In another example, perceptual audio coding uses models of auditory perception to minimize the perceived artifacts when 
-performing compression of audio~\cite{herre2019psychoacoustic}.
+In another example, perceptual audio coding uses models of auditory perception to minimize the perceived artifacts introduced when
+performing the compression of audio~\cite{herre2019psychoacoustic}.
 
-In general, many perceptual models apply an analysis filter bank to obtain a time-frequency representation 
-of the input stimuli.
+In general, many perceptual models operate on an time-frequency internal-ear representation of the input stimuli which is obtained by applying a 
+analysis filter bank. 
 Among other effects, the filtering performed by the human ear is often taken 
 into account at this stage~\cite{van2005perceptual, taal2012low}.
 This representation is then used to determine its perceptually relevant aspects 
@@ -19,7 +19,7 @@ of the input stimuli~\cite{herre2019psychoacoustic}.
 
 One aspect often used in perceptual models are the various auditory masking properties of the 
 input stimuli~\cite{herre2019psychoacoustic}.
-In general, auditory masking refers the effects one sound has on the perception of other sounds~\cite{painter2000perceptual}.
+In general, auditory masking refers to the effects one sound has on the perception of other sounds~\cite{painter2000perceptual}.
 In simultaneous masking for example, one loud tone may overpower a tone of a similar frequency, rendering the 
 latter tone inaudible~\cite{painter2000perceptual}.
 
@@ -29,7 +29,7 @@ Combining this principal with the masking properties, one can define the ``maski
 This threshold determines the sound pressure level required for other stimuli to be audible to a human observer in presence 
 of the input stimuli~\cite{painter2000perceptual}, and is often used in perceptual 
 models~\cite{van2005perceptual, taal2012low}. 
-In one example, the threshold of hearing is often used in perceptual audio coding to 
+For example, the threshold of hearing is used in perceptual audio coding to 
 make the coding artifacts inaudible~\cite{herre2019psychoacoustic}.
 
 This chapter will motivate the use of the ``Par distortion detectability'' as the perceptual model used in 

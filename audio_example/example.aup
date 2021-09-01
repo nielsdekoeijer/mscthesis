@@ -1,0 +1,65 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="example_data" version="1.3.0" audacityversion="2.4.2" sel0="0.5982222222" sel1="0.5982222222" vpos="128" h="0.0000000000" zoom="173.8484398217" rate="8000.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags/>
+	<wavetrack name="Target" isSelected="0" height="150" minimized="0" channel="2" linked="0" mute="1" solo="0" rate="8000" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="80760">
+				<waveblock start="0">
+					<simpleblockfile filename="e08083b7.au" len="80760" min="-0.296692" max="0.413574" rms="0.047011"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Reference" isSelected="0" height="150" minimized="0" channel="2" linked="0" mute="1" solo="0" rate="8000" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="80640">
+				<waveblock start="0">
+					<simpleblockfile filename="e08088db.au" len="80640" min="-0.24884" max="0.30722" rms="0.041366"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Ref. Interference" isSelected="0" height="150" minimized="0" channel="2" linked="0" mute="1" solo="0" rate="8000" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="80640">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808344.au" len="80640" min="-0.250336" max="0.23288" rms="0.024094"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Perceptual" isSelected="0" height="150" minimized="0" channel="2" linked="0" mute="1" solo="0" rate="8000" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="80760">
+				<waveblock start="0">
+					<simpleblockfile filename="e080880b.au" len="80760" min="-0.226135" max="0.297394" rms="0.029326"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Per. Interference" isSelected="0" height="150" minimized="0" channel="2" linked="0" mute="1" solo="0" rate="8000" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="80760">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808d97.au" len="80760" min="-0.069092" max="0.05423" rms="0.009104"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Constrained" isSelected="1" height="150" minimized="0" channel="2" linked="0" mute="0" solo="1" rate="8000" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="80640">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808783.au" len="80640" min="-0.259888" max="0.296082" rms="0.036109"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>

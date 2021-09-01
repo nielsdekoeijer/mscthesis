@@ -79,7 +79,22 @@
 \advisorone{dr. J. Mart\'{\i}nez-Casta{\~n}eda}
 
 % =Abstract==============================================================================
-\def\ABSTRACT{}
+\def\ABSTRACT{With the aid of an array of loudspeakers, sound zone algorithms seek to reproduce multiple 
+    distinct zones of audio inside an enclosure.
+    Typical approaches determine the loudspeaker inputs by optimizing over a cost function which models the 
+    sound pressure inside the enclosure. 
+    However, recent methods propose cost functions that include a perceptual model of the human auditory system,
+    which further models the perception of sound.
+    This thesis investigates such an approach by proposing a framework within
+    which sound zones are constructed through optimization over a perceptual model.
+    The framework is used to propose two perceptual sound zone algorithms.
+    In order to determine the benefits of including auditory-perceptual information, 
+    simulations of proposed and reference algorithms are presented.
+    From this it is found that the perceptual approach outperforms the reference in terms of various perceptual measures.
+    In addition, it is found that adding perceptual constraints to the optimization problem allows for a control of 
+    sound zones which correlates well with other perceptual quality measures.
+    }
+
 
 % =Document==============================================================================
 \begin{document}
@@ -120,7 +135,7 @@
 \input{perceptual_literature_review/model_implementation.tex}
 \newpage
 
-\chapter{Perceptual Sound Zone Approach Motivation}
+\chapter{Perceptual Sound Zone Framework Proposal}
 \label{ch:sound_zone}
 \input{sound_zone_literature_review/problem.tex}
 \newpage
