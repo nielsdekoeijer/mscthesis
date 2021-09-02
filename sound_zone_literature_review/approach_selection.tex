@@ -50,7 +50,7 @@ disturbance detectability $\dd$ are modeled:
         and the leakage error detectability $\text{LED}^{(m)}_\zz$ the masking signal $x[n]$ is modeled as the target 
         sound pressure for the given control point $m$, i.e $t^{(m)}[n]$. 
 
-        As a result, the masking properties of the target sound pressure are used for both 
+        As a result, the masking properties of the target sound pressures are used for both 
         the reproduction error detectability and the leakage error detectability.
     \item 
         The reproduction error detectability $\text{RED}^{(m)}_\zz$ models the distortion signal 
@@ -66,7 +66,7 @@ disturbance detectability $\dd$ are modeled:
         as the leakage error, which is defined as the achieved sound pressure in the dark zone, i.e $p_\zz^{(m)}[n]$.  
 
         The leakage error detectability can thus be understood as the detectability of the achieved dark zone pressure, or 
-        leakage, in presence of the target sound pressure for that control point $m$.
+        interference, in presence of the target sound pressure for that control point $m$.
 \end{itemize}
 
 The expected behavior of minimizing over the reproduction error detectability and the leakage error detectability 
@@ -83,7 +83,7 @@ Adopting the total sound pressure in place of the target sound pressure for the 
 problem.
 As stated in \autoref{ch:perceptual:implementation:least_squares}, the detectability is only convex if the masking signal 
 is constant.
-As such, by the masking effects of the achieved pressure are modeled by those of the target sound pressure.
+As such, the masking effects of the achieved pressure are approximated by those of the target sound pressure.
 
 Note also that the detectability is proposed to operate on short time frequency domain segments 
 with a time resolution of 20 to 200 milliseconds. 

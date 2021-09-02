@@ -65,8 +65,8 @@ From the results in the table, the following observations are made:
 \begin{enumerate}
     \item The perceptual approach outperforms the reference in two perceptual measures evaluating the total experience:
         total PESQ and SIIB attain higher values for the perceptual approach.
-        The perceptual approach also attains a higher value for STOI, but the confidence intervals indicate that 
-        the values are too close to drawn any real conclusions. 
+        The perceptual approach also attains a higher value for STOI, 
+        however the values are too close to drawn any real conclusions. 
 
         Note that these measures evaluate the total experience, taking into consideration the total 
         sound pressure per control point including interference.
@@ -118,9 +118,6 @@ This is because, when disregarding noise, the reference algorithm has a better r
 However, when the noise is added, the reference algorithm gets outperformed by the perceptual approach.
 The distraction ratings also indicate that the noise introduced by the reference algorithm is more distracting.
 
-In addition to this, these results also imply that the physical metrics NMSE and AC do not correlate well 
-with the perceptual measures, as the physical metrics predict the reference to outperform the perceptual approach.
-
 \subsubsection*{Analyzing Algorithm Behavior}
 \begin{figure}[]
     \centering
@@ -143,7 +140,7 @@ The selected control point is in zone $\za$.
 As explained in \autoref{ch:results:methodology}, the achieved dark-zone sound pressure can be understood 
 as the interference due to another zone, in this case zone $\zb$.
 
-Consider the highlighted region for the highlighted region for the perceptual algorithm.
+Consider the highlighted region for the perceptual algorithm.
 From this it can be seen that the 
 magnitude of the interference is correlated to the magnitude of the target sound pressure for zone $\za$.
 Contrast this to the highlighted region for the reference algorithm, where the interference is a 
@@ -204,18 +201,19 @@ The following observations are made:
         interference.
         Thus, increasing the constraints correlates with a lowering of the quality of the reproduced target
         perceptually.
+        This makes sense, as higher $D_0$ allows for a more detectable reproduction error. 
         \label{obs:constrained:1}
 
     \item It can be seen that the total PESQ, STOI and SIIB are not strictly decreasing functions of $D_0$.
         The total quantities refer to the perceptual quality all the sound pressure in the control points,
         including interference.
         Interestingly, the measures peak at a constraint value $D_0$ of about 3 or 5. 
-        This effect is likely due to the interference, as it is shown in \autoref{obs:constrained:1} that 
-        the achieved sound pressure sans interference is strictly decreasing.
 
-        One explanation for this is as follows.
-        Increasing the constraint value $D_0$ relaxes the optimization problem, 
-        which should allow for further minimization of the leakage error detectability.
+        This effect is likely due to the interference introducing considerable perceptual distortion,
+        as the achieved sound pressure sans interference is strictly decreasing.
+        Low values of the constraint limit the deviation from the target sound pressure, and thus limit how much 
+        interference suppression can take place.
+
         For high values of $D_0$, the total and bright zone quantities converge to one another.
         This corresponds to the interference being so small that it is perceptually irrelevant.
         \label{obs:constrained:2}
@@ -227,7 +225,7 @@ The following observations are made:
         % further decrease in distraction.
 
         The rise in distraction can potentially be explained by a decrease in achieved bright zone sound pressure energy.
-        One way of reducing the amount of interference is decreasing the bright zone sound energy.
+        One way of reducing the amount of interference is by decreasing the bright zone sound energy.
         As such, the algorithm has an incentive to do so.
         Increasing constraint values $D_0$ allows for larger reproduction errors, which allow for a lower-energy
         representation of the achieved bright zone sound pressure.
@@ -252,23 +250,25 @@ Higher constraint values seem to increase the distraction.
 It is theorized that this is due to there being diminishing returns in increasing the constraint $D_0$, as the 
 interference is not decreased in a perceptually meaningful way.
 This can be seen from the convergence of the bright zone and the total perceptual measures as discussed in 
-\autoref{obs:constrained:2}
+\autoref{obs:constrained:2}.
 Furthermore, the bright zone sound pressure energy is theorized to be decreased due to the further 
 relaxation of the constraints.
 
 \subsubsection*{Analyzing Algorithm Behavior}
 \input{tikz/tikz_constrained_masking_effect.tex}
-In the previous section, it is hypothesized that the perceptually constrained pressure matching approach does 
-allow for accurate control of the perceived sound pressure.
-This section explores the effects that increasing the value of $D_0$ have on the wave forms of the 
+In the previous section, it is hypothesized that the perceptually constrained pressure matching approach 
+allows for accurate control of the perceived sound pressure.
+This section explores the effects that increasing the value of $D_0$ has on the wave forms of the 
 bright zone sound pressure and the dark zone sound pressure.
 
 To this end, consider \autoref{fig:results:constrained_results:behavior}.
 This plot depicts wave forms for control point $m=2$ in zone $\za$ for one of the experiments for different values 
-of the constraint $D_0$.
+of the constraint~$D_0$.
 
 As can be seen from the plots on the right hand side,
 increasing the constraint value $D_0$ seems to reduce the interference.
+This makes sense, as increasing the constraint relaxes the required reproduction error detectability, and allows for more interference suppression.
+
 Interestingly, one can see the frequency-weighting that occurs in Par detectability.
 As discussed in \autoref{ch:perceptual:implementation:least_squares}, the Par detectability has a low perceptual weighting 
 for lower frequencies due to the threshold of hearing.

@@ -3,11 +3,11 @@ algorithms.
 
 Especially promising are models that attach some ``score'' or ``rating'' to the perceptual quality of input signals.
 These ratings can be used in algorithms to obtain an optimal rating through optimization.
-In addition to this, they are also used to quantify the quality of the algorithms in \autoref{ch:results}.
+In addition to this, they can also be used to quantify the quality of the algorithms in \autoref{ch:results}.
 As such, the focus of the literature review is not on the latest findings in the field of psycho-acoustics, or models 
-that most accurately emulate the behavior of the human ear, but rather on algorithms that quantify quality.
+that most accurately emulate the behavior of the human ear, but rather on models that quantify a perceptual quality.
 
-In addition to this, the review also focusses on the optimization tractability of the algorithms.
+In addition to this, the review also focusses on the optimization tractability of the models.
 This information is used in \autoref{ch:perceptual:selection} to motivate the use of the 
 ``Par distortion detectability'' perceptual model in the proposed perceptual sound zone algorithm.
 
@@ -276,7 +276,8 @@ As such, it is more effective in hiding sinusoidal distortion.
 Thirdly and finally, the perceptual model is described as a distortion function which quantifies how 
 detectable a disturbance stimuli is.
 
-The proposed distortion measure can be expressed as a squared L2-norm, which makes it tractable for integration 
+The proposed distortion measure can be expressed as a squared $L^2$-norm, which makes it tractable for integration 
+ 
 into existing least-square problems.
 As such, the Par distortion detectability has been used in many signal processing applications, 
 examples ranging from speech enhancement to removing perceptually irrelevant sinusoidal 

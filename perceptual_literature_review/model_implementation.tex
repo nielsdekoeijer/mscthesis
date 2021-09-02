@@ -5,7 +5,7 @@ the Par distortion detectability measure is considered in greater detail.
 This section is organized as follows.
 First, \autoref{ch:perceptual:implementation:intuition} gives a high-level description of the 
 Par distortion detectability, providing an intuitive understanding and introducing some of the notation that is used.
-Next, the steps to computing the distortion detectability are described in 
+Next, the steps for computing the distortion detectability are described in 
 \autoref{ch:perceptual:implementation:computation}.
 Finally, \autoref{ch:perceptual:implementation:least_squares} rewrites the distortion detectability into terms of a 
 squared $L^2$-norm, and provides some analysis of the behavior of the resulting representation.
@@ -71,13 +71,13 @@ the disturbance signal $\mathcal{E}[k]$ respectively.
 This output power can be understood as the amount of power perceived per frequency band of the human ear. 
 The relationship between the input quantities and the output power of the filter taps can be given as follows:
 \begin{align}
-    M_i &= \frac{1}{N_x}\sum_{k=0}^{N_x-1}\left|H_\text{om}[k]\right|^2\left|\Gamma_i[k]\right|^2\left|X[k]\right|^2 \\
-    S_i &= \frac{1}{N_x}\sum_{k=0}^{N_x-1}\left|H_\text{om}[k]\right|^2\left|\Gamma_i[k]\right|^2\left|\mathcal{E}[k]\right|^2 
+    M_i &= \frac{1}{N_x}\sum_{k=0}^{N_x-1}\left|H_\text{om}[k]\right|^2\left|\Gamma_i[k]\right|^2\left|X[k]\right|^2, \\
+    S_i &= \frac{1}{N_x}\sum_{k=0}^{N_x-1}\left|H_\text{om}[k]\right|^2\left|\Gamma_i[k]\right|^2\left|\mathcal{E}[k]\right|^2. 
 \end{align}
 The output powers can then be used to define the within-channel distortion detectability $D_i$ per filter tap $i$.
 This can be thought of the distortion detectability per frequency band of the human ear, and is defined as follows:
 \begin{align}
-    D_i = \frac{N_xS_i}{N_xM_i + C_a}
+    D_i = \frac{N_xS_i}{N_xM_i + C_a}.
 \end{align}
 Here, $C_a$ is a calibration constant that ensures that the absolute threshold of hearing is predicted correctly.
 This can be understood by considering the case where no masking signal $x[n]$ is present, 
@@ -96,7 +96,7 @@ It is defined as follows:
                         \frac{\sum_{k=0}^{N_x-1}\left|H_\text{om}[k]\right|^2\left|
                             \Gamma_i[k]\right|^2\left|\mathcal{E}[k]\right|^2}
                         {\sum_{k=0}^{N_x-1}\left|H_\text{om}[k]\right|^2\left|
-                            \Gamma_i[k]\right|^2\left|X[k]\right|^2 + C_a}
+                            \Gamma_i[k]\right|^2\left|X[k]\right|^2 + C_a}.
     \label{eq:perceptual:implementation:computation:detectability}
 \end{align}
 Here, $C_s$ is a calibration constant chosen such that a just noticeable disturbance signal results in a 
@@ -113,7 +113,7 @@ due to the threshold of hearing (determined by the calibration constant $C_a$).
 
 Conversely consider the case that the spectrum of the masking signal is much smaller than the disturbance signal,
 i.e. $X[k] \ll \mathcal{E}[k]$ for all frequency bins $k$.
-In this case, the resulting detectability is determined greatly by the calibration coefficient $C_a$: 
+In this case, the resulting detectability is determined greatly by the calibration coefficient~$C_a$: 
 \begin{itemize}
     \item If the total energy of the filtered disturbance signal is much larger than the calibration constant 
         $S_i \gg C_a$ for all $i$, the distortion detectability becomes large.
@@ -151,7 +151,7 @@ Consider the following rewrite of the detectability given in
                                  {\norm[2][2]{H_\text{om}[k]\Gamma_i[k]X[k]} + C_a}\right)
                         \left|H_\text{om}[k]\right|^2\left|\mathcal{E}[k]\right|^2 \\
                            &= \sum_{k=0}^{N_x-1}\left|W_x[k]\right|^2\left|\mathcal{E}[k]\right|^2 \\
-                           &= \norm[2][2]{W_x[k]\mathcal{E}[k]} 
+                           &= \norm[2][2]{W_x[k]\mathcal{E}[k]}. 
 \end{align*}
 The rewrite above introduced perceptual weighting $W_x[k]\in\Real{N_x}$ informed by the auditory masking effects of the masking signal $x[n]$. 
 The entries of the perceptual weighting can be understood as the importance of those frequencies for the total detectability.
@@ -159,7 +159,7 @@ The perceptual weighting $W_x[k]$ is defined as follows:
 \begin{equation}
     W_x[k] = \left(\sqrt{\sum_{i=0}^{N_g}\frac{C_s L_\text{eff}\left|\Gamma_i[k]\right|^2}
         {\norm[2][2]{H_\text{om}[k]\Gamma_i[k]X[k]} + C_a}}\right)
-        \left|H_\text{om}[k]\right|
+        \left|H_\text{om}[k]\right|.
 \end{equation}
 Note from this formulation that the perceptual weighting is only a function of the masking signal $x[n]$.
 
@@ -187,7 +187,7 @@ masking that occurs due to the masking signal.
 
 As can be seen, the masking threshold peaks at 52 dB SPL at 1000 Hz.
 This implies that an additional tone at the same frequency must be at least 52 dB SPL in order to be audible.
-As depicted, this results in a low perceptual weighting implying that a disturbance at this frequency is less detectable.
+As depicted, this results in a low perceptual weighting at 1000 Hz, implying that a disturbance at this frequency is less detectable.
 Note also that the low and higher frequencies are also weighted lower due to the threshold of hearing.
 This implies that these frequencies are less important perceptually.
 
