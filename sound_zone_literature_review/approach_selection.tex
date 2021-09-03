@@ -12,15 +12,12 @@ is in presence of a masking signal $x[n]\in\Real{N_x}$.
 Note that the Par distortion detectability assumes that the time-scale of its inputs are short, 
 in the order of 20 to 200 ms.
 
-It is noted in \autoref{ch:perceptual:implementation:least_squares} that the Par distortion detectability measure
-is a convex function of the disturbance signal $\varepsilon[n]$ when the masking signal is held constant. 
-As such, one approach is to specify a sound zone algorithm which leverages the optimization over 
-this disturbance signal in some way.
+It is noted in \autoref{ch:perceptual:implementation:least_squares} that the Par distortion detectability measure is a convex function of the disturbance signal $\varepsilon[n]$ when the masking signal is held constant. 
+As such, one approach is to specify a sound zone algorithm that leverages the optimization over this disturbance signal in some way.
 This is be done by adopting a model for the disturbance $\varepsilon[n]$ and the masking signal $x[n]$.
 
-One natural choice of such model of disturbance is the sound pressure errors from the pressure matching approach.
-As discussed in \autoref{ch:sound_zone:approaches:pressure_matching}, pressure matching constructs 
-sound zones by minimizing the sum of the reproduction error in the bright zone $\text{RE}^{(m)}_\zz$ 
+One natural choice of such a disturbance model is the sound pressure errors from the pressure matching approach.
+As discussed in \autoref{ch:sound_zone:approaches:pressure_matching}, pressure matching constructs sound zones by minimizing the sum of the reproduction error in the bright zone $\text{RE}^{(m)}_\zz$ 
  and the leakage to the dark zone $\text{LE}^{(m)}_\zz$.
 
 The original definitions of these equations are given by \autoref{eq:sound_zone:approaches:RE,eq:sound_zone:approaches:LE}.
@@ -39,7 +36,7 @@ and the leakage error detectability $\text{LED}^{(m)}_\zz$:
     \text{LED}^{(m)}_\zz &= D(t^{(m)}[n],\,p_\zz^{(m)}[n]) \qquad&& \forall\,\, m\notin Z 
         \label{eq:sound_zone:approach_selection:LED} 
 \end{alignat}
-The reproduction error detectability and the leakage error detectability are building blocks which form a framework
+The reproduction error detectability and the leakage error detectability are building blocks that form a framework
 with which perceptual sound zone algorithms can be created.
 In these definitions, both the masking signal $x[n]$ and the disturbance signal $\varepsilon[n]$ of the 
 disturbance detectability $\dd$ are modeled:  
@@ -50,33 +47,27 @@ disturbance detectability $\dd$ are modeled:
         and the leakage error detectability $\text{LED}^{(m)}_\zz$ the masking signal $x[n]$ is modeled as the target 
         sound pressure for the given control point $m$, i.e $t^{(m)}[n]$. 
 
-        As a result, the masking properties of the target sound pressures are used for both 
-        the reproduction error detectability and the leakage error detectability.
+        As a result, the masking properties of the target sound pressures are used for both the reproduction error detectability and the leakage error detectability.
     \item 
         The reproduction error detectability $\text{RED}^{(m)}_\zz$ models the distortion signal 
         as the reproduction error, which is defined as the 
         the deviation of the achieved sound pressure in the bright zone from the target sound pressure, i.e 
         $p_\zz^{(m)}[n] - t^{(m)}[n]$. 
 
-        As such, the reproduction error detectability  
-        can be understood as the detectability of the reproduction error in presence of the target sound pressure for that 
-        control point $m$.
+        As such, the reproduction error detectability can be understood as the detectability of the reproduction error in the presence of the target sound pressure for that control point $m$.
     \item 
         The leakage error detectability $\text{LED}^{(m)}_\zz$ models the distortion signals
-        as the leakage error, which is defined as the achieved sound pressure in the dark zone, i.e $p_\zz^{(m)}[n]$.  
+        as the leakage error, which is defined as the achieved sound pressure in the dark zone, i.e., $p_\zz^{(m)}[n]$.  
 
-        The leakage error detectability can thus be understood as the detectability of the achieved dark zone pressure, or 
-        interference, in presence of the target sound pressure for that control point $m$.
+        The leakage error detectability can thus be understood as the detectability of the achieved dark zone pressure, or interference, in the presence of the target sound pressure for that control point $m$.
 \end{itemize}
 
-The expected behavior of minimizing over the reproduction error detectability and the leakage error detectability 
-is that the reconstruction and leakage errors are shaped in such a way that they are masked to a degree by the 
+The expected behavior of minimizing the reproduction error detectability and the leakage error detectability is that the reconstruction and leakage errors are shaped in such a way that they are masked to a degree by the 
 target sound pressure.
 As a result, the errors should become minimally detectable.
 
-Note that using the target sound pressure as a masking signal is an is an approximation: 
-In reality, generally it cannot be assumed that the achieved sound algorithm exactly matches the target sound pressure 
-perfectly, as the target is not always attainable for the given room, zones, and set of loudspeakers.
+Note that using the target sound pressure as a masking signal is an approximation: 
+In reality, generally, it cannot be assumed that the achieved sound algorithm exactly matches the target sound pressure perfectly, as the target is not always attainable for the given room, zones, and set of loudspeakers.
 In the ideal case, the masking properties of the total achieved sound pressure would be used instead.
 However, this quantity depends on the optimizer.
 Adopting the total sound pressure in place of the target sound pressure for the masking signal results in a non-convex 
@@ -85,15 +76,12 @@ As stated in \autoref{ch:perceptual:implementation:least_squares}, the detectabi
 is constant.
 As such, the masking effects of the achieved pressure are approximated by those of the target sound pressure.
 
-Note also that the detectability is proposed to operate on short time frequency domain segments 
+Note also that the detectability is proposed to operate on short time-frequency domain segments 
 with a time resolution of 20 to 200 milliseconds. 
-As such, the existing data model and pressure matching approach must be changed to operate in a short time frequency 
+As such, the existing data model and pressure matching approach must be changed to operate in a short time-frequency 
 domain fashion.
 This is done in \autoref{ch:perceptual_sound_zone:stft}.
 
-This framework of error detectabilities is found to be a promising and natural 
-way of creating sound zone algorithms directly through the Par disturbance detectability,
-and is used to state two perceptual sound zone algorithms in \autoref{ch:perceptual_sound_zone}.
+This framework of error detectabilities is found to be a promising and natural way of creating sound zone algorithms directly through the Par disturbance detectability and is used to state two perceptual sound zone algorithms in \autoref{ch:perceptual_sound_zone}.
 
-Using the ACC approach to formulate perceptual sound zone algorithms is not explored further in this work, 
-but is left as promising future work.
+Using the ACC approach to formulate perceptual sound zone algorithms is not explored further in this work but is left as promising future work.

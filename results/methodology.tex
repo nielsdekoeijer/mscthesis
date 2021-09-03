@@ -11,13 +11,13 @@ given in \autoref{ch:perceptual_sound_zone:stft} by \autoref{eq:perceptual_sound
 \subsection{Simulation Configuration}
 \label{ch:results:methodology:configuration}
 All sound zone algorithms are evaluated in a simulated square room of 5 by 5 meters, with a ceiling height of 3.4 meters.
-There are two zones each consisting of two control points.
+There are two zones, each consisting of two control points.
 In order to obtain a sufficiently challenging problem, the zones are placed in close proximity to each other, 
 with the two closest points being 0.5 meters apart.
 This is important, as a trivial problem makes it difficult to highlight the differences in performance
 between the perceptual and non-perceptual approaches.
 
-The room contains 4 loudspeakers placed in the corners of the room at a height of 1.2 meters.
+The room contains four loudspeakers placed in the corners of the room at the height of 1.2 meters.
 Omnidirectional loudspeakers, which radiate energy equally in all directions~\cite{habets2006room}, are used.
 An image depicting the entire setup is given in \autoref{fig:results:methodology:room}.
 
@@ -32,35 +32,31 @@ An image depicting the entire setup is given in \autoref{fig:results:methodology
 \end{figure}
 
 In order to synthesize room impulse responses used to relate the loudspeaker inputs and the resulting sound pressure 
-in the control points, the image source method~\cite{allen1979image} is used.
-Specifically, the Habets implementation of the image source method~\cite{habets2006room}.
+in the control points, the image source method~\cite{allen1979image} is used, specifically, the Habets implementation~\cite{habets2006room}.
 
-For reasons of computational complexity, the simulated room impulse 
-responses are limited to reverberation times of at most 200 milliseconds.
-The definition of the reverberation time is the time required for the intensity of reflections to reduce 60 dB relative 
-to the direct path sound pressure~\cite{habets2006room}. 
+For reasons of computational complexity, the simulated room impulse responses are limited to reverberation times of at most 200 milliseconds.
+The definition of the reverberation time is the time required for the intensity of reflections to reduce 60 dB relative to the direct path sound pressure~\cite{habets2006room}. 
 To put the reverberation time used in the experiment into context, 
-it has been found in a investigation into the reverberation time of furnished rooms
+it has been found in an investigation into the reverberation time of furnished rooms
 that similarly sized rooms have an average maximal reverberation 
 time of 720 milliseconds~\cite{diaz2005reverberation}.
 
 To define the target sound pressure, content must be selected for the two zones.
-For this evaluation, english speech content is used.
+For this evaluation, English speech content is used.
 The motivation for this is that the objective speech quality measures described in 
 \autoref{ch:perceptual} are found to be more robust than
 the discussed general audio quality measures.
 Another practical reason is that many general audio quality measures have 
 little to no free and openly available implementations, whereas the speech measures do.
 
-The speech signals are down sampled to 8000 Hz.
-The motivation for this is that it is computationally intensive to run the algorithms at higher sampling rate.
+The speech signals are downsampled to 8000 Hz.
+The motivation for this is that it is computationally intensive to run the algorithms at a higher sampling rate.
 Another motivation is that the majority of the speech energy is contained between 150 and 4000 Hz~\cite{etsi2010}.
 
 In total, a dataset of 4 loudness-matched speech signals is used for evaluation.
 For each experiment, one speech signal is assigned to each zone.
 All possible combinations of the speech signals are formed, resulting in a total of 12 possible configurations.
-However, due to the symmetry of the the loudspeaker, room, and zones given by \autoref{fig:results:methodology:room} this simplifies to 
-a total of 6 configurations.
+However, due to the symmetry of the loudspeaker, room, and zones given by \autoref{fig:results:methodology:room} this simplifies to a total of 6 configurations.
 
 \subsection{Simulation Evaluation Measures}
 \label{ch:results:methodology:measures}
@@ -68,33 +64,30 @@ This section introduces the measures that are used to evaluate the simulation re
 of the reference and perceptual algorithms.
 
 The perceptual measures PESQ, STOI, SIIB, and Distraction 
-from the literature review discussed in \autoref{ch:perceptual:review} are used for the evaluation.
+from the literature review discussed in \autoref{ch:perceptual:review} is used for the evaluation.
 In addition to these perceptual measures, two traditional physical measures, namely the ``normalized mean square error'' (NMSE) and
-the ``acoustic contrast'' (AC) in terms of sound pressure are used in the evaluation of 
+the ``acoustic contrast'' (AC) in terms of sound pressure is used in the evaluation of 
 sound zone algorithms~\cite{lee2018unified} are also used.
 
 The motivation for including physical measures is to test the hypothesis that, 
 while typically outperforming in terms of perceptual measures, the perceptual sound zone algorithms likely do not 
 outperform the reference sound zone algorithm in terms of physical measures.
-The hypothesis for this for this is that the reference pressure matching approach optimizes over a physical error measure.
+The hypothesis for this is that the reference pressure matching approach optimizes over a physical error measure.
 
 A brief summary is given of the outputs and inputs of the sound zone algorithm is given below.
 These serve as the inputs to the evaluation measures.
 \begin{itemize}
     \item \textbf{Target Sound Pressure $t^{(m)}$:}\\
-        The desired sound pressure per control point $m$, defined by the speech signals 
-        corresponding to the zone $\zz$ the control point is in.
+        The desired sound pressure per control point $m$, defined by the speech signals corresponding to the zone $\zz$ the control point is in.
     \item \textbf{Achieved Sound Pressure $p_\zz^{(m)}$:}\\
-        The sound pressure achieved by the algorithm at control point control point $m$ for the zone $\zz$.
+        The sound pressure is achieved by the algorithm at control point $m$ for the zone $\zz$.
         This sound pressure has two different interpretations, depending on the control point under consideration.
         \begin{itemize}
             \item \textbf{Achieved Bright Zone Sound Pressure for Zone $\zz$:}\\
-                When $m \in Z$, the achieved sound pressure is the achieved approximation of the 
-                target sound pressure $t^{(m)}$ for control point $m$.
+                When $m \in Z$, the achieved sound pressure is the achieved approximation of the target sound pressure $t^{(m)}$ for control point $m$.
                 This can be understood as the approximation of the target sound pressure for a control point $m$, sans leakage or interference. 
             \item \textbf{Achieved Dark Zone Sound Pressure for Zone $\zz$:}\\
-                When $m \notin Z$, the achieved sound pressure represents the sound pressure 
-                that arises other zones due to reproducing the bright zone for zone $\zz$. 
+                When $m \notin Z$, the achieved sound pressure represents the sound pressure that arises in other zones due to reproducing the bright zone for zone $\zz$. 
                 It can be understood as the leakage or interference in other zones due to reproducing zone~$\zz$.
         \end{itemize}
     \item \textbf{Total Achieved Sound Pressure $\sum_\zz p_\zz^{(m)}$:}\\
@@ -102,16 +95,15 @@ These serve as the inputs to the evaluation measures.
         This represents the sound pressure that a user of the sound zone system would experience,
         and thus it contains both the approximation of the target sound pressure and the interference.
 \end{itemize}
-For more information on these quantities, the reader is referred to \autoref{ch:sound_zone:data_model}, where they 
-are introduced.
+For more information on these quantities, the reader is referred to \autoref{ch:sound_zone:data_model}, where they are introduced.
 What follows is a description of various categories of evaluation measures.
 
 \subsubsection{Perceptual Quality Measures}
-The first category of measures that is discussed are perceptual measures that estimate the perceived 
+The first category of measures that are discussed are perceptual measures that estimate the perceived 
 quality of speech audio.
 
 One of the metrics that is used is the Perceptual Evaluation of Speech Quality (PESQ).
-As described in \autoref{ch:perceptual:review:objective}, PESQ is a metric which grades the quality of a 
+As described in \autoref{ch:perceptual:review:objective}, PESQ is a metric that grades the quality of a 
 degraded speech signal with respect to a reference speech signal.
 The resulting quality grade will be between 0 and 5, where 5 is the highest obtainable grade.
 
@@ -120,14 +112,14 @@ the Short-Time Objective Intelligibility (STOI) and
 the Speech Intelligibility in Bits (SIIB).
 STOI provides an intelligibility score between 0 and 1, where 1 is the highest score.
 SIIB instead scores the intelligibility with an information rate given in bits/s, lower-bounded by 0 bits/s.
-A maximum intelligibility corresponds to a rate of about 150 bits/s~\cite{van2017instrumental}.
+Maximum intelligibility corresponds to a rate of about 150 bits/s~\cite{van2017instrumental}.
 
 All perceptual measures evaluate the quality of a ``degraded'' input stimuli with respect to a ''reference'' stimuli.
 Using the previously introduced quantities, the measures are used to evaluate sound zone performance as follows:
 \begin{itemize}
     \item \textbf{PESQ, STOI and SIIB of the Total Achieved Sound Pressure with 
         respect to the Target Sound Pressure:}\\
-        Corresponds to the quality / intelligibility of the achieved sound pressure,
+        Corresponds to the quality/intelligibility of the achieved sound pressure,
         including interference, and will be referred 
         to as the \textbf{``total PESQ''}, \textbf{``total STOI''} and the \textbf{``total SIIB''} per control point $m$. 
     \item \textbf{PESQ, STOI and SIIB of the Achieved Bright Zone Sound Pressure with 
@@ -139,12 +131,12 @@ Using the previously introduced quantities, the measures are used to evaluate so
 
 \subsubsection{Perceptual Interference Measure}
 Another metric that will be used for evaluation is the Distraction model also introduced in \autoref{ch:perceptual:review:objective}.
-This model grades how distracting an interferer is in presence of target audio.
+This model grades how distracting an interferer is in the presence of target audio.
 The grade uses a scale from 0 to 100, where 100 is considered maximally distracting.
 
 The distraction will be used as follows:
 \begin{itemize}
-    \item \textbf{Distraction of the achieved Dark Zone Sound Pressure with respect to the Achieved Bright 
+    \item \textbf{Distraction of achieved Dark Zone Sound Pressure with respect to the Achieved Bright 
         Zone Sound Pressure:}\\
         This quantifies how distracting the dark zone sound pressures are when listening to the bright zone 
         sound pressure per control point $m$. 
@@ -153,7 +145,7 @@ The distraction will be used as follows:
 
 \subsubsection{Physical Measures}
 One physical measure is the acoustic contrast (AC) between the 
-achieved bright zone sound pressure and the achieved dark zone sound pressure can be used as a non-perceptual measure of interference.
+achieved bright zone sound pressure, and the achieved dark zone sound pressure can be used as a non-perceptual measure of interference.
 Initially introduced in \autoref{ch:sound_zone:approaches}, 
 the acoustic contrast between two time-domain sequences $x[n]\in\Real{N}$
 and $y[n]\in\Real{N}$ is given as follows: 
@@ -169,13 +161,12 @@ Note that both physical quantities are given in decibels.
 These physical measures are used to evaluate sound zone performance as follows:
 \begin{itemize}
     \item \textbf{NMSE of the Total Achieved Sound Pressure with respect to the Target Sound Pressure:}\\
-        Describes the NMSE between the target and achieved sound pressure, and will be referred to as the 
+        Describes the NMSE between the target and achieved sound pressure and will be referred to as the 
         \textbf{``total NMSE''}.
     \item \textbf{NMSE of the Achieved Bright Zone Sound Pressure with respect to the Target Sound Pressure:}\\
-        This is the NMSE between the target and the achieved sound pressure sans interference, 
-        and will henceforth referred to as the \textbf{``bright zone NMSE''} per control point $m$.
+        This is the NMSE between the target and the achieved sound pressure sans interference and will henceforth be referred to as the \textbf{``bright zone NMSE''} per control point $m$.
     \item \textbf{Acoustic contrast between the Achieved Bright Zone Sound Pressure and the 
         Achieved Dark Zone Sound Pressure:}\\
-        Quantifies the ratio of the acoustic potential energy of the bright zone and of the dark zone.
+        This measure quantifies the ratio of the acoustic potential energy of the bright zone and of the dark zone.
         From here on referred to as the \textbf{``Acoustic Contrast''} per control point $m$.
 \end{itemize}

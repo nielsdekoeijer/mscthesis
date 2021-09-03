@@ -2,22 +2,21 @@ The two main approaches in sound zone literature are ``pressure matching'' (PM) 
 Pressure matching is used as the main inspiration for the perceptual sound zone framework 
 proposed in \autoref{ch:sound_zone:approach_selection}, which is in turn used to propose perceptual sound zone algorithms 
 in \autoref{ch:perceptual_sound_zone}.
-A description of acoustic contrast control is included for completion.
-This section introduces and describes both approaches using the previously derived data model with the 
-goal of sketching their mathematical properties.
+A description of acoustic contrast control is included for completeness.
+This section introduces and describes both approaches using the previously derived data model to sketch their mathematical properties.
 
 Classically, the sound zone problem is divided up into subproblems as described in the introduction of this chapter.
 The resulting loudspeaker input signals $x^{(l)}[n]$ are determined for a single bright-dark zone pair:
 the loudspeaker input signals are found such that the target audio is achieved in the bright zone, while leakage is minimized in the dark zone.
-If a solution for multiple zones is desired, then multiple problems must be solved independently and their resulting loudspeaker input signals combined~\cite{betlehem2015personal}.
+If a solution for multiple zones is desired, multiple problems must be solved independently and their resulting loudspeaker input signals combined~\cite{betlehem2015personal}.
 
-There is another approach however.
+There is another approach, however.
 In a multi-zone approach, the loudspeaker input signals are instead determined jointly for all zones, 
 rather than decomposing into bright-dark zone pairs.
 
-This is the approach that is taken in this thesis, as it was found to be more general.
+A multi-zone approach is taken in this thesis, as it is found to be more general.
 For simplicity, but without loss of generality, this thesis limits the number of zones to two.
-The approach is however generalizable to any multiplicity of zones.
+The approach is, however, generalizable to any multiplicity of zones.
 
 In a two zone multi-zone approach, the loudspeaker input signals $x^{(l)}[n]$ are decomposed into two parts as follows:
 \begin{equation}
@@ -55,15 +54,14 @@ In pressure matching approaches, one attempts to design suitable loudspeaker inp
 signals in such a way that the resulting sound pressure in the zone 
 matches the specified target sound pressure for that zone, 
 while simultaneously minimizing the sound pressure that results in other zones as 
-to minimize the interference or crosstalk between zones
+to minimize the interference or cross-talk between zones
 ~\cite{betlehem2015personal, olik2013comparative}.
 
 This goal can be stated formally as choosing $x_\za^{(l)}[n]$ such that the resulting achieved pressure 
 $p_\za^{(m)}[n]$ attains the target sound pressure $t^{(m)}[n]$ in all control points $m \in A$.   
 
-At the same time however, $p_\za^{(m)}[n]$ should result in minimal sound pressure in all control points $m \in B$.
-Any sound pressure resulting from $x_\za^{(l)}[n]$ in zone $\zb$ can be 
-understood as leakage, or cross-talk between the zones. 
+At the same time, however, $p_\za^{(m)}[n]$ should result in minimal sound pressure in all control points $m \in B$.
+Any sound pressure resulting from $x_\za^{(l)}[n]$ in zone $\zb$ can be understood as leakage or cross-talk between the zones. 
 Similar arguments can be given for $x_\zb^{(l)}[n]$.
 
 An optimization problem that achieves this goal is formulated as follows:
@@ -78,6 +76,7 @@ An optimization problem that achieves this goal is formulated as follows:
     \end{aligned}
 \end{align}
 where the $\norm[2][2]{\,\,\cdot\,\,}$ operator denotes the squared $L^2$-norm.
+In this case, the norm is taken over the time-domain sequence indexed by $n$.
 
 To further understand the optimization problem, consider the following definitions: 
 \begin{alignat}{2}
@@ -102,25 +101,23 @@ Using these definition we can rewrite the optimization problem:
        &\sum_{m\in A} \text{RE}^{(m)}_\za +  \sum_{m\in B} \text{LE}^{(m)}_\za + \sum_{m\in B} \text{RE}^{(m)}_\zb + \sum_{m\in A} \text{LE}^{(m)}_\zb
     }.
 \end{align}
-From this it becomes clear that this approach results in trade-off between minimizing the 
-reproduction errors $\text{RE}^{(m)}_\zz$ 
+From this, it becomes clear that this approach results in a trade-off between minimizing the reproduction errors $\text{RE}^{(m)}_\zz$ 
 and leakage errors $\text{LE}^{(m)}_\zz$. 
 
 Some pressure matching approaches attempt to control this trade-off by introducing weights for the different error terms, 
 or by adding constraints.
-Choosing constraints can however be challenging as the squared $L^2$ pressure error does not always correlate well with how
+Choosing constraints can, however, be challenging as the squared $L^2$ pressure error does not always correlate well with how
 the error is perceived.
 
 \subsection{Acoustic Contrast Control}
 \label{ch:sound_zone:approaches:acoustic_contrast_control}
 The ``acoustic contrast control'' (ACC) method is another widely used sound zone approach from literature.
 The ACC approach attempts to maximize the acoustic contrast between the bright zone and the dark zone. 
-Acoustic contrast is defined as the ratio of the total sound energy of the bright zone and the dark zone.
+Acoustic contrast is the ratio of the total sound energy of the bright and dark zones.
 Essentially, the goal is to maximize the difference in sound pressure level between the bright and dark zones.
 
 In this section, a multi-zone ACC algorithm is described.
-As the previously described data model is in the time domain, 
-this approach will take inspiration from a time-domain approach found in literature known as the
+As the previously described data model is in the time domain, this approach will take inspiration from a time-domain approach found in literature known as the
 broadband acoustic contrast control (BACC) approach~\cite{elliott2011regularisation, cai2014time, moller2016sound}.
 
 In contrast to the multi-zone PM approach, the multi-zone ACC approach does not optimize directly over 
@@ -144,7 +141,7 @@ As such, the acoustic contrast $\text{AC}_\zz$ for a zone $\zz$ can be defined a
 \begin{equation}
     \text{AC}_{\zz} = \frac{\sum_{m\in Z} \norm[2][2]{p_\zz^{(m)}[n]}}{\sum_{m\notin Z} \norm[2][2]{p_\zz^{(m)}[n]}}.
 \end{equation}
-In an ACC approach the goal is to maximize the total acoustic contrast.
+In an ACC approach, the goal is to maximize the total acoustic contrast.
 Thus, consider the following optimization problem:
 \begin{align}
     \argmax{w_\za^{(l)}[n],\,w_\zb^{(l)}[n]\,\forall\,l}{
@@ -155,5 +152,4 @@ As mentioned, the optimization is performed over the loudspeaker filter coeffici
 
 Acoustic contrast control is discussed mainly for completion as an alternative to the pressure matching approach.
 As is discussed in \autoref{ch:sound_zone:approach_selection}, 
-pressure matching is the main inspiration for the proposed perceptual sound zone approach 
-used in the proposed perceptual sound zone algorithm.
+pressure matching is the main inspiration for the proposed perceptual sound zone approach used in the proposed perceptual sound zone algorithm.

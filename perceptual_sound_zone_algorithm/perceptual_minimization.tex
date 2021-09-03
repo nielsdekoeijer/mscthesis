@@ -1,46 +1,38 @@
-Previously, \autoref{ch:sound_zone:approach_selection} noted that pressure matching approach can be formulated using the detectability.
+Previously, \autoref{ch:sound_zone:approach_selection} noted that the pressure matching approach could be formulated using the detectability.
 In this section, this approach is used to propose two sound zone algorithms.
 
-In the proposed approach, rather than optimizing the sum reproduction errors 
-$\text{RE}^{(m)}_\zz$ and leakage errors $\text{LE}^{(m)}_\zz$, it is proposed to instead use
-the reproduction error detectability $\text{RED}^{(m)}_\zz$ and the leakage error detectability $\text{LED}^{(m)}_\zz$ respectively.
+In the proposed approach, rather than optimizing the sum reproduction errors $\text{RE}^{(m)}_\zz$ and leakage errors $\text{LE}^{(m)}_\zz$, it is proposed to instead use the reproduction error detectability $\text{RED}^{(m)}_\zz$ and the leakage error detectability $\text{LED}^{(m)}_\zz$ respectively.
 These can be understood to be perceptual alternatives to $\text{RE}^{(m)}_\zz$ and $\text{LE}^{(m)}_\zz$.
 
-In \autoref{ch:sound_zone:approach_selection} the description of reproduction error detectability $\text{RED}^{(m)}_\zz$ 
-and the leakage error detectability $\text{LED}^{(m)}_\zz$ is given in terms of full-length input sequences.
-As noted, this is inaccurate as the detectability operate on short-time scale, and is only done this way in order to clearly convey the concept. 
+In \autoref{ch:sound_zone:approach_selection} the description of reproduction error detectability $\text{RED}^{(m)}_\zz$ and the leakage error detectability $\text{LED}^{(m)}_\zz$ is given in terms of full-length input sequences.
+As noted, this is inaccurate as the detectability operates on a short-time scale and is only done this way to convey the concept. 
 
-Henceforth, using the concepts introduced in \autoref{ch:perceptual_sound_zone:stft},
-let $\text{RED}^{(m)}_\zz[\mu]$ and $\text{LED}^{(m)}_\zz[\mu]$ denote the reproduction error detectability and  
-leakage error detectability corresponding to block $\mu$ in control point $m$. 
+Henceforth, using the concepts introduced in \autoref{ch:perceptual_sound_zone:stft}, let $\text{RED}^{(m)}_\zz[\mu]$ and $\text{LED}^{(m)}_\zz[\mu]$ denote the reproduction error detectability and leakage error detectability corresponding to block $\mu$ in control point $m$. 
 
-In order to define these error detectability quantities, recall that detectability is defined as follows: 
+To define these error detectability quantities, recall that detectability is defined as follows: 
 \begin{equation}
     D(x[n],\,\varepsilon[n]) = \norm[2][2]{W_x[k]\mathcal{E}[k]} 
 \end{equation}
-Using this definition alongside the short-time frequency domain definitions given in \autoref{ch:perceptual_sound_zone:stft}, 
-the definition of the reproduction error detectability $\text{RED}^{(m)}_\zz$ 
-and the leakage error detectability $\text{LED}^{(m)}_\zz$ can be given as follows:
+Using this definition alongside the short-time frequency domain definitions given in \autoref{ch:perceptual_sound_zone:stft}, the definition of the reproduction error detectability $\text{RED}^{(m)}_\zz$ and the leakage error detectability $\text{LED}^{(m)}_\zz$ can be given as follows:
 \begin{align}
     &\begin{aligned}
         \text{RED}^{(m)}_\zz[\mu] &= D(\tilde{t}^{(m)}[n, \mu],\,\tilde{p}_\zz^{(m)}[n, \mu] - \tilde{t}^{(m)}[n, \mu]) \\
                        &= \norm[2][2]{W_{\tilde{t}^{(m)}[\mu]}[k]
-                            \left(\tilde{P}_\zz^{(m)}[k, \mu] - \tilde{T}^{(m)}[k, \mu]\right)}
+                            \left(\tilde{P}_\zz^{(m)}[k, \mu] - \tilde{T}^{(m)}[k, \mu]\right)},
     \end{aligned}\\
     &\begin{aligned}
         \text{LED}^{(m)}_\zz[\mu] &= D(\tilde{t}^{(m)}[n, \mu],\,\tilde{p}_\zz^{(m)}[n, \mu]) \\
                        &= \norm[2][2]{W_{\tilde{t}^{(m)}[\mu]}[k]
-                            \left(\tilde{P}_\zz^{(m)}[k, \mu]\right)}
+                            \left(\tilde{P}_\zz^{(m)}[k, \mu]\right)}.
     \end{aligned}
 \end{align}
-Here, $W_{\tilde{t}^{(m)}[\mu]}[k]$ can be understood as the perceptual weighting informed by the masking properties of the
-frequency domain target $\tilde{t}^{(m)}[n, \mu]$.
+Here, $W_{\tilde{t}^{(m)}[\mu]}[k]$ can be understood as the perceptual weighting informed by the masking properties of the frequency domain target $\tilde{t}^{(m)}[n, \mu]$.
 
 What follows is the proposal of two perceptual sound zone algorithms using the proposed error detectabilities.
 
-\subsection{Proposed Unconstrained Perceptual Pressure Matching Algorithm}
+\subsection{Proposal of Unconstrained Perceptual Pressure Matching}
 \label{ch:perceptual_sound_zone:perceptual_minimization:unconstrained}
-This section proposes an algorithm which minimizes the detectability of the total error.
+This section proposes an algorithm that minimizes the detectability of the total error.
 This is similar to the pressure matching approach introduced in \autoref{ch:sound_zone:approaches}, 
 in which the total error is minimized.
 
@@ -50,54 +42,55 @@ Consider the following optimization problem:
     \argmin{\tilde{x}_\za^{(l)}[n,\mu],\,\tilde{x}_\zb^{(l)}[n,\mu]\,\forall\,l}{
        & \sum_{m\in A}\text{RED}_\za^{(m)}[\mu] + \sum_{m\in B}\text{LED}_\za^{(m)}[\mu] +\\
        & \sum_{m\in B}\text{RED}_\zb^{(m)}[\mu] + \sum_{m\in A}\text{LED}_\zb^{(m)}[\mu]
-    }
+    }.
     \end{aligned}
     \label{eq:perceptual_unconstrained}
 \end{equation}
 The total detectability of the reproduction errors and the leakage errors is minimized by optimizing over the 
 block-based representations of the loudspeaker input signals $\tilde{x}_\za^{(l)}[n,\mu]$ and $\tilde{x}_\zb^{(l)}[n,\mu]$.
+The expected behavior of this optimization problem is that the sound pressure errors will be shaped in such a way that they are masked by the target sound pressure.
 
-\subsection{Proposed Constrained Perceptual Pressure Matching Algorithm}
+\subsection{Proposal of Constrained Perceptual Pressure Matching}
 \label{ch:perceptual_sound_zone:perceptual_minimization:constrained}
-The previously discussed approach minimizes over the total detectability.
+The previously discussed approach minimizes the total detectability.
 In this section, a perceptual sound zone algorithm is proposed that introduces constraints to the problem. 
 
-The motivation for this approach is that is hypothesized that the Par distortion detectability has a consistent perceptual interpretation.
+The motivation for this approach is that it is hypothesized that the Par distortion detectability has a consistent perceptual interpretation.
 As mentioned in \autoref{ch:perceptual:implementation}, a detectability of 1 will consistently imply ``just noticeable''~\cite{van2005perceptual}.
 
 This makes choosing constraints for detectability easier than typical non-perceptual pressure matching approaches.
-These approaches typically directly constrain the sound pressure energy,
-for which it is difficult to determine constraints~\cite{shi2021generation} as the sound pressure energy does not have a consistent perceptual interpretation.
+These approaches typically directly constrain the sound pressure error, for which it is difficult to determine constraints~\cite{shi2021generation} as the sound pressure error does not have a consistent perceptual interpretation.
+As a result, a sound pressure error constraint can lead to widely varying results perceptually.
 
 This motivates the proposal of a perceptually constrained sound pressure approach.
-In this approach, the reproduction error detectability will be constrained, while the leakage error detectability will be minimized in the cost function.
+In this approach, the reproduction error detectability will be constrained, while the leakage error detectability will be minimized.
 To this end, the following optimization problem is defined:
 \begin{equation}
     \begin{aligned}
     \argmin{\tilde{x}_\za^{(l)}[n,\mu],\,\tilde{x}_\zb^{(l)}[n,\mu]\,\forall\,l}{
-       & \sum_{m\in B}\text{LED}_\za^{(m)}[\mu] + \sum_{m\in A}\text{LED}_\zb^{(m)}[\mu]}\\
+       & \sum_{m\in B}\text{LED}_\za^{(m)}[\mu] + \sum_{m\in A}\text{LED}_\zb^{(m)}[\mu]},\\
         \subjectto {& \text{RED}_\za^{(m)}[\mu] \leq D_0 \quad\forall\, m\in A\\
-                    & \text{RED}_\zb^{(m)}[\mu] \leq D_0 \quad\forall\, m\in B}
+                    & \text{RED}_\zb^{(m)}[\mu] \leq D_0 \quad\forall\, m\in B}.
     \end{aligned}
     \label{eq:perceptual_constrained}
 \end{equation}
 Here, $D_0$ is the maximum allowed detectability of the reproduction error per control point $m$.
 The intended effect of this constraint is limiting how detectable the deviation of the achieved sound pressure is from the specified target.
-Effectively, this allows for the controlling of the quality of the achieved sound pressure per control point $m$. 
+Effectively, this allows for controlling the quality of the achieved sound pressure per control point $m$. 
 To the knowledge of the authors, this is a novelty.
 
-It is also hypothesized that the constraint $D_0$ allows for more control over the trade-off between reproduction error detectability and 
-leakage error detectability.
+It is also hypothesized that the constraint $D_0$ allows for more control over the trade-off between reproduction error detectability and leakage error detectability.
 
-It should be noted that constraining the leakage error detectability is also a valid choice.
-A possible optimization problem that achieves this end is defined below:
+It should be noted that constraining the leakage error detectability is also a good choice.
+In doing so the algorithm is limited in the amount of interference that it allows. 
+A possible optimization problem that achieves this is defined as follows: 
 \begin{equation}
     \begin{aligned}
     \argmin{\tilde{x}_\za^{(l)}[n,\mu],\,\tilde{x}_\zb^{(l)}[n,\mu]\,\forall\,l}{
-       & \sum_{m\in B}\text{RED}_\za^{(m)}[\mu] + \sum_{m\in A}\text{RED}_\zb^{(m)}[\mu]}\\
+       & \sum_{m\in B}\text{RED}_\za^{(m)}[\mu] + \sum_{m\in A}\text{RED}_\zb^{(m)}[\mu]},\\
         \subjectto {& \text{LED}_\zb^{(m)}[\mu] \leq D_0 \quad\forall\, m\in A\\
-                    & \text{LED}_\za^{(m)}[\mu] \leq D_0 \quad\forall\, m\in B}
+                    & \text{LED}_\za^{(m)}[\mu] \leq D_0 \quad\forall\, m\in B}.
     \end{aligned}
 \end{equation}
-Due to time constraints, this problem is not pursued any further.
-Constraining the detectability of the leakage error is however found to be promising future work.
+This problem is not pursued any further in this thesis.
+Constraining the detectability of the leakage error is, however, found to be promising future work, which is discussed further in \autoref{ch:conclusion}.

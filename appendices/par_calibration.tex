@@ -1,12 +1,11 @@
-A calibration is necessary for the Par detectability to provide the correct output.
+Calibration is necessary for the Par detectability to provide the correct output.
 In the previous section, it was shown that the constants $C_a$ and $C_s$ are used to this end.
-A correct calibration of the Par detectability must satisfy the following:
+Correct calibration of the Par detectability must satisfy the following:
 \begin{enumerate}
     \item The just noticeable disturbance signal must result in a detectability of $1$.
     \item The threshold of hearing takes effect appropriately.
 \end{enumerate}
-Both the concepts of just noticeable distortion and the threshold of hearing require knowledge of the 
-sound pressure level of the stimuli.
+Both the concepts of just noticeable distortion and the threshold of hearing require knowledge of the sound pressure level of the stimuli.
 Thus, before determining the calibration coefficients, it is important to first discuss the 
 relationship between the input signals $x[n]$ and $\varepsilon[n]$ and reproduced sound pressure level.
 This is the topic of \autoref{ch:perceptual:implementation:calibration:sound_pressure_level}.
@@ -39,7 +38,7 @@ One way of determining the offset $O_\text{dB}$ is by relating the sound pressur
 A full-scale sinusoid is a sinusoid that has an amplitude of the maximum value that can be attained in the digital representation.
 
 In our previous example, one way of doing so would be to state that a full-scale sinusoid with amplitude 32767 corresponds to 
-e.g. a sound pressure level of 100 dB SPL.
+e.g., a sound pressure level of 100 dB SPL.
 The interpretation of this is that playing a full-scale sinusoid will result in a sound pressure of 100 dB SPL when played from the sound system.
 
 To do so, let the digital representation of the full-scale sinusoid be modeled by a sinusoid with amplitude $A$ and frequency $f_0$.
@@ -56,15 +55,14 @@ results in the following definition for $O_\text{dB}$:
 The offset fully defines the relationship between digital representation and sound pressure level, and allows for the conversion of the threshold of hearing
 to digital representation.
 
-\section{Determing Calibration Constants}
+\section{Determining Calibration Constants}
 \label{ch:perceptual:implementation:calibration:coefficients}
 There are various ways of calibrating this model, but this section will discuss the method of calibrating 
 that is given in the original paper~\cite{van2005perceptual}.
 The given approach is to find the two unknowns $C_a$ and $C_s$ by solving a system of two equations that model the previously stated calibration requirements.
 
 The first requirement is that a just noticeable disturbance signal must result in a detectability of 1.
-From perceptual literature it is known that a sinusoidal disturbance signal at a given frequency $f_0$ is just noticeable 
-in presence of an in-phase sinusoidal masking signal that is 18 dB SPL louder~\cite{van2005perceptual}.
+From perceptual literature, it is known that a sinusoidal disturbance signal at a given frequency $f_0$ is just noticeable in the presence of an in-phase sinusoidal masking signal that is 18 dB SPL louder~\cite{van2005perceptual}.
 To model this, consider the following masking and disturbance signals. 
 \begin{align}
     x_\text{JND}[n] &= A_{70}\cos\left(2\pi f_0 n / f_s\right) \\
@@ -94,9 +92,9 @@ Here the masking signal $x_\text{THR}[n]$ is zero.
 The disturbance signal is a sinusoid of frequency $f_0$ with amplitude $A_{\text{tq}}$, which is chosen such that it attains 
 the threshold of quiet at $f_0$, i.e. $T_q(f_0)$. 
 
-As the threshold of quiet is the verge between audible and inaudible sound, it is assumed that a disturbance signal in presence of no masking signal that has
+As the threshold of quiet is the verge between audible and inaudible sound, it is assumed that a disturbance signal in the presence of no masking signal that has
 an amplitude equal to the threshold of quiet is just noticeable.
-Recall that for just noticeable stimuli the detectability must be equal to 1.
+Recall that for just noticeable stimuli, the detectability must be equal to 1.
 This allows us to specify the second equation in the system of equations:
 \begin{equation}
     D(0,\varepsilon_\text{THR}[n]) = 1

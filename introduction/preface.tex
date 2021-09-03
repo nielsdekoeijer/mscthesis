@@ -1,7 +1,7 @@
 \section{Preface: the Sound Zone Problem}
 \label{ch:introduction:preface}
 Sound systems are used worldwide to fill rooms with enjoyable audio content. 
-Problems arise however when multiple people in the same room want to enjoy different audio content at the same time.
+Problems arise, however, when multiple people in the same room want to enjoy different audio content simultaneously.
 
 For example, one person may want to enjoy a movie on the television, while others may want to listen to their music.
 If they are in the same room, their desires clash: neither person can fully enjoy their chosen activity without disturbing
@@ -9,39 +9,39 @@ the other.
 In short, the interference of multiple audio sources can lead to a situation where both individual experiences are diminished.
 
 In recent years, attempts have been made to solve this problem by controlling the spatial reproduction of sound in such
-a way that different areas in a room have distinct content, without interfering with each other.
+a way that different areas in a room have distinct content without interfering with each other.
 This is typically done by controlling the sound pressure created by an array of loudspeakers.
 
-One attempt at solving this problem is through use of sound zone algorithms~\cite{betlehem2015personal}.
+One attempt at solving this problem is through the use of sound zone algorithms~\cite{betlehem2015personal}.
 Sound zone algorithms partition the space of the room into multiple so-called sound zones.
 Each sound zone is assigned different audio content.
-The sound zone algorithms decide how to use the loudspeakers of the sound system to reproduce said audio content in every zone.
-Using the principals of constructive and destructive interference, this is done in such a way that there is 
+The sound zone algorithms decide how to use the sound system's loudspeakers to reproduce said audio content in every zone.
+Using the principles of constructive and destructive interference, this is done in such a way that there is 
 minimal interference between zones~\cite{betlehem2015personal}.
 That is to say: the audio content of each zone is not audible in the others.
 
-In the previously listed example where one person watches television and the other listens to music,
+In the previously listed example, where one person watches television and the other listens to music,
 there would be one zone that would contain the audio of a movie and another zone that would contain music.
 An image depicting the situation is given in \autoref{fig:introduction:motivation:concept}.
 The sound zone algorithm determines how to best use the sound system to reproduce these two zones.
-In the ideal case, both people can now enjoy the full potential of their audio content, without bothering one another.
+In the ideal case, both people can now enjoy the full potential of their audio content without bothering one another.
 
 \begin{figure}[]
     \centering
     \scalebox{1.0}{\input{tikz/tikz_2D_room_concept.tex}}
     \caption{A room containing a sound system consisting of an array of loudspeakers and two zones.
                 The goal of the sound zone algorithm is to control the sound system in such a way that the red zone
-                contains the audio of a movie, and the blue zone contains the music, with minimal interference.}
+                contains the audio of a movie, and the blue zone contains the music with minimal interference.}
     \label{fig:introduction:motivation:concept}
 \end{figure}
 
-In practice however, the sound zone algorithm will not always do a perfect job~\cite{moller2016sound}.
+In practice, however, the sound zone algorithm will not always do a perfect job~\cite{moller2016sound}.
 The performance of algorithms depends on the environment and the available sound system.
 Depending on the chosen zones, number and position of the loudspeakers, and the room, the interference between zones can typically only be reduced by so much.
-As such, audio content of one zone is often still audible in other zones~\cite{moller2016sound}.
+As such, the audio content of one zone is often still audible in other zones~\cite{moller2016sound}.
 
 Improving sound zone algorithms is thus an active topic of research.
-One recent approach is to include a model of the human auditory system, which models how sound is perceived by humans.
+One recent approach is to include a model of the human auditory system, which models how humans perceive sound.
 Typically, sound zone algorithms use sound pressure~\cite{betlehem2015personal}, which is a physical quantity characterizing the sound.
 Sound pressure does not always accurately describe what is important for the perception of sound.
 Including a perceptual model may allow the algorithm to focus on reproducing and canceling the parts of the audio content
@@ -51,10 +51,10 @@ Early results show that a perceptual sound zone approach is promising.
 Recent work by Donley et al. explored including the absolute threshold of hearing, which models the lowest sound pressure
 humans can hear, into sound zone algorithms.
 This pursuit found an increased quality of the reproduced audio in the zones~\cite{donley2015multizone}.
-Other work by Lee et al. showed that including a perceptually-motivated weighting in the sound zone algorithm outperforms 
+Other work by Lee et al. showed that including a perceptually motivated weighting in the sound zone algorithm outperforms 
 traditional algorithms~\cite{lee2019towards,lee2020signal}.
 
-This work seeks to further explore this perceptual approach.
+This work seeks to explore this perceptual approach further.
 This is done by proposing novel perceptual sound zone algorithms based on the pressure matching approach.
-The proposed approach is then used to determine benefits of including perceptual information into
+The proposed method is then used to determine the benefits of including perceptual information into
 sound zone algorithms.

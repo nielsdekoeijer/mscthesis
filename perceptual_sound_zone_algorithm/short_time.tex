@@ -1,44 +1,41 @@
-In \autoref{ch:sound_zone:approach_selection} a perceptual sound zone approach is proposed based on the pressure matching approach discussed in \autoref{ch:sound_zone:approaches}.
-In this approach, the Par detectability measure is used to quantify the perceptual cost of sound pressure errors.
-In doing so, \autoref{ch:sound_zone:approaches} introduces the reproduction error detectability 
+In \autoref{ch:sound_zone:approach_selection} a perceptual sound zone framework is proposed based on the pressure matching approach discussed in \autoref{ch:sound_zone:approaches}.
+In this framework, the Par detectability measure quantifies the perceptual cost of sound pressure errors.
+In doing so, \autoref{ch:sound_zone:approaches} introducing the concepts of reproduction error detectability 
 $\text{RED}_\zz^{(m)}$ and the leakage error detectability $\text{LED}_\zz^{(m)}$
-per control point $m$ introduced conceptually, but without defining them.
+per control point $m$.
 
-As noted, the original pressure matching approach from \autoref{ch:sound_zone:approaches} operates on full-length input sequences in the time-domain.
-The detectability however operates on short-time segments of 20 to 200 milliseconds in the frequency-domain.
-As such, in order to define the reproduction error detectability and the leakage error detectability, this section proposes a short-time
-frequency-domain pressure matching approach.
+As noted, the original pressure matching approach from \autoref{ch:sound_zone:approaches} operates on full-length input sequences in the time domain.
+The detectability, however, operates on short-time segments of 20 to 200 milliseconds in the frequency domain.
+To define the reproduction error detectability and the leakage error detectability, this section proposes a short-time frequency-domain pressure matching approach.
 
-First in \autoref{ch:perceptual_sound_zones:stft:block_based} the existing pressure matching approach is reformulated to operate on 
-short-time segments through a ``block-based'' approach. 
+First in \autoref{ch:perceptual_sound_zones:stft:block_based} the existing pressure matching approach is reformulated to operate on short-time segments through a ``block-based'' approach. 
 Next, \autoref{ch:perceptual_sound_zones:stft:stft_pm} adapts the short-time pressure matching algorithm to operate in the frequency domain. 
 
-\subsection{Proposed Block-Based Pressure-Matching Algorithm}
+\subsection{Short-Time Pressure Matching}
 \label{ch:perceptual_sound_zones:stft:block_based}
-In order to operate on short-time segments, all quantities introduced in the data model from \autoref{ch:sound_zone:data_model}
-are converted to their short-time equivalent representations.
-This is done by expressing quantities using overlapping blocks of samples of the quantities.
+In order to operate on short-time segments, all quantities introduced in the data model from \autoref{ch:sound_zone:data_model} are converted to their short-time equivalent representations.
+This is done by expressing quantities using overlapping blocks containing samples of these quantities.
 
-Here, the blocks are each of size $N_w$ and $N_w - H$ samples.
-The constant $H$ denotes the hop size, which is the number of samples between each successive block.
+Here, the blocks are each of size $N_w$ and overlap $N_w - H$ samples.
+The constant $H$ denotes the hop size, the number of samples between each successive block.
 
 First, the short-time equivalent representations of the desired playback signal $s_{\zz}[n]$ and the loudspeaker input
 signals $x^{(l)}_{\zz}[n]$ for zone $\zz$ and loudspeaker $l$ are discussed.
 
-In order to do so, $s_\zz[n]$ and $x^{(l)}_{\zz}[n]$ will be split up into multiple overlapping blocks by using shifted windows $w[n - kH]$. 
+In order to formulate their short-time representations, $s_\zz[n]$ and $x^{(l)}_{\zz}[n]$ are split up into multiple overlapping blocks by using shifted windows $w[n - kH]$. 
 
 The window $w[n]\in\Real{H}$ is a non-causal window with support $-N_w + 1 \leq n \leq 0$. 
 Here, $w[n]$ is chosen such that it complies with the Constant Overlap Add (COLA) condition for a given hop size $H$.
-The COLA condition requires that the the sum of all $H$-shifted windows add to unity for all samples $n$. 
+The COLA condition requires that the sum of all $H$-shifted windows add to unity for all samples $n$. 
 It is given as follows:
 \begin{equation}
-     \sum_{k=-\infty}^{\infty} w[n - kH] = 1 \quad\forall\,n
+     \sum_{k=-\infty}^{\infty} w[n - kH] = 1 \quad\forall\,n.
 \end{equation}
 Using the windows as defined above, consider the following representation of $s_\zz[n]$,
 \begin{equation}
     \begin{aligned}
         s_\zz[n] &= s_\zz[n]\sum_{k=-\infty}^{\infty} w[n - kH] \\
-                 &= \sum_{k=-\infty}^{\infty} \tilde{s}_{\zz,k}[n]w[n - kH]
+                 &= \sum_{k=-\infty}^{\infty} \tilde{s}_{\zz,k}[n]w[n - kH],
     \end{aligned}
     \label{eq:perceptual_sound_zones:stft:block_based:desired_playback}
 \end{equation}
@@ -46,39 +43,38 @@ and of $x^{(l)}_{\zz}[n]$,
 \begin{equation}
     \begin{aligned}
         x^{(l)}_\zz[n] &= x^{(l)}_\zz[n]\sum_{k=-\infty}^{\infty} w[n - kH] \\
-                       &= \sum_{k=-\infty}^{\infty} \tilde{x}^{(l)}_{\zz,k}[n]w[n - kH]
+                       &= \sum_{k=-\infty}^{\infty} \tilde{x}^{(l)}_{\zz,k}[n]w[n - kH].
     \end{aligned}
     \label{eq:perceptual_sound_zones:stft:block_based:loudspeaker_inputs}
 \end{equation}
-Here, $\tilde{s}_{\zz,k}[n]$ and $\tilde{x}^{(l)}_{\zz,k}[n]$ represent the content of the $k^\text{th}$ blocks of the playback signal $s_{\zz}[n]$ and loudspeaker input signals $x^{(l)}_{\zz}[n]$.
+Where $\tilde{s}_{\zz,k}[n]$ and $\tilde{x}^{(l)}_{\zz,k}[n]$ represent the content of the $k^\text{th}$ blocks of the playback signal $s_{\zz}[n]$ and loudspeaker input signals $x^{(l)}_{\zz}[n]$.
 
 As such, $\tilde{s}_{\zz,k}[n] = s_{\zz}[n]$ and $\tilde{x}^{(l)}_{\zz,k}[n] = s_{\zz}[n]$ for $-N_w + 1 + kH \leq n \leq kH$ and zero for all other samples $n$.  
-One interpretation is that the windows decimate the signal, into segments of size $N_w$, which, due to the COLA condition, can be reconstructed perfectly.
+One interpretation is that the windows decimate the signal into segments of size $N_w$, which can be reconstructed perfectly through addition due to the COLA condition.
 
-One way of interpreting the equations above is as a projection of $s_\zz[n]$ and $x^{(l)}_{\zz}[n]$ on a 
-basis of frames spanned by shifted overlapping windows $w[n - kH]$.
+One way of interpreting the equations above is as a projection of $s_\zz[n]$ and $x^{(l)}_{\zz}[n]$ on a basis of frames spanned by shifted overlapping windows $w[n - kH]$.
 Here, $\tilde{s}_{\zz,k}[n]$ and $\tilde{x}^{(l)}_{\zz,k}[n]$ can be thought of as the coefficients for the basis functions resulting from the projection.
 
-Let $\tilde{s}_\zz[n, \mu]$ and $\tilde{x}^{(l)}_\zz[n, \mu]$ represent the desired playback signal and the loudspeaker input signals with the contributions up to and including the $\mu^\mathrm{th}$
-block. 
+Let $\tilde{s}_\zz[n, \mu]$ and $\tilde{x}^{(l)}_\zz[n, \mu]$ represent the desired playback signal and the loudspeaker input signals with contributions up to and including the $\mu^\mathrm{th}$block. 
 This can be expressed as follows:
 \begin{align}
-    \tilde{s}_\zz[n, \mu] &= \sum_{k=-\infty}^{\mu} \tilde{s}_{\zz,k}[n]w[n - kH] \\
-    \tilde{x}^{(l)}_\zz[n, \mu] &= \sum_{k=-\infty}^{\mu} \tilde{x}^{(l)}_{\zz,k}[n]w[n - kH]
+    \tilde{s}_\zz[n, \mu] &= \sum_{k=-\infty}^{\mu} \tilde{s}_{\zz,k}[n]w[n - kH], \\
+    \tilde{x}^{(l)}_\zz[n, \mu] &= \sum_{k=-\infty}^{\mu} \tilde{x}^{(l)}_{\zz,k}[n]w[n - kH].
 \end{align}
-This form will converge to the real desired playback signal as $\mu\to\infty$.
+This form will converge to the actual desired playback signal as $\mu\to\infty$.
 As such, $\tilde{s}_\zz[n, \infty] = s_\zz[n]$ and $\tilde{x}^{(l)}_\zz[n, \infty] = x^{(l)}_\zz[n]$.
 
 This representation is beneficial, as it can be used to show that the $\tilde{x}^{(l)}_\zz[n, \mu]$ can be computed recursively:
 \begin{align}
+    \begin{aligned}
     \tilde{x}^{(l)}_\zz[n, \mu] &= \tilde{x}^{(l)}_{\zz,\mu}[n]w[n - \mu H] +
                                \sum_{k=-\infty}^{\mu - 1} \tilde{x}^{(l)}_{\zz,k}[n]w[n - kH] \\
-                           &=  \tilde{x}^{(l)}_{\zz,\mu}[n]w[n - \mu H] + \tilde{x}^{(l)}_\zz[n, \mu - 1]
+                           &=  \tilde{x}^{(l)}_{\zz,\mu}[n]w[n - \mu H] + \tilde{x}^{(l)}_\zz[n, \mu - 1].
+    \end{aligned}
 \end{align}
 As the newest block depends on the previous blocks, this representation shows that $x^{(l)}_\zz[n]$ can be computed block-by-block.
 
-With the block-based equivalents of the desired playback signal $\tilde{s}_\zz[n, \mu]$ and the loudspeaker input signals $\tilde{s}_\zz[n, \mu]$ defined,
-the block-based equivalents of the target and achieved sound pressure $\tilde{t}_\zz[n, \mu]$ and $\tilde{p}^{(m)}_\zz[n, \mu]$ can be computed: 
+With the block-based equivalents of the desired playback signal $\tilde{s}_\zz[n, \mu]$ and the loudspeaker input signals $\tilde{x}^{(l)}_\zz[n, \mu]$ defined, the block-based equivalents of the target and achieved sound pressure $\tilde{t}_\zz[n, \mu]$ and $\tilde{p}^{(m)}_\zz[n, \mu]$ can be computed: 
 
 \begin{itemize}
     \item 
@@ -89,48 +85,41 @@ the block-based equivalents of the target and achieved sound pressure $\tilde{t}
             \begin{aligned}
                 \tilde{t}^{(m)}[n, \mu] &= \sum_{l=0}^{N_L-1} \left(h^{(l,m)} \ast \tilde{s}_\zz[\mu]\right)[n]\\
                                         &= \sum_{l=0}^{N_L - 1}\sum_{k=-\infty}^{\mu}\left(h^{(l,m)}\ast\tilde{s}_{\zz,k}w_k\right)[n] \\
-                                   &= \sum_{l=0}^{N_L-1}\left(h^{(l,m)}\ast\tilde{s}_{\zz,\mu}w_\mu\right)[n] + \tilde{t}^{(m)}[n, \mu - 1]  
+                                   &= \sum_{l=0}^{N_L-1}\left(h^{(l,m)}\ast\tilde{s}_{\zz,\mu}w_\mu\right)[n] + \tilde{t}^{(m)}[n, \mu - 1].  
             \end{aligned}
         \end{equation}
         Here, $w_k[n]$ is defined to be equal to $w[n - kH]$ and is introduced for notational convenience.  
-        The definition above holds for all points $m\in Z$, i.e. the points contained in zone $\zz$.  
+        The definition above holds for all points $m\in Z$, i.e., the points contained in zone $\zz$.  
 
-        As can be seen, the block based target sound pressure for the block $\mu$ can be computed recursively by adding the contribution of the newest block 
-        $\tilde{s}_{\zz,\mu}[n]$ the target sound pressure of the previous block.
+        As can be seen, the block-based target sound pressure for the block $\mu$ can be computed recursively by adding the contribution of the newest block of $\tilde{s}_{\zz,\mu}[n]$ to the target sound pressure of the previous block.
     \item 
-        The block-based resulting sound pressure $\tilde{p}_\zz^{(m)}[n, \mu]$ can be defined by simply 
-        substituting the definition for the block-based loudspeaker input signals $\tilde{x}_\zz^{(l)}[n, \mu]$ into the definition 
-        of the resulting pressure given by \autoref{eq:sound_zone:data_model:achieved_pressure}.
+        The block-based resulting sound pressure $\tilde{p}_\zz^{(m)}[n, \mu]$ can be defined by simply substituting the definition for the block-based loudspeaker input signals $\tilde{x}_\zz^{(l)}[n, \mu]$ into the definition of the resulting pressure given by \autoref{eq:sound_zone:data_model:achieved_pressure}.
         This results in the following: 
         \begin{equation}
             \begin{aligned}
                 \tilde{p}_\zz^{(m)}[n, \mu] &= \sum_{l=0}^{N_L-1}                       \left(h^{(l,m)} \ast \tilde{x}^{(l)}_{\zz}[\mu]\right)[n]\\
                                             &= \sum_{l=0}^{N_L-1}\sum_{k=-\infty}^{\mu} \left(h^{(l,m)} \ast \tilde{x}^{(l)}_{\zz,k}w_k\right)[n] \\
                                             &= \sum_{l=0}^{N_L-1}                       \left(h^{(l,m)} \ast \tilde{x}^{(l)}_{\zz,\mu}w_\mu\right)[n] +
-                                                \tilde{p}_\zz^{(m)}[n, \mu - 1]  
+                                                \tilde{p}_\zz^{(m)}[n, \mu - 1].
             \end{aligned}
             \label{eq:perceptual_sound_zones:stft:block_based:achieved_pressure}
         \end{equation}
         The definition above again holds for all points $m\in Z$.  
 
-        As can be seen, the block based resulting sound pressure for the block $\mu$ can also be computed recursively.
+        As can be seen, the block-based resulting sound pressure for the block $\mu$ can also be computed recursively.
 \end{itemize}
 
 With this, all quantities required for the block-based formulation of the pressure matching approach are defined.
 
-It is shown that all quantities can be computed recursively.
-This is used in the block-based pressure matching approach by computing the blocks of the loudspeaker input signal
-$x_\zz^{(l)}[n]$ one by one. 
+It is shown in \autoref{eq:perceptual_sound_zones:stft:block_based:achieved_pressure} and \autoref{eq:sound_zone:data_model:target_pressure} that all quantities can be computed recursively.
 
-As such, the $k^\text{th}$ loudspeaker input signal coefficient $\tilde{x}^{(l)}_{\zz,\mu}[n]$ is computed such 
-that the resulting resulting sound pressure $\tilde{p}_\zz^{(m)}[n, \mu]$ best matches the target sound pressure 
-$\tilde{t}^{(m)}[n, \mu]$. 
+This is used in the block-based pressure matching approach by computing the blocks of the loudspeaker input signal$x_\zz^{(l)}[n]$ one by one. 
+As such, the $k^\text{th}$ loudspeaker input signal coefficient $\tilde{x}^{(l)}_{\zz,\mu}[n]$ is computed such that the resulting resulting sound pressure $\tilde{p}_\zz^{(m)}[n, \mu]$ best matches the target sound pressure $\tilde{t}^{(m)}[n, \mu]$. 
 
-Note that in this approach only newest loudspeaker coefficients $\tilde{x}^{(l)}_{\zz,\mu}$ are being controlled. 
-Thus, the previous coefficients $\tilde{x}^{(l)}_{\zz,k}[n]$ for $-\infty \leq k \leq \mu - 1$ are held fixed.
+Note that in this approach, only the newest loudspeaker coefficients $\tilde{x}^{(l)}_{\zz,\mu}$ are being controlled. 
+The previous coefficients $\tilde{x}^{(l)}_{\zz,k}[n]$ for $-\infty \leq k \leq \mu - 1$ are held fixed.
 
-The block-based optimization problem can be found by simply replacing all quantities in the previously derived optimization problem
-with their block-based counterparts.
+The block-based optimization problem can be found by replacing all quantities in the previously derived optimization problem with their block-based counterparts.
 The problem is given as follows:
 \begin{align}
     \begin{aligned}
@@ -139,74 +128,71 @@ The problem is given as follows:
            \sum_{m\in A} \norm[2][2]{\tilde{p}_{\zb}^{(m)}[n,\mu]} + \\
            &\sum_{m\in B} \norm[2][2]{\tilde{p}_{\zb}^{(m)}[n,\mu] - \tilde{t}_\mu^{(m)}[n,\mu]} + 
            \sum_{m\in B} \norm[2][2]{\tilde{p}_{\za}^{(m)}[n,\mu]}
-        }
+        }.
     \end{aligned}
 \end{align}
-Note that this problem implicitly contains the target sound pressure and resulting sound pressure of the previous blocks $-\infty \leq k \leq \mu - 1$ due to
-the aforementioned recursive definitions.
+Note that this problem implicitly contains the target sound pressure and resulting sound pressure of the previous blocks $-\infty \leq k \leq \mu - 1$ due to the aforementioned recursive definitions.
 As a result, the history of what has been transmitted by the loudspeaker previously is included in the optimization.
 
-This is beneficial, as due to overlap, this allows for block $\mu$ to potentially improve the results of previous blocks.
-However, the loudspeaker input signals of the current block $\mu$, can only effect so many previous blocks (depending on the overlap).
-As such, in order to reduce the complexity of the optimization without effecting the results, 
-one may choose to truncate the number of previous blocks $-\infty \leq k \leq \mu - 1$ in the history of the optimization.
+This is beneficial, as due to overlap, this allows block $\mu$ to potentially improve the results of previous blocks.
+However, the loudspeaker input signals of the current block $\mu$ can only affect so many previous blocks (depending on the overlap).
+As such, to reduce the complexity of the optimization without affecting the results, one may choose to truncate the number of previous blocks $-\infty \leq k \leq \mu - 1$ in the history of the optimization.
 
 The problem above is solved recursively for all loudspeaker input signal coefficients $\tilde{x}_{\za,\mu}^{(l)}[n]$ and $\tilde{x}_{\zb,\mu}^{(l)}[n]$.
 The final loudspeaker input signals $x_\zz^{(l)}[n]$  can then be found by means of \autoref{eq:perceptual_sound_zones:stft:block_based:loudspeaker_inputs}.
 
-\subsection{Proposed Block-Based Frequency-Domain Pressure-Matching Algorithm}
+\subsection{Short-Time Frequency-Domain Pressure Matching}
 \label{ch:perceptual_sound_zones:stft:stft_pm}
-This section will adjust the block-based data model equivalent frequency domain formulation in order to propose a block-based frequency-domain
-pressure-matching algorithm.
+This section will adjust the block-based data model equivalent frequency-domain formulation to propose a short-time frequency-domain pressure matching algorithm.
 This is done by first introducing a transformation relating the time and frequency domain quantities.
 
 A suitable transform is the discrete Fourier transform (DFT).
-However, it is important to take a number of precautions before applying the DFT directly.
-As shown in \autoref{eq:sound_zone:data_model:achieved_pressure} the computation of the sound pressures used in the optimization 
-problem introduced previously involves taking the 
-linear convolution of the loudspeaker input signals with the room impulse responses.
+However, it is important to take some precautions before applying the DFT directly.
+As shown in \autoref{eq:sound_zone:data_model:achieved_pressure}, the computation of the sound pressures used in the optimization problem introduced previously involves taking the linear convolution of the loudspeaker input signals with the room impulse responses.
 
-Time domain circular convolution can be computed in the frequency domain through the Hadamard product.
-Time domain circular convolution coincides with time domain linear convolution only if the two operands are zero-padded sufficiently.
-To be specific, both operands need be zero-padded to the length of the resulting linear convolution.
+Time-domain circular convolution can be computed in the frequency domain through the Hadamard product.
+Time-domain circular convolution coincides with time-domain linear convolution only if the two operands are zero-padded sufficiently.
+To be specific, both operands need to be zero-padded to the length of the resulting linear convolution.
 
-As such, the frequency domain transform requires this zero padding to be built in.
-The convolutions described in the previous chapter are between the window coefficients of size $N_w$ 
-and the room impulse responses of size $N_h$.
-Thus, the both must be zero padded to convolution length $N_w + N_h - 1$ before going to the frequency domain.
+As such, the frequency domain transform requires this zero padding to be built-in.
+The convolutions described in the previous chapter are between the window coefficients of size $N_w$ and the room impulse responses of size $N_h$.
+Thus, both must be zero-padded to convolution length $N_w + N_h - 1$ before going to the frequency domain.
 
-Let $x[n]$ and $X[k]$ denote the time- and frequency-domain representations of an arbitrary sequence.  
+Let $x[n]\in\Real{N_w}$ and $X[k]\in\Complex{N_w + N_h - 1}$ denote the time- and frequency-domain representations of an arbitrary sequence.  
 A suitable transform is given by the following $N_w + N_h - 1$ point DFT:
 \begin{equation}
-    X[k] = \sum_{n=0}^{N_w + N_h - 2} x[n]\exp\left(\frac{-j2\pi k n}{N_w + N_h - 1}\right)
+    X[k] = \sum_{n=0}^{N_w - 1} x[n]\exp\left(\frac{-j2\pi k n}{N_w + N_h - 1}\right).
 \end{equation}
 
 Converting the previously introduced block-based pressure matching to a frequency domain equivalent version
 essentially involves converting the sound pressures $\tilde{p}_{\zz}^{(m)}[n,\mu]$ and $\tilde{t}^{(m)}[n,\mu]$ 
-to their frequency domain counterparts, which are denoted by $\tilde{P}_{\zz,\mu}^{(m)}[k]$ and $\tilde{T}_\mu^{(m)}[k]$ respectively.
+to their frequency domain counterparts, which are denoted by $\tilde{P}_{\zz,\mu}^{(m)}[k]\in\Complex{N_w + N_h - 1}$ and $\tilde{T}_\mu^{(m)}[k]\in\Complex{N_w + N_h - 1}$ respectively.
 
-This results in the following expressions.
+This is done as follows:
 \begin{align}
-    \tilde{T}^{(m)}[k, \mu] &= \tilde{T}^{(m)}[k, \mu - 1] + \sum_{l=0}^{N_L}H^{(l,m)}[k]\tilde{S}_{\zz,\mu}[k],\label{eq:perceptual_sound_zones:stft:t_freq} \\
-    \tilde{P}_\zz^{(m)}[k, \mu] &= \tilde{P}_\zz^{(m)}[k, \mu - 1] 
-        + \sum_{l=0}^{N_L}H^{(l,m)}[k]\tilde{X}^{(l)}_{\zz,\mu}[k]. \label{eq:perceptual_sound_zones:stft:p_freq} 
+    \tilde{T}^{(m)}[k, \mu] &= 
+    \sum_{l=0}^{N_L}H^{(l,m)}[k]\tilde{S}_{\zz,\mu}[k],\label{eq:perceptual_sound_zones:stft:t_freq} \\
+    \tilde{P}_\zz^{(m)}[k, \mu] &= 
+    \sum_{l=0}^{N_L}H^{(l,m)}[k]\tilde{X}^{(l)}_{\zz,\mu}[k]. \label{eq:perceptual_sound_zones:stft:p_freq} 
 \end{align}
 Here, $H^{(l,m)}[k]\in\Complex{N_w + N_h - 1}$ is the transformed version of the room impulse responses.
-
 Furthermore, $\tilde{S}_{\zz,\mu}[k]\in\Complex{N_w + N_h - 1}$ and 
 $\tilde{X}^{(l)}_{\zz,\mu}[k]\in\Complex{N_w + N_h - 1}$ are the frequency domain versions of
-the desired playback signal and the loudspeaker input signal, which are defined as follows:
+the desired playback signal and the loudspeaker input signals, which are defined as follows:
 \begin{align}
-    \tilde{S}_{\zz,\mu}[k] &= \sum_{n=0}^{N_w + N_h - 2} \tilde{s}_{\zz,\mu}[n]w[n - \mu H]
-        \exp\left(\frac{-j2\pi k n}{N_w + N_h - 1}\right) \\
-    \tilde{X}^{(l)}_{\zz,\mu}[k] &= \sum_{n=0}^{N_w + N_h - 2} \tilde{x}^{(l)}_{\zz,\mu}[n]w[n - \mu H]
-        \exp\left(\frac{-j2\pi k n}{N_w + N_h - 1}\right)
+    \tilde{S}_{\zz,\mu}[k] &= 
+    \sum_{n=\mu H - N_w + 1}^{\mu H}\left[\sum_{k=-\infty}^{\mu}\tilde{s}_{\zz,\mu}[n]w[n - kH]\right]
+    \exp\left({\textstyle\frac{-j2\pi k \left(n - \mu H + N_w - 1\right)}{N_w + N_h - 1}}\right), \\
+    \tilde{X}^{(l)}_{\zz,\mu}[k] &= 
+    \sum_{n=\mu H - N_w + 1}^{\mu H}\left[\sum_{k=-\infty}^{\mu}\tilde{x}^{(l)}_{\zz,\mu}[n]w[n - kH]\right]
+    \exp\left({\textstyle\frac{-j2\pi k \left(n - \mu H + N_w - 1\right)}{N_w + N_h - 1}}\right).
 \end{align}
+This definition takes the short-time Fourier transformation of block $\mu$ of all contributions to the desired playback signal and the loudspeaker input signals up to and including block $\mu$. 
+As such, the history formed by the previous blocks is also taken into account.
 Note that the window is implicitly included in the transformed quantities.
 This is done for ease of notation.
 
-Using the previously derived quantities, it is possible express the frequency domain version of the block-based pressure matching approach
-as follows:
+Using the previously derived quantities, it is possible express the frequency domain version of the short-time pressure matching approach as follows:
 \begin{align}
     \begin{aligned}
     \argmin{\tilde{x}_{\za,\mu}^{(l)}[n],\,\tilde{x}_{\zb,\mu}^{(l)}[n]\,\forall\,l}{
@@ -218,57 +204,16 @@ as follows:
     \end{aligned}
     \label{eq:perceptual_sound_zone:stft:stft_pm}
 \end{align}
-Note also how the optimization is still performed over the time domain signal.
-This was done to constrain the loudspeaker input signal coefficient to size $N_w$, 
-as that is an assumption made by the frame-based processing.
+Note also how the optimization is still performed over the time domain loudspeaker input signals 
+$\tilde{x}_{\za,\mu}^{(l)}[n]$ and $\tilde{x}_{\zb,\mu}^{(l)}[n]$.
+This was done to constrain the loudspeaker input signal coefficient to size $N_w$, as that is an assumption made by the frame-based processing.
 
-In principal, this introduces more complexity than solving directly over the frequency domain loudspeaker input coefficient
+In principle, this introduces more complexity than solving directly over the frequency domain loudspeaker input coefficient
 $\tilde{X}^{(l)}_{\zz,\mu}[k]$.
-This however introduces issues as it requires the truncation of the time-domain version to the first $N_w$ samples.
+This, however, introduces issues as it requires the truncation of the time-domain version to the first $N_w$ samples.
 
 Naively truncating $N_w$ this way introduced artifacts. 
-In experiments in which this approach is attempted the time-domain representation of the resulting frequency-domain loudspeaker input signals 
-results in significant energy contained in the last $N_h - 1$ samples.
+In experiments in which this approach is attempted, the time-domain representation of the resulting frequency-domain loudspeaker input signals results in significant energy contained in the last $N_h - 1$ samples.
 If truncated, a significant portion of the signal energy would be disregarded, which serves as a possible explanation for the artifacts.
 
-However, due to the computational benefits, formulating a frequency domain approach that minimizes the impact of or prevents these artifacts is 
-found to be promising future work.
-
-% \subsection{Proposed Short-Time Frequency-Domain Pressure-Matching in Vector Notation}
-% \label{ch:perceptual_sound_zones:stft:vector}
-% To conclude \autoref{ch:perceptual_sound_zone:stft} a vector notation alternative representation of the short-time 
-% frequency-domain pressure-matching approach is given, as vector notation is typically preferred for the understand and
-% implementation of signal processing algorithms.
-
-% To this end, let $\tilde{\vec{t}}^{(m)}_\mu\in\Complex^{N_w + N_h - 1}$ and 
-% $\tilde{\vec{p}}^{(m)}_\mu\in\Complex{N_w + N_h - 1}$ 
-% denote vectors that contain the target and achieved sound pressures $\tilde{T}^{(m)}[k, \mu]$ and 
-% $\tilde{P}^{(m)}[k, \mu]$ respectively.
-% Their definitions are given as follows:
-% \begin{align}
-%     \tilde{\vec{t}}^{(m)}_\mu &= \tilde{\vec{t}}^{(m)}_{\mu - 1} +
-%     \sum_{l=0}^{N_L}\mat{H}^{(l,m)}\tilde{\vec{s}}_{\zz,\mu},\label{eq:perceptual_sound_zones:stft:t_freq_vec} \\
-%     \tilde{\vec{p}}^{(m)}_\mu &= \tilde{\vec{p}}^{(m)}_{\mu - 1} +
-%     \sum_{l=0}^{N_L}\mat{H}^{(l,m)}\tilde{\vec{x}}^{(l)}_{\zz,\mu}.\label{eq:perceptual_sound_zones:stft:p_freq_vec} 
-% \end{align}
-% Here, $\tilde{\vec{s}}_{\zz,\mu}\in\Complex{N_w + N_h - 1}$ and 
-% $\tilde{\vec{x}}^{(l)}_{\zz,\mu}\in\Complex{N_w + N_h - 1}$ are vectors containing the frequency 
-% versions of the playback and loudspeaker input signals $\tilde{S}_{\zz,\mu}[k]$ and $\tilde{X}^{(l)}_{\zz,\mu}[k]$ 
-% respectively.
-% The matrix $\mat{H}^{(l,m)}\in\Complex{N_w + N_h - 1 \times N_w + N_h - 1}$ contains the the elements of $H^{(l,m)}[k]$
-% on its diagonal.
-
-% From this, a vector based variant of the the short-time frequency-domain pressure matching optimization problem 
-% originally given in \autoref{eq:perceptual_sound_zone:stft:stft_pm} can be given as follows:
-
-% \begin{align}
-%     \begin{aligned}
-%     \argmin{\tilde{x}_{\za,\mu}^{(l)}[n],\,\tilde{x}_{\zb,\mu}^{(l)}[n]\,\forall\,l}{
-%        &\sum_{m\in A} \norm[2][2]{\tilde{\vec{p}}_{\za}^{(m)}[\mu] - \tilde{\vec{t}}^{(m)}[\mu]} +
-%         \sum_{m\in A} \norm[2][2]{\tilde{\vec{p}}_{\zb}^{(m)}[\mu]} + \\
-%        &\sum_{m\in B} \norm[2][2]{\tilde{\vec{p}}_{\zb}^{(m)}[\mu] - \tilde{\vec{t}}^{(m)}[\mu]} + 
-%         \sum_{m\in B} \norm[2][2]{\tilde{\vec{p}}_{\za}^{(m)}[\mu]}
-%     }
-%     \end{aligned}
-%     \label{eq:perceptual_sound_zone:stft:stft_pm_vec}
-% \end{align}
+However, due to the computational benefits, formulating a frequency domain approach that minimizes the impact of or prevents these artifacts is found to be promising future work.

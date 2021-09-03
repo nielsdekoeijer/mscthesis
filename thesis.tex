@@ -79,21 +79,15 @@
 \advisorone{dr. J. Mart\'{\i}nez-Casta{\~n}eda}
 
 % =Abstract==============================================================================
-\def\ABSTRACT{With the aid of an array of loudspeakers, sound zone algorithms seek to reproduce multiple 
-    distinct zones of audio inside an enclosure.
-    Typical approaches determine the loudspeaker inputs by optimizing over a cost function which models the 
-    sound pressure inside the enclosure. 
-    However, recent methods propose cost functions that include a perceptual model of the human auditory system,
-    which further models the perception of sound.
-    This thesis investigates such an approach by proposing a framework within
-    which sound zones are constructed through optimization over a perceptual model.
-    The framework is used to propose two perceptual sound zone algorithms.
-    In order to determine the benefits of including auditory-perceptual information, 
-    simulations of proposed and reference algorithms are presented.
-    From this it is found that the perceptual approach outperforms the reference in terms of various perceptual measures.
-    In addition, it is found that adding perceptual constraints to the optimization problem allows for a control of 
-    sound zones which correlates well with other perceptual quality measures.
-    }
+\def\ABSTRACT{
+With the aid of an array of loudspeakers, sound zone algorithms seek to reproduce multiple distinct zones of audio inside an enclosure.
+Typical approaches determine the loudspeaker inputs by optimizing over a cost function that models the sound pressure inside the enclosure. 
+However, recent methods propose cost functions that include a perceptual model of the human auditory system, which further models the perception of sound. This thesis investigates such an approach by proposing a framework within which sound zones are constructed through optimization over a perceptual model.
+The framework is used to propose two perceptual sound zone algorithms.
+To determine the benefits of including auditory-perceptual information, simulations of proposed and reference algorithms are presented.
+From this, it is found that the perceptual approach outperforms the reference in terms of various perceptual measures.
+In addition, it is found that adding perceptual constraints to the optimization problem allows for control of sound zones which correlates well with other perceptual quality measures.
+}
 
 
 % =Document==============================================================================
@@ -156,16 +150,16 @@
 \label{ch:perceptual_sound_zone}
 \input{perceptual_sound_zone_algorithm/introduction.tex}
 \newpage
-\section{Proposed Short-Time Frequency-Domain Reformulation of the Pressure Matching Approach}
+\section{Proposal of Short-Time Frequency-Domain Pressure Matching}
 \label{ch:perceptual_sound_zone:stft}
 \input{perceptual_sound_zone_algorithm/short_time.tex}
 \newpage
-\section{Proposal of Proposed Perceptual Pressure Matching Algorithms}
+\section{Proposal of Perceptual Pressure Matching Algorithms}
 \label{ch:perceptual_sound_zone:perceptual_minimization}
 \input{perceptual_sound_zone_algorithm/perceptual_minimization.tex}
 \newpage
 
-\chapter{Simulations and Analysis of Proposed Perceptual Sound Zone Algorithms}
+\chapter{Evaluation of Proposed Perceptual Sound Zone Algorithms}
 \label{ch:results}
 \input{results/introduction.tex}
 \newpage

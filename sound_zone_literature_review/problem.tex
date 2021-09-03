@@ -1,4 +1,4 @@
-As mentioned in the introduction, the problem that sound zones seeks to solve is the reproduction
+As mentioned in the introduction, the problem that sound zones seek to solve is the reproduction
 of multiple types of audio content in the same room with minimal interference.
 This way, multiple people can enjoy different audio content without disturbing one another.
 
@@ -7,34 +7,31 @@ This way, multiple people can enjoy different audio content without disturbing o
     \scalebox{1.0}{\input{tikz/tikz_2D_room_concept_content.tex}}
     \caption{
             A birds-eye view of a room is depicted.
-            It is divided into two zones: a red zone and a blue zone.
-            Each zone is assigned different content: content A and content B respectively.
+            The room is divided into two zones: a red zone and a blue zone.
+            Each zone is assigned different content: content A and content B, respectively.
             In the northern and southern parts of the room, a loudspeaker array is mounted on the walls.
         }
     \label{fig:sound_zones:background:content}
 \end{figure}
 
-This section seeks to build on this description in order to provide the understanding necessary 
-for the rest of this work.
+This section seeks to build on this description to provide the understanding necessary for the rest of this work.
 
 Controlling the spatial distribution of sound is done by calculating the audio the loudspeakers must produce to approximate 
 the desired sound field in the given space.
 The space inside the enclosure is divided up into multiple zones.
 Each zone is assigned target sound pressure that we would like to have reproduced inside of it.
-This target sound pressure could be any kind of audio content, for example music, the sound of a movie, or speech.
+This target sound pressure could be any audio content, for example, music, the sound of a movie, or speech.
 
-To understand this principal, consider the example given by \autoref{fig:sound_zones:background:content}.
-The loudspeakers array that is present in the room is to be controlled by the sound zone algorithm 
-in such a way that the desired content is reproduced in each zone.
-As mentioned, this is to be done in a way that results in minimal interference, e.g. it is undesirable
+To understand this principle, consider the example given by \autoref{fig:sound_zones:background:content}.
+The loudspeakers array present in the room is to be controlled by the sound zone algorithm so that the desired content is reproduced in each zone.
+As mentioned, this is to be done in a way that results in minimal interference, e.g., it is undesirable
 to be able to hear content B when inside the red zone.
 
 
 There are various approaches to solving the sound zone problem.
 Sound zone problems are typically decomposed into a separate subproblem for every zone.
 Each one of these subproblems considers only two zones: one bright zone and one dark zone.
-The goal of each subproblems is to reproduce a specified target sound pressure in the bright zone while restricting the 
-sound pressure in the dark zones.
+The goal of each subproblem is to reproduce a specified target sound pressure in the bright zone while restricting the sound pressure in the dark zones.
 The combination of both subproblems provides a solution to the sound zone problem. 
 
 To ease the understanding of this concept, consider an example of this decomposition is given in 
@@ -44,7 +41,7 @@ two bright-dark zone pairs.
 
 For the first problem, the goal is to reproduce ``content A'' in ``bright zone A'' while minimizing 
 the amount of sound pressure in ``dark zone A''.
-Similarly for the second problem: reproduce ``content B'' in ``bright zone B'' while minimizing the 
+Similarly, for the second problem: reproduce ``content B'' in ``bright zone B'' while minimizing the 
 amount of sound pressure in ``dark zone B''.
 Combining the two solutions results in a solution with content reproduced in both zones with 
 minimal interference between zones.
