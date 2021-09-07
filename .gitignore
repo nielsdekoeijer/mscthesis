@@ -1,4 +1,6 @@
 ## Core latex/pdflatex auxiliary files:
+tags 
+just-in-case.zip
 *.aux
 *.lof
 *.log
