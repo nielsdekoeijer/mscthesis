@@ -1,4 +1,0 @@
-defense-figure8.pdf: data/target.csv
-defense-figure8.pdf: data/target.csv
-defense-figure8.pdf: data/per_leakage.csv
-defense-figure8.pdf: data/ref_leakage.csv

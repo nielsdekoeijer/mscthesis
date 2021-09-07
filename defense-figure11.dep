@@ -1,6 +1,0 @@
-defense-figure11.pdf: data/reconstruction_Q_1.csv
-defense-figure11.pdf: data/reconstruction_Q_7.csv
-defense-figure11.pdf: data/reconstruction_Q_21.csv
-defense-figure11.pdf: data/leakage_Q_1.csv
-defense-figure11.pdf: data/leakage_Q_7.csv
-defense-figure11.pdf: data/leakage_Q_21.csv
