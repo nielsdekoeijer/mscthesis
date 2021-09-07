@@ -43,23 +43,18 @@ This decomposition is used to describe a multi-zone variant of both a pressure m
 in \autoref{ch:sound_zone:approaches:pressure_matching},
 and acoustic contrast control approach in \autoref{ch:sound_zone:approaches:acoustic_contrast_control}.
 
-\subsection{Pressure Matching}
+\subsection{Description of Pressure Matching}
 \label{ch:sound_zone:approaches:pressure_matching}
 The ``pressure matching'' (PM) approach is widely used in the literature to 
 solve the sound zone problem~\cite{betlehem2015personal, moller2016sound}.
 In this section, a multi-zone pressure matching algorithm is derived using the data model 
 given in \autoref{ch:sound_zone:data_model}.
 
-In pressure matching approaches, one attempts to design suitable loudspeaker input 
-signals in such a way that the resulting sound pressure in the zone 
-matches the specified target sound pressure for that zone, 
-while simultaneously minimizing the sound pressure that results in other zones as 
-to minimize the interference or cross-talk between zones
-~\cite{betlehem2015personal, olik2013comparative}.
+In pressure matching approaches, one attempts to design suitable loudspeaker input signals in such a way that the resulting sound pressure in the zone matches the specified target sound pressure for that zone. 
+Simultaneously the sound pressure that results in other zones as interference or cross-talk due to reproducing the target in the bright zone is minimized~\cite{betlehem2015personal, olik2013comparative}.
 
 This goal can be stated formally as choosing $x_\za^{(l)}[n]$ such that the resulting achieved pressure 
 $p_\za^{(m)}[n]$ attains the target sound pressure $t^{(m)}[n]$ in all control points $m \in A$.   
-
 At the same time, however, $p_\za^{(m)}[n]$ should result in minimal sound pressure in all control points $m \in B$.
 Any sound pressure resulting from $x_\za^{(l)}[n]$ in zone $\zb$ can be understood as leakage or cross-talk between the zones. 
 Similar arguments can be given for $x_\zb^{(l)}[n]$.
@@ -89,7 +84,7 @@ With the following interpretations:
         for control point $m \in Z$.
         This error corresponds to how well the achieved sound pressure $p_\zz^{(m)}[n]$ matches the 
         target sound pressure $t^{(m)}[n]$ for a control point in the 
-        bright zone $Z$. 
+        bright zone. 
     \item $\text{LE}^{(m)}_\zz$ is the leakage error in zone $\zz \in \left(\za,\,\zb\right)$ for control point $m \notin Z$.
         This error can be understood as the total sound energy that ``leaks'' into control point $m$ in zones 
         other than $\zz$ when attempting to reproduce the target sound pressure $t^{(m)}[n]$ in zone $\zz$. 
@@ -107,9 +102,9 @@ and leakage errors $\text{LE}^{(m)}_\zz$.
 Some pressure matching approaches attempt to control this trade-off by introducing weights for the different error terms, 
 or by adding constraints.
 Choosing constraints can, however, be challenging as the squared $L^2$ pressure error does not always correlate well with how
-the error is perceived.
+the error is perceived by humans.
 
-\subsection{Acoustic Contrast Control}
+\subsection{Description of Acoustic Contrast Control}
 \label{ch:sound_zone:approaches:acoustic_contrast_control}
 The ``acoustic contrast control'' (ACC) method is another widely used sound zone approach from literature.
 The ACC approach attempts to maximize the acoustic contrast between the bright zone and the dark zone. 
@@ -132,7 +127,7 @@ This relationship between the loudspeaker input signals and the filter coefficie
     x_\zz^{(l)}[n] = \left(w_\zz^{(l)} \ast s_\zz\right)[n].
 \end{equation}
 This definition also relates the filter coefficients to the resulting sound pressure 
-through \autoref{eq:sound_zone:approaches:pressure}.
+through \autoref{eq:sound_zone:data_model:achieved_pressure}.
 
 As mentioned, the goal of the ACC approach is to maximize the acoustic contrast between bright and dark zones,
 which is defined as the ratio between the sound energy in the bright and dark zones.

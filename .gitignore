@@ -11,7 +11,10 @@
 *.cb
 *.cb2
 .*.lb
+*.pdf
 thesis-*
+defense-*
+defence-*
 
 ## Intermediate documents:
 *.dvi

@@ -1,8 +1,7 @@
 In \autoref{ch:sound_zone:approach_selection} a perceptual sound zone framework is proposed based on the pressure matching approach discussed in \autoref{ch:sound_zone:approaches}.
 In this framework, the Par detectability measure quantifies the perceptual cost of sound pressure errors.
-In doing so, \autoref{ch:sound_zone:approaches} introducing the concepts of reproduction error detectability 
-$\text{RED}_\zz^{(m)}$ and the leakage error detectability $\text{LED}_\zz^{(m)}$
-per control point $m$.
+In doing so, \autoref{ch:sound_zone:approaches} introduces the concepts of reproduction error detectability 
+$\text{RED}_\zz^{(m)}$ and the leakage error detectability $\text{LED}_\zz^{(m)}$ per control point $m$.
 
 As noted, the original pressure matching approach from \autoref{ch:sound_zone:approaches} operates on full-length input sequences in the time domain.
 The detectability, however, operates on short-time segments of 20 to 200 milliseconds in the frequency domain.
@@ -24,7 +23,7 @@ signals $x^{(l)}_{\zz}[n]$ for zone $\zz$ and loudspeaker $l$ are discussed.
 
 In order to formulate their short-time representations, $s_\zz[n]$ and $x^{(l)}_{\zz}[n]$ are split up into multiple overlapping blocks by using shifted windows $w[n - kH]$. 
 
-The window $w[n]\in\Real{H}$ is a non-causal window with support $-N_w + 1 \leq n \leq 0$. 
+The window $w[n]\in\Real{H}$ is a non-causal window with support $-N_w + 1 \leq n \leq 0$, and is zero otherwise. 
 Here, $w[n]$ is chosen such that it complies with the Constant Overlap Add (COLA) condition for a given hop size $H$.
 The COLA condition requires that the sum of all $H$-shifted windows add to unity for all samples $n$. 
 It is given as follows:
@@ -49,7 +48,7 @@ and of $x^{(l)}_{\zz}[n]$,
 \end{equation}
 Where $\tilde{s}_{\zz,k}[n]$ and $\tilde{x}^{(l)}_{\zz,k}[n]$ represent the content of the $k^\text{th}$ blocks of the playback signal $s_{\zz}[n]$ and loudspeaker input signals $x^{(l)}_{\zz}[n]$.
 
-As such, $\tilde{s}_{\zz,k}[n] = s_{\zz}[n]$ and $\tilde{x}^{(l)}_{\zz,k}[n] = s_{\zz}[n]$ for $-N_w + 1 + kH \leq n \leq kH$ and zero for all other samples $n$.  
+As such, $\tilde{s}_{\zz,k}[n] = s_{\zz}[n]$ and $\tilde{x}^{(l)}_{\zz,k}[n] = x^{(l)}_{\zz,k}[n]$ for $-N_w + 1 + kH \leq n \leq kH$ and zero for all other samples $n$.  
 One interpretation is that the windows decimate the signal into segments of size $N_w$, which can be reconstructed perfectly through addition due to the COLA condition.
 
 One way of interpreting the equations above is as a projection of $s_\zz[n]$ and $x^{(l)}_{\zz}[n]$ on a basis of frames spanned by shifted overlapping windows $w[n - kH]$.
@@ -72,7 +71,8 @@ This representation is beneficial, as it can be used to show that the $\tilde{x}
                            &=  \tilde{x}^{(l)}_{\zz,\mu}[n]w[n - \mu H] + \tilde{x}^{(l)}_\zz[n, \mu - 1].
     \end{aligned}
 \end{align}
-As the newest block depends on the previous blocks, this representation shows that $x^{(l)}_\zz[n]$ can be computed block-by-block.
+As the newest block depends on the previous blocks. 
+This representation shows that $x^{(l)}_\zz[n]$ can be computed block-by-block: the next block can be computed using the preceding block.
 
 With the block-based equivalents of the desired playback signal $\tilde{s}_\zz[n, \mu]$ and the loudspeaker input signals $\tilde{x}^{(l)}_\zz[n, \mu]$ defined, the block-based equivalents of the target and achieved sound pressure $\tilde{t}_\zz[n, \mu]$ and $\tilde{p}^{(m)}_\zz[n, \mu]$ can be computed: 
 
@@ -87,6 +87,7 @@ With the block-based equivalents of the desired playback signal $\tilde{s}_\zz[n
                                         &= \sum_{l=0}^{N_L - 1}\sum_{k=-\infty}^{\mu}\left(h^{(l,m)}\ast\tilde{s}_{\zz,k}w_k\right)[n] \\
                                    &= \sum_{l=0}^{N_L-1}\left(h^{(l,m)}\ast\tilde{s}_{\zz,\mu}w_\mu\right)[n] + \tilde{t}^{(m)}[n, \mu - 1].  
             \end{aligned}
+            \label{eq:perceptual_sound_zones:stft:block_based:target_pressure}
         \end{equation}
         Here, $w_k[n]$ is defined to be equal to $w[n - kH]$ and is introduced for notational convenience.  
         The definition above holds for all points $m\in Z$, i.e., the points contained in zone $\zz$.  
@@ -111,9 +112,9 @@ With the block-based equivalents of the desired playback signal $\tilde{s}_\zz[n
 
 With this, all quantities required for the block-based formulation of the pressure matching approach are defined.
 
-It is shown in \autoref{eq:perceptual_sound_zones:stft:block_based:achieved_pressure} and \autoref{eq:sound_zone:data_model:target_pressure} that all quantities can be computed recursively.
+It is shown in \autoref{eq:perceptual_sound_zones:stft:block_based:achieved_pressure} and \autoref{eq:perceptual_sound_zones:stft:block_based:target_pressure} that all quantities can be computed recursively.
 
-This is used in the block-based pressure matching approach by computing the blocks of the loudspeaker input signal$x_\zz^{(l)}[n]$ one by one. 
+This is used in the block-based pressure matching approach by computing the blocks of the loudspeaker input signal $x_\zz^{(l)}[n]$ one by one. 
 As such, the $k^\text{th}$ loudspeaker input signal coefficient $\tilde{x}^{(l)}_{\zz,\mu}[n]$ is computed such that the resulting resulting sound pressure $\tilde{p}_\zz^{(m)}[n, \mu]$ best matches the target sound pressure $\tilde{t}^{(m)}[n, \mu]$. 
 
 Note that in this approach, only the newest loudspeaker coefficients $\tilde{x}^{(l)}_{\zz,\mu}$ are being controlled. 

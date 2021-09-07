@@ -1,4 +1,4 @@
-The Par distortion detectability is the perceptual model used in the proposed perceptual sound zone algorithm.
+The Par distortion detectability is the perceptual model used in the proposed perceptual sound zone framework.
 In this section, to give the reader a greater understanding of the model, the Par distortion detectability measure is considered in greater detail.
 
 This section is organized as follows.
@@ -32,7 +32,7 @@ The larger values of the distortion detectability correspond with an increased p
 
 \subsection{Computation Details of the Par Distortion Detectability}
 \label{ch:perceptual:implementation:computation}
-This section explores calculating the Par distortion detectability.
+This section explores calculating the Par distortion detectability.k
 The first thing to note about the Par distortion detectability is that it is computed using the frequency domain representations of its inputs~\cite{van2005perceptual}. 
 To this end, let $X[k]$ and $\mathcal{E}[k]$ denote the frequency domain representations of the masking signal $x[n]$ and 
 the disturbance signal $\varepsilon[n]$ respectively.
@@ -109,7 +109,6 @@ In this case, the resulting detectability is determined greatly by the calibrati
     \item Alternatively, if $S_i \ll C_a$ for all $i$, the disturbance signal is inaudible due to the threshold of hearing, and the distortion detectability will be low accordingly.
 \end{itemize}
 
-This concludes the analysis of the Par distortion detectability.
 The determination of the calibration constants $C_a$ and $C_s$ is discussed in \autoref{ch:perceptual:implementation:calibration}.
 
 
@@ -156,8 +155,8 @@ of the disturbance signal $\varepsilon[n]$.
 This can be seen as follows.
 The frequency-domain representation $\mathcal{E}[k]$ is related to the 
 time-domain representation $\varepsilon[n]$ through the DFT, which is a linear operator.
-The perceptual weighting of $\mathcal{E}[k]$ performed by $W[k]$ is also a linear operation.
-As such, $W[k]\mathcal{E}[k]$ is an affine function of $\varepsilon[n]$.
+The perceptual weighting of $\mathcal{E}[k]$ performed by $W_x[k]$ is also a linear operation.
+As such, $W_x[k]\mathcal{E}[k]$ is an affine function of $\varepsilon[n]$.
 Finally, as the composition of an affine mapping and a convex function is convex~\cite{boyd2004convex},
 the Par detectability distortion
 is convex in $\varepsilon[n]$.
@@ -167,7 +166,7 @@ In order to gain a deeper understanding of the behavior of the perceptual weight
 The figure relates the auditory masking threshold and the corresponding perceptual weighting when a 1000 Hz tone at 70 dB SPL is used as masking signal $x[n]$.
 The top plot depicts the masking threshold, and the bottom plot depicts the corresponding perceptual weighting.
 
-Recall that the masking threshold is a minimal sound pressure level that is required for an additional stimulus to be audible in the presence of the masking signal~\cite{painter2000perceptual}.
+Recall that the masking threshold is the minimal sound pressure level that is required for an additional stimulus to be audible in the presence of the masking signal~\cite{painter2000perceptual}.
 In addition to this, the threshold of hearing is also depicted to highlight the additional masking that occurs due to the masking signal.
 
 As can be seen, the masking threshold peaks at 52 dB SPL at 1000 Hz.

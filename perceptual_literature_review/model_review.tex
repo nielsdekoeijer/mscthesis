@@ -50,7 +50,7 @@ This is done by considering three classes of different objective measures: measu
 \subsubsection{Review of Objective Speech Quality Measures}
 There have been a number of attempts to create objective measures to quantify the perceived quality of speech.
 In this section, three objective speech quality measures are discussed.
-Of these three measures, the Perceptual Evaluation of Speech Quality (PESQ) is used in the evaluation of the proposed perceptual sound zone algorithm in \autoref{ch:results}
+Of these three measures, the Perceptual Evaluation of Speech Quality (PESQ) is used in the evaluation of the proposed perceptual sound zone algorithm in \autoref{ch:results}.
 
 \begin{itemize}
     \item 
@@ -145,7 +145,7 @@ A number of the MOVs computed in PEAQ, such as the partial noise loudness, are n
 As ViSQOLAudio is similar to ViSQOL with some minor adjustments, it is similarly challenging to optimize.
 
 \subsubsection{Review of the Distraction Model}
-In an elicitation study also performed by Francombe et al. 
+In an elicitation study performed by Francombe et al. 
 in 2014~\cite{francombe2014elicitation}, ``distraction'' was determined to be the keyword that best describes the perceptual experience of interfering audio programs.
 Further research led to the proposal of a ``distraction model'', which is capable of estimating how distracting an interferer stimulus is given a certain target stimuli~\cite{francombe2015model}.
 This model was designed with the application of sound zones in mind and is as such an especially promising
@@ -164,7 +164,7 @@ The model consisted of taking a linear combination of 5 features that were compu
 Computing said features could, however, not be performed in real-time.
 The reason for this was that the original distraction model is too computationally complex~\cite{ramo2017real}.
 To this end, in 2017, R\"am\"o et al. proposed a version of the distraction model that could be run in real-time.
-This was done by approximating the features of the original distraction model by computationally less complex alternatives.
+This was done by approximating the features of the original distraction model by less computationally complex alternatives.
 The resulting real-time distraction model was found to be less precise but could be run in 0.04\% of the time of the 
 original distraction model~\cite{ramo2017real}.
 
@@ -183,7 +183,7 @@ which can be a detriment to the listening experience.
 
 To minimize the impact of these errors, many audio coding algorithms use a perceptual model to quantify 
 how disturbing the introduced distortions are~\cite{herre2019psychoacoustic}.
-The perceptual model is used to introduce encoding errors in such a way that the audio output signal is perceptually indistinguishable from the audio input signal~\cite{taal2012low}.
+The perceptual model is used to introduce encoding errors in such a way that the audio output signal is minimally perceptually distinguishable from the audio input signal~\cite{taal2012low}.
 This model typically takes the form of a distortion function which determines how audible the difference between a reference input audio signal and a distorted output audio signal is.
 This function can be used to, for example, encode an input audio signal such that it has minimal distortion for a specified bitrate.
 

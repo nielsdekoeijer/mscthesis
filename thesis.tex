@@ -66,7 +66,7 @@
 \msccity{Delft}
 \msccountry{The Netherlands}
 \mscnumber{4480767}
-\mscdate{September 15, 2021}
+\mscdate{September 16, 2021}
 \major{Electrical Engineering}
 \mscinstitute{Delft University of Technology}
 \mscfaculty{Electrical Engineering, Mathematics and Computer Science}
@@ -83,9 +83,9 @@
 With the aid of an array of loudspeakers, sound zone algorithms seek to reproduce multiple distinct zones of audio inside an enclosure.
 Typical approaches determine the loudspeaker inputs by optimizing over a cost function that models the sound pressure inside the enclosure. 
 However, recent methods propose cost functions that include a perceptual model of the human auditory system, which further models the perception of sound. This thesis investigates such an approach by proposing a framework within which sound zones are constructed through optimization over a perceptual model.
-The framework is used to propose two perceptual sound zone algorithms.
-To determine the benefits of including auditory-perceptual information, simulations of proposed and reference algorithms are presented.
-From this, it is found that the perceptual approach outperforms the reference in terms of various perceptual measures.
+The framework is used to propose two perceptual sound zone algorithms: unconstrained and constrained perceptual pressure matching.
+Simulations of the proposed algorithms and a reference algorithm are presented to determine the benefits of including auditory-perceptual information in sound zone algorithms.
+From this, it is found that the unconstrained perceptual approach outperforms the reference in terms of various perceptual measures.
 In addition, it is found that adding perceptual constraints to the optimization problem allows for control of sound zones which correlates well with other perceptual quality measures.
 }
 
@@ -174,7 +174,6 @@ In addition, it is found that adding perceptual constraints to the optimization 
 \section{Comparison with Approaches from Literature}
 \label{ch:results:comparision}
 \input{results/literature_comparision.tex}
-\newpage
 
 \chapter{Conclusion}
 \label{ch:conclusion}
