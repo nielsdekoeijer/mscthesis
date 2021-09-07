@@ -13,9 +13,7 @@ just-in-case.zip
 *.cb
 *.cb2
 .*.lb
-thesis-*
-defense-*
-defence-*
+./build/
 
 ## Intermediate documents:
 *.dvi
