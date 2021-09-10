@@ -40,7 +40,13 @@
 \usetikzlibrary{pgfplots.fillbetween}
 \usetikzlibrary{patterns}
 \usetikzlibrary{external}
-\tikzexternalize[prefix=./build]
+
+% Assumes linux 
+\immediate\write18{mkdir build/tikz-output}
+\makeatletter
+\tikzset{external/shell escape={-shell-escape\space-output-directory=build}}
+\makeatother
+\tikzexternalize[prefix=tikz-output/]
 
 \usepackage{nielstex}
 
