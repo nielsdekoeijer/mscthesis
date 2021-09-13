@@ -1,0 +1,6 @@
+DUIDELIJK aangegeven wat het doel is
+Prior Art VOOR mijn perceptuele aanpak
+TIJDENS vergelijkingen slides => NOEM INTERPRETATIE per symbool!!
+	=> Intepretatie moet dudielijk zijn (NOOIT SYMBOL IN TERMEN VAN LETTER)
+GOEIE conclusies en future work => terugkoppelen aan doel
+	=> LOGISCH dat het goed ging werken

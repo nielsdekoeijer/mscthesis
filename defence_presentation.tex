@@ -151,7 +151,8 @@ Bang and Olufsen, Denmark}
 
 \begin{frame}{\textbf{Preface:} The Sound Zone Problem II}
     \centering
-    \embedvideo{\emptybox[8cm]{5cm}}{./intro-animation.mp4}
+    \textbf{Sound Zone Example}
+    \emptybox[8cm]{5cm}
 \end{frame}
 
 \note{
@@ -579,11 +580,11 @@ Bang and Olufsen, Denmark}
     \end{columns}
 \end{frame}
 
-\begin{frame}{\textbf{Algorithms:} Unconstrained Perceptual Pressure Matching}
+\begin{frame}{\textbf{Algorithms:} Constrained Perceptual Pressure Matching}
     \begin{columns}[c]
         \centering
         \column{.60\textwidth}
-        \begin{block}{\textbf{Unconstrained Perceptual Pressure Matching}}
+        \begin{block}{\textbf{Constrained Perceptual Pressure Matching}}
             Minimize the leakage error detectability with constraints: 
             \begin{equation}
                 \begin{aligned}
@@ -637,6 +638,99 @@ Bang and Olufsen, Denmark}
     \end{block}
 \end{frame}
 
+\begin{frame}{\textbf{Algorithm Evaluation:} Simulation Setup}
+    \begin{columns}[c]
+        \column{.60\textwidth}
+        \begin{block}{\textbf{Simulation Configuration}}
+            \begin{itemize}
+                \item Simulations use \textbf{speech} signals. 
+                \vspace{3pt}
+                \item Simulation of \textbf{perceptual} and a \textbf{reference} pressure matching algorithms 
+                \vspace{3pt}
+                % \item Evaluated using \textbf{perceptual speech measures}:
+                % \begin{itemize}
+                %     \item \textbf{PESQ:} Quantifies speech quality
+                %     \item \textbf{Distraction:} Quantifies interference
+                % \end{itemize}
+                % \vspace{3pt}
+            \end{itemize}
+        \end{block}
+        \column{.33\textwidth}
+        \begin{figure}[]
+            \centering
+            \scalebox{0.9}{\input{tikz/tikz_2D_room_simulation_setup_numbered.tex}}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{\textbf{Algorithm Evaluation:} Unconstrained Perceptual Pressure Matching I}
+    \begin{table}[]
+        \sisetup{table-format=1.3(7), round-precision=3, table-comparator=true, round-integer-to-decimal=false, 
+        separate-uncertainty=true, table-align-text-post = true}
+        \centering
+        \begin{tabular}{lS[round-mode=places]S[round-mode=places]}
+        \toprule
+         \multicolumn{1}{c}{\textbf{Measure}} & 
+         \textbf{\begin{tabular}[c]{@{}c@{}}Unconstrained Perceptual PM\\ Mean ($\pm$ 95\% CI)\end{tabular}} & 
+         \textbf{\begin{tabular}[c]{@{}c@{}}Reference PM\\ Mean ($\pm$ 95\% CI)\end{tabular}} \\ 
+        \midrule
+         PESQ (No interference)     & 3,345                  \pm 0,087              & 4,107                 \pm 0,051                \\ 
+         PESQ                       & 3,154                  \pm 0,081              & 2,609                 \pm 0,084                \\ 
+         Distraction                & 7,828                  \pm 1,868              & 12,693                \pm 3,405                \\ 
+        \bottomrule
+    \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}{\textbf{Algorithm Evaluation:} Unconstrained Perceptual Pressure Matching II}
+    \begin{columns}[c]
+        \column{.44\textwidth}
+        \centering
+        \textbf{Reference}
+        \emptybox[5cm]{3cm}
+        % \embedvideo{\emptybox[5cm]{3cm}}{./reference.mp4}
+        \column{.44\textwidth}
+        \centering
+        \textbf{Unconstrained}
+        \emptybox[5cm]{3cm}
+        % \embedvideo{\emptybox[5cm]{3cm}}{./perceptual.mp4}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{\textbf{Algorithm Evaluation:} Unconstrained Perceptual Pressure Matching III}
+    \begin{figure}[]
+        \centering
+        \scalebox{0.55}{\input{tikz/tikz_masking_effect_vert.tex}}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{\textbf{Algorithm Evaluation:} Constrained Perceptual Pressure Matching I}
+    \begin{columns}[c]
+        \column{.33\textwidth}
+        \centering
+        \textbf{Reference}
+        \emptybox[5cm]{3cm}
+        % \embedvideo{\emptybox[5cm]{3cm}}{./reference.mp4}
+        \column{.33\textwidth}
+        \centering
+        \textbf{Unconstrained}
+        \emptybox[5cm]{3cm}
+        % \embedvideo{}{./perceptual.mp4}
+        \column{.33\textwidth}
+        \centering
+        \textbf{Constraining}
+        \emptybox[5cm]{3cm}
+        % \embedvideo{\emptybox[5cm]{3cm}}{./perceptual.mp4}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{\textbf{Algorithm Evaluation:} Constrained Perceptual Pressure Matching II}
+    \begin{figure}[]
+        \centering
+        \scalebox{0.75}{\input{tikz/tikz_constrained_results_defense.tex}}
+    \end{figure}
+\end{frame}
+
 \begin{frame}{\textbf{Structure:} Answering Research Question 2}
     \begin{block}{\textbf{RQ2:} What are benefits of including perceptual models in sound zone algorithms?}
         \begin{enumerate}
@@ -647,290 +741,19 @@ Bang and Olufsen, Denmark}
     \end{block}
 \end{frame}
 
+\begin{frame}{\textbf{Future Work:}}
+    \begin{itemize}
+        \item Validation of current results through listening tests. 
+        \item Further proposal of new perceptual sound zone algorithms through the proposed framework.
+        \item Current algorithms are very slow, as such it is of interest to speed them up!
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{Sources:}}
+    \begin{columns}[c]
+        \column{.8\textwidth}
+        \printbibliography
+    \end{columns}
+\end{frame}
+
 \end{document}
-
-% \begin{frame}{\textbf{Determining a Suitable Perceptual Model:}\\ Approach}
-%     In order to obtain a suitable perceptual model, various perceptual models from literature 
-%     were considered.\\
-%     \vspace{10pt}
-%     \begin{itemize}
-%         \item Mainly considered were algorithms that assign a \textbf{perceptually-motivated ``score''} to audio.
-%             For example, such a score could quantify the perceived quality of an input audio stimuli.
-%         \item These could be used to propose sound zone algorithms that optimizes over this perceptually-motivated score.
-%     \end{itemize}
-% \end{frame}
-
-% \begin{frame}{\textbf{Determining a Suitable Perceptual Model:}\\ Literature Review}
-%     To this end, two categories of perceptual models were considered.\\
-%     \vspace{10pt}
-%     \begin{itemize}
-%         \item \textbf{Objective Audio Measures:} Perceptual models that seek to predict the outcomes of 
-%             listening tests, e.g. PESQ, PEAQ, Distraction, and STOI.
-%         \vspace{7pt}
-%         \item \textbf{Audio Coding Models:} Perceptual models that are used to make the quantization noise
-%             introduced by audio compression as minimally disturbing as possible, e.g. the MPEG perceptual models.
-%     \end{itemize}
-% \end{frame}
-
-% \begin{frame}{\textbf{Determining a Suitable Perceptual Model:}\\ Introduction to the Par Distortion Detectability}
-%     % Intuition of detectability
-%     From this review, the \textbf{``Par distortion detectability''}\cite{van2005perceptual} is selected as the most promising model because of its
-%     ease of integration into optimization problems.\\
-%     \vspace{10pt}
-%     \begin{itemize}
-%         \item The Par distortion detectability defines a mathematical function $D(x[n], \varepsilon[n])$ which models how easily a human 
-%             listener can detect the disturbance signal $\varepsilon[n]$ in presence of the masking signal $x[n]$.
-%         \vspace{7pt}
-%         \item It is used in \textbf{audio coding} to make the quantization noise introduced by compression minimally detectable.
-%     \end{itemize}
-% \end{frame}
-
-% \begin{frame}{\textbf{Determining a Suitable Perceptual Model:}\\ Perceptual Background for the Par Distortion Detectability}
-%     The detectability $D(x[n], \varepsilon[n])$ operates using two psycho-acoustical principals: the \textbf{threshold of hearing} 
-%     and the \textbf{masking properties} of the masking signal $x[n]$.
-%     \vspace{10pt}
-%     \begin{enumerate}
-%         \item \textbf{Threshold of Hearing:} The sound levels as a function of frequency below which humans cannot perceive sound.
-%             \begin{itemize}
-%                 \item E.g. if a sound is below this threshold, it is not detectable.
-%             \end{itemize}
-%         \vspace{10pt}
-%         \item \textbf{Masking Properties:} The degree to which the masking signal $x[n]$ ``overpowers'' other sounds.
-%             \begin{itemize}
-%                 \item E.g. if $x[n]$ is loud sound, then it will other mask sounds close in frequency, and they will not be audible.
-%             \end{itemize}
-%     \end{enumerate}
-% \end{frame}
-
-% \begin{frame}{\textbf{Proposal of Perceptual Sound Zone Framework:}\\ Approach}
-%     To determine how the Par distortion detectability can be used to create sound zones, sound zone literature was consulted.\\
-%     \vspace{10pt}
-%     \begin{itemize}
-%         \item From this review it was found that a \textbf{Pressure Matching} sound zone approach can easily be adapted to 
-%                 use the Par distortion detectability.
-%     \end{itemize}
-% \end{frame}
-
-% \begin{frame}{\textbf{Proposal of Perceptual Sound Zone Framework:}\\ Review of Pressure Matching I}
-%     \begin{columns}[c]
-%         \column{.54\textwidth}
-%         Pressure matching assigns \textbf{target sound pressure} that we wish to attain at \textbf{discrete points} $m$ in the zones.\\
-%         \vspace{10pt}
-%         Sound zones are constructed by minimizing \textbf{sound pressure errors}.
-%         \column{.44\textwidth}
-%         \begin{figure}[]
-%             \centering
-%             \scalebox{0.7}{\input{tikz/tikz_2D_room_data_model_sampled.tex}}
-%         \end{figure}
-%     \end{columns}
-% \end{frame}
-
-% \begin{frame}{\textbf{Proposal of Perceptual Sound Zone Framework:}\\ Review of Pressure Matching II}
-%     \begin{columns}[c]
-%         \column{.54\textwidth}
-%         Two types of sound pressure errors can be distinguished:
-%         \vspace{7pt}
-%         \begin{enumerate}
-%         \item The \textbf{reproduction error} for control point $m$ denoted $\text{RE}^{(m)}$, 
-%             which quantifies the deviation from the target sound pressure.     
-%         \item The \textbf{leakage error} for control point $m$ denoted by $\text{LE}^{(m)}$, 
-%             which quantifies how much interference is present. 
-%         \end{enumerate}
-%         \column{.44\textwidth}
-%         \begin{figure}[]
-%             \centering
-%             \scalebox{0.7}{\input{tikz/tikz_2D_room_data_model_sampled.tex}}
-%         \end{figure}
-%     \end{columns}
-% \end{frame}
-
-% \begin{frame}{\textbf{Proposal of Perceptual Sound Zone Framework:}\\ Review of Pressure Matching III}
-%     \begin{columns}[c]
-%         \column{.54\textwidth}
-%         The pressure matching algorithm minimizes over these sound pressure errors:
-%         \begin{equation}
-%             \argmin{}{\sum_m \left(\text{RE}^{(m)} + \text{LE}^{(m)}\right)}
-%         \end{equation}
-%         \column{.44\textwidth}
-%         \begin{figure}[]
-%             \centering
-%             \scalebox{0.7}{\input{tikz/tikz_2D_room_data_model_sampled.tex}}
-%         \end{figure}
-%     \end{columns}
-% \end{frame}
-
-% \begin{frame}{\textbf{Proposal of Perceptual Sound Zone Framework:}\\ Proposal of Pressure Error Detectability Framework I}
-%     The definitions of the sound pressure errors gave inspiration for the a framework of \textbf{sound pressure error detectabilities}.\\
-%     \vspace{10pt}
-%     Just as the Par distortion detectability is used to minimize the detectability of quantization noise in audio coding, 
-%     the proposed framework will minimize the detectabilities of the sound pressure errors from pressure matching.\\
-%     \vspace{10pt}
-%     This is done by \textbf{modeling the disturbance signal} $\varepsilon[n]$ of the detectability $D(x[n],\varepsilon[n])$.
-% \end{frame}
-
-% \begin{frame}{\textbf{Proposal of Perceptual Sound Zone Framework:}\\ Proposal of Pressure Error Detectability Framework II}
-%     \begin{columns}[c]
-%         \column{.54\textwidth}
-%         \begin{enumerate}
-%         \item The \textbf{reproduction error detectability} for control point $m$ denoted $\text{RED}^{(m)}$. 
-%             Here, the disturbance signal $\varepsilon[n]$ is taken to be the deviation from the target sound pressure at point $m$.
-%         \item The \textbf{leakage error detectability} for control point $m$ denoted by $\text{LED}^{(m)}$. 
-%             Here, the disturbance signal $\varepsilon[n]$ is taken to be the interference at point $m$.
-%     \end{enumerate}
-%         \column{.44\textwidth}
-%         \begin{figure}[]
-%             \centering
-%             \scalebox{0.7}{\input{tikz/tikz_2D_room_data_model_sampled.tex}}
-%         \end{figure}
-%     \end{columns}
-%     \vspace{7pt}
-%     In both cases, the \textbf{masking signal} $x[n]$ is taken to be the \textbf{target sound pressure}.
-%     Hence, the detectability of the errors is determined in presence of the target sound pressure.
-% \end{frame}
-
-% \begin{frame}{\textbf{Proposal of Perceptual Sound Zone Algorithms:}\\ Algorithm 1: Unconstrained Perceptual Pressure
-%     Matching}
-%     \begin{columns}[c]
-%         \column{.54\textwidth}
-%         The first perceptual sound zone algorithm is analogous to the pressure matching approach.\\
-%         \vspace{7pt}
-%         It simply minimizes the total sound pressure error detectability:
-%         \begin{equation}
-%             \argmin{}{\sum_m \left(\text{RED}^{(m)} + \text{LED}^{(m)}\right)}
-%         \end{equation}
-%         \column{.44\textwidth}
-%         \begin{figure}[]
-%             \centering
-%             \scalebox{0.7}{\input{tikz/tikz_2D_room_data_model_sampled.tex}}
-%         \end{figure}
-%     \end{columns}
-% \end{frame}
-
-% \begin{frame}{\textbf{Proposal of Perceptual Sound Zone Algorithms:}\\ Algorithm 2: Constrained Perceptual Pressure
-%     Matching}
-%     \begin{columns}[c]
-%         \column{.54\textwidth}
-%         The second algorithm leverages the \textbf{perceptual interpretation} of the detectability.
-%         It minimizes the leakage error detectability, while constraining the reproduction error detectability.
-%         \begin{align}
-%             \begin{aligned}
-%                 \argmin{}{&\sum_m \text{LED}^{(m)}}\\
-%                 \subjectto{&\text{RED}^{(m)} \leq D_0 \quad \forall\,m}
-%             \end{aligned}
-%         \end{align}
-%         \column{.44\textwidth}
-%         \begin{figure}[]
-%             \centering
-%             \scalebox{0.7}{\input{tikz/tikz_2D_room_data_model_sampled.tex}}
-%         \end{figure}
-%     \end{columns}
-% \end{frame}
-
-% \begin{frame}{\textbf{Evaluation of Perceptual Sound Zone Algorithms:}\\ Simulation Setup}
-%     \begin{columns}[c]
-%         \column{.44\textwidth}
-%         \begin{itemize}
-%             \item A 5 by 5 meter square room with 4 loudspeakers is used for the evaluation.
-%             \item The zones, each consisting of two points, are assigned speech content for the simulations.
-%             \item The non-perceptual pressure algorithm previously discussed is used as a reference.
-%         \end{itemize}
-%         \column{.44\textwidth}
-%         \begin{figure}[]
-%             \centering
-%             \scalebox{0.7}{\input{tikz/tikz_2D_room_simulation_setup.tex}}
-%         \end{figure}
-%     \end{columns}
-% \end{frame}
-
-% \begin{frame}{\textbf{Evaluation of Perceptual Sound Zone Algorithms:}\\ Evaluation Measures}
-%     In order to effectively compare the reference and the perceptual approach, two perceptual measures are used:\\
-%     \vspace{10pt}
-%     \begin{itemize}
-%         \item Perceptual Evaluation of Speech Quality (PESQ)\cite{rix2001perceptual}, quantifies speech quality.
-%         \item Distraction\cite{ramo2017real}, quantifies how distracting interference is.
-%     \end{itemize}
-% \end{frame}
-
-% \begin{frame}{\textbf{Evaluation of Perceptual Sound Zone Algorithms:}\\ Evaluation of Unconstrained
-%     Perceptual Pressure Matching}
-%     \begin{table}[]
-%         \sisetup{table-format=1.3(7), round-precision=3, table-comparator=true, round-integer-to-decimal=false, 
-%         separate-uncertainty=true, table-align-text-post = true}
-%         \centering
-%         \begin{tabular}{lS[round-mode=places]S[round-mode=places]}
-%         \toprule
-%          \multicolumn{1}{c}{\textbf{Measure}} & 
-%          \textbf{\begin{tabular}[c]{@{}c@{}}Unconstrained Perceptual PM\\ Mean ($\pm$ 95\% CI)\end{tabular}} & 
-%          \textbf{\begin{tabular}[c]{@{}c@{}}Reference PM\\ Mean ($\pm$ 95\% CI)\end{tabular}} \\ 
-%         \midrule
-%          PESQ (No interference)     & 3,345                  \pm 0,087              & 4,107                 \pm 0,051                \\ 
-%          PESQ                       & 3,154                  \pm 0,081              & 2,609                 \pm 0,084                \\ 
-%          Distraction                & 7,828                  \pm 1,868              & 12,693                \pm 3,405                \\ 
-%         \bottomrule
-%     \end{tabular}
-%     \end{table}
-%     The unconstrained perceptual pressure matching approach outperforms the reference when interference is taken into account.
-% \end{frame}
-
-% \begin{frame}{\textbf{Evaluation of Perceptual Sound Zone Algorithms:}\\ Evaluation of Unconstrained
-%     Perceptual Pressure Matching}
-%     \begin{figure}[]
-%         \centering
-%         \scalebox{0.55}{\input{tikz/tikz_masking_effect_vert.tex}}
-%     \end{figure}
-% \end{frame}
-
-% \begin{frame}{\textbf{Evaluation of Perceptual Sound Zone Algorithms:}\\ Evaluation of Unconstrained
-%     Perceptual Pressure Matching}
-%     To conclude, 
-%     \begin{itemize}
-%         \item The unconstrained perceptual pressure matching algorithm outperforms the reference for both perceptual measures when taking interference
-%             into account.
-%         \item One possible reason for this is the perceptual approach makes a \textbf{better perceptual trade-off}.
-%     \end{itemize}
-% \end{frame}
-
-% \begin{frame}{\textbf{Evaluation of Perceptual Sound Zone Algorithms:}\\ Evaluation of Constrained
-%     Perceptual Pressure Matching}
-%     \begin{figure}[]
-%         \centering
-%         \scalebox{0.75}{\input{tikz/tikz_constrained_results_defense.tex}}
-%     \end{figure}
-%     The plots show the PESQ and Distraction perceptual measures as a function of constraint $D_0$. 
-%     The error bars denote 95\% confidence intervals.
-%     As can be seen, the constraint allows for a degree of control over the reproduced quality.
-% \end{frame}
-
-% \begin{frame}{\textbf{Evaluation of Perceptual Sound Zone Algorithms:}\\ Evaluation of Constrained
-%     Perceptual Pressure Matching}
-%     \begin{figure}[]
-%         \centering
-%         \scalebox{0.55}{\input{tikz/tikz_constrained_masking_effect_vert.tex}}
-%     \end{figure}
-% \end{frame}
-
-% \begin{frame}{\textbf{Evaluation of Perceptual Sound Zone Algorithms:}\\ Evaluation of Constrained
-%     Perceptual Pressure Matching}
-%     To conclude, 
-%     \begin{itemize}
-%         \item The constraint is shown to correlate well with the other perceptual measures, which allows for a degree of control over the 
-%             quality of the reproduced audio.
-%     \end{itemize}
-% \end{frame}
-
-% \begin{frame}{\textbf{Future Work:}}
-%     \begin{itemize}
-%         \item Validation of current results through listening tests. 
-%         \item Further proposal of new perceptual sound zone algorithms through the proposed framework.
-%         \item Current algorithms are very slow, as such it is of interest to speed them up!
-%     \end{itemize}
-% \end{frame}
-
-% \begin{frame}{\textbf{Sources:}}
-%     \begin{columns}[c]
-%         \column{.8\textwidth}
-%         \printbibliography
-%     \end{columns}
-% \end{frame}
-
-% \end{document}
